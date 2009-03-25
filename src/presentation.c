@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "presentation.h"
 
@@ -23,19 +24,19 @@ Slide* presentation_add_slide(Presentation* presentation)
 	return s;
 }
 
-Command* slide_add_command(Slide* slide)
+UnparsedCommand* slide_add_unparsed_command(Slide* slide)
 {
-	Command* c = malloc(sizeof(Command));
+	UnparsedCommand* c = malloc(sizeof(UnparsedCommand));
 	c->n_parameters = 0;
 	c->id = '\0';
-	slide->commands[slide->n_commands++] = c;
+	slide->unparsed_commands[slide->n_commands++] = c;
 #ifdef DEBUG
 	printf("New command.\n");
 #endif
 	return c;
 }
 
-Parameter* command_add_parameter(Command* command, char* key)
+Parameter* command_add_parameter(UnparsedCommand* command, char* key)
 {
 	// TODO
 	Parameter* p = malloc(sizeof(Parameter));
@@ -49,4 +50,23 @@ Parameter* command_add_parameter(Command* command, char* key)
 	#endif
 	}
 	return p;
+}
+
+//
+// parsing commands
+//
+static void slide_parse_commands(Slide* slide)
+{
+	int i;
+	for(i=0; i<slide->n_commands; i++)
+	{
+		
+	}
+}
+
+void presentation_parse(Presentation* presentation)
+{
+	int i;
+	for(i=0; i<presentation->n_slides; i++)
+		slide_parse_commands(presentation->slides[i]);	
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "parser.h"
 
@@ -9,7 +10,7 @@
                    parse_id(pres, id); }
 
 static Slide* current_slide;
-static Command* current_command;
+static UnparsedCommand* current_command;
 static Parameter* current_parameter;
 
 inline static void parse_error(char* s)
@@ -37,7 +38,8 @@ inline static void parse_id(Presentation* pr, char *id)
 	if(strcmp("slide:", id) == 0)
 	{
 		current_slide = presentation_add_slide(pr);
-		current_command = current_parameter = NULL;
+		current_command = NULL;
+		current_parameter = NULL;
 		return;
 	}
 
@@ -46,7 +48,7 @@ inline static void parse_id(Presentation* pr, char *id)
 	{
 		if(current_slide == NULL)
 			parse_error("Expected: slide");
-		current_command = slide_add_command(current_slide);
+		current_command = slide_add_unparsed_command(current_slide);
 		current_parameter = NULL;
 		return;
 	}
@@ -109,7 +111,9 @@ int parser_parse(Presentation *pres, char *sswl)
 	int i = 0, i_id = 0;
 	char id[MAX_ID_LENGTH];
 
-	current_slide = current_command = current_parameter = NULL;
+	current_slide = NULL;
+	current_command = NULL;
+	current_parameter = NULL;
 
 	// 
 	// lexer

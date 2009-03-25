@@ -38,6 +38,17 @@ inline static void parse_id(Presentation* pr, char *id)
 	{
 		current_slide = presentation_add_slide(pr);
 		current_command = current_parameter = NULL;
+		return;
+	}
+
+	// new command
+	if(strcmp("-", id) == 0)
+	{
+		if(current_slide == NULL)
+			parse_error("Expected: slide");
+		current_command = slide_add_command(current_slide);
+		current_parameter = NULL;
+		return;
 	}
 
 	// id
@@ -48,7 +59,7 @@ inline static void parse_id(Presentation* pr, char *id)
 			if(!is_command(id))
 				parse_error("Expected: command");
 			current_command->id = strcpy_nc(id);
-#ifndef DEBUG
+#ifdef DEBUG
 			printf("Command: %s\n", current_command->id);
 #endif
 		}
@@ -71,17 +82,17 @@ inline static void parse_id(Presentation* pr, char *id)
 #endif
 					current_parameter = NULL;
 				}
+				else
+				{
+					Parameter *p = command_add_parameter(current_command, NULL);
+					p->value = (char*)malloc(strlen(id)+1);
+					strcpy(p->value, id);
+#ifdef DEBUG
+					printf("New default parameter: %s\n", p->value);
+#endif
+				}
 			}
 		}
-	}
-
-	// new command
-	if(strcmp("-", id) == 0)
-	{
-		if(current_slide == NULL)
-			parse_error("Expected: slide");
-		current_command = slide_add_command(current_slide);
-		current_parameter = NULL;
 	}
 
 

@@ -48,7 +48,9 @@ inline static void parse_id(Presentation* pr, char *id)
 			if(!is_command(id))
 				parse_error("Expected: command");
 			current_command->id = strcpy_nc(id);
+#ifndef DEBUG
 			printf("Command: %s\n", current_command->id);
+#endif
 		}
 		else // command already has an id
 		{

@@ -9,12 +9,12 @@ int main(int argc, char* argv[])
 	Presentation* presentation = presentation_new();
 
 	// read options from command line
- //      	options_get(presentation, argc, argv);
+       	options_get(presentation, argc, argv);
 
 	// read file
 	char* sswl;
-	// sswl = file_read(presentation->filename);
-	sswl = file_read("test.sswl");
+	sswl = file_read(presentation->filename);
+	// sswl = file_read("test.sswl");
 	
 	// parse
 	if(!parser_parse(presentation, sswl))

@@ -39,11 +39,14 @@ Parameter* command_add_parameter(Command* command, char* key)
 {
 	// TODO
 	Parameter* p = malloc(sizeof(Parameter));
-	p->key = (char*)malloc(strlen(key) + 1);
-	strcpy(p->key, key);
-	command->parameters[command->n_parameters++] = p;
-#ifdef DEBUG
-	printf("New parameter: %s.\n", key);
-#endif
+	if(key)
+	{
+		p->key = (char*)malloc(strlen(key) + 1);
+		strcpy(p->key, key);
+		command->parameters[command->n_parameters++] = p;
+	#ifdef DEBUG
+		printf("New parameter: %s.\n", key);
+	#endif
+	}
 	return p;
 }

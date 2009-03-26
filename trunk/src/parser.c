@@ -179,7 +179,7 @@ int parser_parse(Presentation *pres, char *sswl)
 		i++;	
 	}
 
-	return 1;
+	return presentation_parse(pres);
 
 error:
 	return 0;

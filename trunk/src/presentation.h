@@ -57,6 +57,6 @@ Presentation* presentation_new();
 Slide* presentation_add_slide(Presentation* presentation);
 UnparsedCommand* slide_add_unparsed_command(Slide* slide);
 Parameter* command_add_parameter(UnparsedCommand* command, char* key);
-void presentation_parse(Presentation* presentation);
+int presentation_parse(Presentation* presentation);
 
 #endif

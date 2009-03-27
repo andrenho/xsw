@@ -61,12 +61,13 @@ static int slide_parse_commands(Slide* slide)
 	for(i=0; i<slide->n_commands; i++)
 	{
 		UnparsedCommand* up_cmd = slide->unparsed_commands[i];
+		Command* cmd = malloc(sizeof(Command));
+		slide->commands[i] = cmd;
 
 		if(strcmp(up_cmd->id, "text"))
 		{
-			CommandText* ct = malloc(sizeof(CommandText));
-			slide->commands[i]->type = text;
-			slide->commands[i].command.text = ct;
+			cmd->command.text.x = 20;
+			printf("x = %d\n", slide->commands[i]->command.text.x);
 			
 			// parse parameters
 

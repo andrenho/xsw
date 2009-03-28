@@ -52,37 +52,3 @@ Parameter* command_add_parameter(UnparsedCommand* command, char* key)
 	return p;
 }
 
-//
-// parsing commands
-//
-static int slide_parse_commands(Slide* slide)
-{
-	int i;
-	for(i=0; i<slide->n_commands; i++)
-	{
-		UnparsedCommand* up_cmd = slide->unparsed_commands[i];
-		Command* cmd = malloc(sizeof(Command));
-		slide->commands[i] = cmd;
-
-		if(strcmp(up_cmd->id, "text"))
-		{
-			cmd->command.text.x = 20;
-			printf("x = %d\n", slide->commands[i]->command.text.x);
-			
-			// parse parameters
-
-		}
-	}
-
-	return 1;
-}
-
-int presentation_parse(Presentation* presentation)
-{
-	int i;
-	for(i=0; i<presentation->n_slides; i++)
-		if(!slide_parse_commands(presentation->slides[i]))
-			return 0;
-
-	return 1;
-}

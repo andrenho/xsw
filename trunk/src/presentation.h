@@ -14,7 +14,7 @@ typedef struct {
 
 typedef struct {
 	char* path;
-	enum { full, horizontal, vertical, nw, n, ne, e, sw, s, se, w } anchor;
+	enum { full, horizontal, vertical } anchor;
 } CommandBackground;
 
 typedef union {
@@ -57,6 +57,5 @@ Presentation* presentation_new();
 Slide* presentation_add_slide(Presentation* presentation);
 UnparsedCommand* slide_add_unparsed_command(Slide* slide);
 Parameter* command_add_parameter(UnparsedCommand* command, char* key);
-int presentation_parse(Presentation* presentation);
 
 #endif

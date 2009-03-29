@@ -36,14 +36,7 @@ typedef struct {
 } Parameter;
 
 typedef struct {
-	char* id;
-	Parameter* parameters[16];
-	int n_parameters;
-} UnparsedCommand;
-
-typedef struct {
 	Command* commands[1024];
-	UnparsedCommand* unparsed_commands[1024];
 	int n_commands;
 } Slide;
 
@@ -55,7 +48,5 @@ typedef struct {
 
 Presentation* presentation_new();
 Slide* presentation_add_slide(Presentation* presentation);
-UnparsedCommand* slide_add_unparsed_command(Slide* slide);
-Parameter* command_add_parameter(UnparsedCommand* command, char* key);
 
 #endif

@@ -44,12 +44,15 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_xsw_OBJECTS = xsw.$(OBJEXT) options.$(OBJEXT) file.$(OBJEXT) \
-	presentation.$(OBJEXT) presenter.$(OBJEXT) parser.$(OBJEXT) \
-	lexer.$(OBJEXT)
+am_xsw_OBJECTS = xsw-xsw.$(OBJEXT) xsw-options.$(OBJEXT) \
+	xsw-file.$(OBJEXT) xsw-presentation.$(OBJEXT) \
+	xsw-xpresenter.$(OBJEXT) xsw-xslide.$(OBJEXT) \
+	xsw-parser.$(OBJEXT) xsw-lexer.$(OBJEXT)
 xsw_OBJECTS = $(am_xsw_OBJECTS)
 am__DEPENDENCIES_1 =
-xsw_DEPENDENCIES = $(am__DEPENDENCIES_1)
+xsw_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+xsw_LINK = $(CCLD) $(xsw_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o \
+	$@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -71,6 +74,8 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CAIRO_CFLAGS = @CAIRO_CFLAGS@
+CAIRO_LIBS = @CAIRO_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -105,6 +110,7 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PKG_CONFIG = @PKG_CONFIG@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -157,11 +163,12 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 BUILT_SOURCES = parser.h
 AM_YFLAGS = -d
-xsw_SOURCES = xsw.c options.c file.c presentation.c presenter.c \
-	          options.h file.h presentation.h presenter.h _parser.h \
+xsw_SOURCES = xsw.c options.c file.c presentation.c xpresenter.c xslide.c \
+	          options.h file.h presentation.h xpresenter.h xslide.h \
 		  parser.y lexer.l
 
-xsw_LDADD = $(X11)
+xsw_LDADD = $(X11) $(CAIRO_LIBS)
+xsw_CFLAGS = $(CAIRO_CFLAGS) -DDEBUG
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -226,7 +233,7 @@ parser.h: parser.c
 	else :; fi
 xsw$(EXEEXT): $(xsw_OBJECTS) $(xsw_DEPENDENCIES) 
 	@rm -f xsw$(EXEEXT)
-	$(LINK) $(xsw_OBJECTS) $(xsw_LDADD) $(LIBS)
+	$(xsw_LINK) $(xsw_OBJECTS) $(xsw_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -234,13 +241,14 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lexer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/options.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/presentation.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/presenter.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-file.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-lexer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-options.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-parser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-presentation.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-xpresenter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-xslide.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-xsw.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -255,6 +263,118 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+xsw-xsw.o: xsw.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-xsw.o -MD -MP -MF $(DEPDIR)/xsw-xsw.Tpo -c -o xsw-xsw.o `test -f 'xsw.c' || echo '$(srcdir)/'`xsw.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-xsw.Tpo $(DEPDIR)/xsw-xsw.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xsw.c' object='xsw-xsw.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-xsw.o `test -f 'xsw.c' || echo '$(srcdir)/'`xsw.c
+
+xsw-xsw.obj: xsw.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-xsw.obj -MD -MP -MF $(DEPDIR)/xsw-xsw.Tpo -c -o xsw-xsw.obj `if test -f 'xsw.c'; then $(CYGPATH_W) 'xsw.c'; else $(CYGPATH_W) '$(srcdir)/xsw.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-xsw.Tpo $(DEPDIR)/xsw-xsw.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xsw.c' object='xsw-xsw.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-xsw.obj `if test -f 'xsw.c'; then $(CYGPATH_W) 'xsw.c'; else $(CYGPATH_W) '$(srcdir)/xsw.c'; fi`
+
+xsw-options.o: options.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-options.o -MD -MP -MF $(DEPDIR)/xsw-options.Tpo -c -o xsw-options.o `test -f 'options.c' || echo '$(srcdir)/'`options.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-options.Tpo $(DEPDIR)/xsw-options.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='options.c' object='xsw-options.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-options.o `test -f 'options.c' || echo '$(srcdir)/'`options.c
+
+xsw-options.obj: options.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-options.obj -MD -MP -MF $(DEPDIR)/xsw-options.Tpo -c -o xsw-options.obj `if test -f 'options.c'; then $(CYGPATH_W) 'options.c'; else $(CYGPATH_W) '$(srcdir)/options.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-options.Tpo $(DEPDIR)/xsw-options.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='options.c' object='xsw-options.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-options.obj `if test -f 'options.c'; then $(CYGPATH_W) 'options.c'; else $(CYGPATH_W) '$(srcdir)/options.c'; fi`
+
+xsw-file.o: file.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-file.o -MD -MP -MF $(DEPDIR)/xsw-file.Tpo -c -o xsw-file.o `test -f 'file.c' || echo '$(srcdir)/'`file.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-file.Tpo $(DEPDIR)/xsw-file.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='file.c' object='xsw-file.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-file.o `test -f 'file.c' || echo '$(srcdir)/'`file.c
+
+xsw-file.obj: file.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-file.obj -MD -MP -MF $(DEPDIR)/xsw-file.Tpo -c -o xsw-file.obj `if test -f 'file.c'; then $(CYGPATH_W) 'file.c'; else $(CYGPATH_W) '$(srcdir)/file.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-file.Tpo $(DEPDIR)/xsw-file.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='file.c' object='xsw-file.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-file.obj `if test -f 'file.c'; then $(CYGPATH_W) 'file.c'; else $(CYGPATH_W) '$(srcdir)/file.c'; fi`
+
+xsw-presentation.o: presentation.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-presentation.o -MD -MP -MF $(DEPDIR)/xsw-presentation.Tpo -c -o xsw-presentation.o `test -f 'presentation.c' || echo '$(srcdir)/'`presentation.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-presentation.Tpo $(DEPDIR)/xsw-presentation.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presentation.c' object='xsw-presentation.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-presentation.o `test -f 'presentation.c' || echo '$(srcdir)/'`presentation.c
+
+xsw-presentation.obj: presentation.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-presentation.obj -MD -MP -MF $(DEPDIR)/xsw-presentation.Tpo -c -o xsw-presentation.obj `if test -f 'presentation.c'; then $(CYGPATH_W) 'presentation.c'; else $(CYGPATH_W) '$(srcdir)/presentation.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-presentation.Tpo $(DEPDIR)/xsw-presentation.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presentation.c' object='xsw-presentation.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-presentation.obj `if test -f 'presentation.c'; then $(CYGPATH_W) 'presentation.c'; else $(CYGPATH_W) '$(srcdir)/presentation.c'; fi`
+
+xsw-xpresenter.o: xpresenter.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-xpresenter.o -MD -MP -MF $(DEPDIR)/xsw-xpresenter.Tpo -c -o xsw-xpresenter.o `test -f 'xpresenter.c' || echo '$(srcdir)/'`xpresenter.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-xpresenter.Tpo $(DEPDIR)/xsw-xpresenter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xpresenter.c' object='xsw-xpresenter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-xpresenter.o `test -f 'xpresenter.c' || echo '$(srcdir)/'`xpresenter.c
+
+xsw-xpresenter.obj: xpresenter.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-xpresenter.obj -MD -MP -MF $(DEPDIR)/xsw-xpresenter.Tpo -c -o xsw-xpresenter.obj `if test -f 'xpresenter.c'; then $(CYGPATH_W) 'xpresenter.c'; else $(CYGPATH_W) '$(srcdir)/xpresenter.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-xpresenter.Tpo $(DEPDIR)/xsw-xpresenter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xpresenter.c' object='xsw-xpresenter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-xpresenter.obj `if test -f 'xpresenter.c'; then $(CYGPATH_W) 'xpresenter.c'; else $(CYGPATH_W) '$(srcdir)/xpresenter.c'; fi`
+
+xsw-xslide.o: xslide.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-xslide.o -MD -MP -MF $(DEPDIR)/xsw-xslide.Tpo -c -o xsw-xslide.o `test -f 'xslide.c' || echo '$(srcdir)/'`xslide.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-xslide.Tpo $(DEPDIR)/xsw-xslide.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xslide.c' object='xsw-xslide.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-xslide.o `test -f 'xslide.c' || echo '$(srcdir)/'`xslide.c
+
+xsw-xslide.obj: xslide.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-xslide.obj -MD -MP -MF $(DEPDIR)/xsw-xslide.Tpo -c -o xsw-xslide.obj `if test -f 'xslide.c'; then $(CYGPATH_W) 'xslide.c'; else $(CYGPATH_W) '$(srcdir)/xslide.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-xslide.Tpo $(DEPDIR)/xsw-xslide.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xslide.c' object='xsw-xslide.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-xslide.obj `if test -f 'xslide.c'; then $(CYGPATH_W) 'xslide.c'; else $(CYGPATH_W) '$(srcdir)/xslide.c'; fi`
+
+xsw-parser.o: parser.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-parser.o -MD -MP -MF $(DEPDIR)/xsw-parser.Tpo -c -o xsw-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-parser.Tpo $(DEPDIR)/xsw-parser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parser.c' object='xsw-parser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c
+
+xsw-parser.obj: parser.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-parser.obj -MD -MP -MF $(DEPDIR)/xsw-parser.Tpo -c -o xsw-parser.obj `if test -f 'parser.c'; then $(CYGPATH_W) 'parser.c'; else $(CYGPATH_W) '$(srcdir)/parser.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-parser.Tpo $(DEPDIR)/xsw-parser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parser.c' object='xsw-parser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-parser.obj `if test -f 'parser.c'; then $(CYGPATH_W) 'parser.c'; else $(CYGPATH_W) '$(srcdir)/parser.c'; fi`
+
+xsw-lexer.o: lexer.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-lexer.o -MD -MP -MF $(DEPDIR)/xsw-lexer.Tpo -c -o xsw-lexer.o `test -f 'lexer.c' || echo '$(srcdir)/'`lexer.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-lexer.Tpo $(DEPDIR)/xsw-lexer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lexer.c' object='xsw-lexer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-lexer.o `test -f 'lexer.c' || echo '$(srcdir)/'`lexer.c
+
+xsw-lexer.obj: lexer.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-lexer.obj -MD -MP -MF $(DEPDIR)/xsw-lexer.Tpo -c -o xsw-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-lexer.Tpo $(DEPDIR)/xsw-lexer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lexer.c' object='xsw-lexer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
 
 .l.c:
 	$(am__skiplex) $(SHELL) $(YLWRAP) $< $(LEX_OUTPUT_ROOT).c $@ -- $(LEXCOMPILE)

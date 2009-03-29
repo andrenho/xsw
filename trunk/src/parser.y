@@ -8,6 +8,7 @@ extern FILE *yyin;
 static Presentation* pr;
 static Slide* cr_slide;
 static CommandText* cr_txt_cmd;
+static CommandImage* cr_img_cmd;
 
 void yyerror(const char *s)
 {
@@ -30,7 +31,7 @@ int parser_parse(Presentation *pres, char *filename)
 
 %}
 
-%token SLIDE COLON HIFEN ID TEXT X Y NUM
+%token SLIDE COLON HIFEN ID TEXT X Y NUM IMAGE
 
 %%
 
@@ -43,13 +44,14 @@ slide: SLIDE COLON
 commands:
 	| commands command;
 
-command: text_command;
+command: text_command
+       | image_command;
 
 
 /* 
  * Text command 
  */
-text_command: HIFEN TEXT COLON ID { cr_txt_cmd = slide_add_text_command(cr_slide, $4); } text_parameters;
+text_command: HIFEN TEXT COLON ID { cr_txt_cmd = slide_add_text_command(cr_slide, (unsigned char*)$4); } text_parameters;
 
 text_parameters:
 	       | text_parameters text_parameter;
@@ -57,3 +59,8 @@ text_parameters:
 text_parameter:
 	       | X COLON NUM { cr_txt_cmd->x = $3; }
 	       | Y COLON NUM { cr_txt_cmd->y = $3; }
+
+/*
+ * Image command
+ */
+image_command: HIFEN IMAGE COLON ID { cr_img_cmd = slide_add_image_command(cr_slide, (unsigned char*)$4); } /* TODO image parameters */

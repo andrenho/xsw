@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <stdio.h>
 #include "presentation.h"
 
 Presentation* presentation_new()
@@ -26,11 +27,26 @@ Slide* presentation_add_slide(Presentation* presentation)
 
 CommandText* slide_add_text_command(Slide* slide, char* text)
 {
-	CommandText* ct = malloc(sizeof(Command));
-	slide->commands[slide->n_commands++] = ct;
-	ct->text = strdup(text);
+	Command* cmd = malloc(sizeof(Command));
+	slide->commands[slide->n_commands++] = cmd;
+
+	cmd->type = T_TEXT;
+	cmd->command.text.text = strdup(text);
 #ifdef DEBUG
-	printf("parser: new text command: %s.\n", ct->text);
+	printf("parser: new text command: %s.\n", text);
 #endif
-	return ct;
+	return &cmd->command.text;
+}
+
+CommandImage* slide_add_image_command(Slide* slide, char* path)
+{
+	Command* cmd = malloc(sizeof(Command));
+	slide->commands[slide->n_commands++] = cmd;
+
+	cmd->type = T_IMAGE;
+	cmd->command.image.path = strdup(path);
+#ifdef DEBUG
+	printf("parser: new image command: %s.\n", path);
+#endif
+	return &cmd->command.image;
 }

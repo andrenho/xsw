@@ -5,11 +5,13 @@
 
 %%
 
+#.*\n			; // ignore comments
 x			return X;
 y			return Y;
 slide			return SLIDE;
 text            	return TEXT;
-\".*\"			yylval = (int)strdup(yytext); return ID;
+image			return IMAGE;
+\".*\"			yytext[strlen(yytext)-1] = '\0'; yylval = (int)strdup(yytext+1); return ID;
 [a-zA-Z][a-zA-Z0-9]*    yylval = (int)strdup(yytext); return ID;
 [0-9]*			yylval = atoi(yytext); return NUM;
 \-           		return HIFEN;

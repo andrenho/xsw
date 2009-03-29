@@ -24,7 +24,7 @@ typedef union {
 } CommandUnion;
 
 typedef struct {
-	enum { text, image, background } type;
+	enum { T_TEXT, T_IMAGE } type;
 	CommandUnion command;
 } Command;
 
@@ -48,5 +48,7 @@ typedef struct {
 
 Presentation* presentation_new();
 Slide* presentation_add_slide(Presentation* presentation);
+CommandText* slide_add_text_command(Slide* slide, char* text);
+CommandImage* slide_add_image_command(Slide* slide, char* path);
 
 #endif

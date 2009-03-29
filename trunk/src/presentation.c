@@ -8,7 +8,7 @@ Presentation* presentation_new()
 	Presentation *p = malloc(sizeof(Presentation));
 	p->n_slides = 0;
 #ifdef DEBUG
-	printf("New presentation.\n");
+	printf("parser: new presentation.\n");
 #endif
 	return p;
 }
@@ -19,36 +19,18 @@ Slide* presentation_add_slide(Presentation* presentation)
 	s->n_commands = 0;
 	presentation->slides[presentation->n_slides++] = s;
 #ifdef DEBUG
-	printf("New slide.\n");
+	printf("parser: new slide.\n");
 #endif
 	return s;
 }
 
-UnparsedCommand* slide_add_unparsed_command(Slide* slide)
+CommandText* slide_add_text_command(Slide* slide, char* text)
 {
-	UnparsedCommand* c = malloc(sizeof(UnparsedCommand));
-	c->n_parameters = 0;
-	c->id = '\0';
-	slide->unparsed_commands[slide->n_commands++] = c;
+	CommandText* ct = malloc(sizeof(Command));
+	slide->commands[slide->n_commands++] = ct;
+	ct->text = strdup(text);
 #ifdef DEBUG
-	printf("New command.\n");
+	printf("parser: new text command: %s.\n", ct->text);
 #endif
-	return c;
+	return ct;
 }
-
-Parameter* command_add_parameter(UnparsedCommand* command, char* key)
-{
-	// TODO
-	Parameter* p = malloc(sizeof(Parameter));
-	if(key)
-	{
-		p->key = (char*)malloc(strlen(key) + 1);
-		strcpy(p->key, key);
-		command->parameters[command->n_parameters++] = p;
-	#ifdef DEBUG
-		printf("New parameter: %s.\n", key);
-	#endif
-	}
-	return p;
-}
-

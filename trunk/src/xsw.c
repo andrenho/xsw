@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 	// read options from command line
      	options_get(presentation, argc, argv);
 
-	// read file
+	// read file - TODO test if file exists
 //	char* sswl;
 // 	sswl = file_read(presentation->filename);
 //	sswl = file_read("test.sswl");

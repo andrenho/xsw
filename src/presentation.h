@@ -5,11 +5,13 @@
 typedef struct {
 	char* text;
 	int x, y, w, h;
+	float size;
 } CommandText;
 
 typedef struct {
 	char* path;
 	int x, y, w, h;
+	float scale;
 } CommandImage;
 
 typedef struct {
@@ -48,7 +50,7 @@ typedef struct {
 
 Presentation* presentation_new();
 Slide* presentation_add_slide(Presentation* presentation);
-CommandText* slide_add_text_command(Slide* slide, char* text);
+CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_txt);
 CommandImage* slide_add_image_command(Slide* slide, char* path);
 
 #endif

@@ -74,4 +74,4 @@ image_parameter:
 	       | Y COLON NUM { cr_img_cmd->y = $3; }
 	       | W COLON NUM { cr_img_cmd->w = $3; }
 	       | H COLON NUM { cr_img_cmd->h = $3; }
-               | SCALE COLON NUM { cr_img_cmd->scale = $3; }
+               | SCALE COLON NUM { cr_img_cmd->scale = $3; printf("%0.2f\n", $3); }

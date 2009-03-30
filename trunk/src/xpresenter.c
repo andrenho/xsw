@@ -51,6 +51,7 @@ unsigned int width = WIDTH, height = HEIGHT;
 Window      win;
 Pixmap      pix;
 GC          gc;
+static int fullscreen;
 
 static Presentation* current_p;
 static int current_slide;
@@ -117,6 +118,8 @@ int presenter_show(Presentation* p)
     char        quit_string[10];
     unsigned long   window_mask;
     int         has_colormap = 0;
+
+    fullscreen = 0;
 
     wm_name.value = "xsw";
     wm_name.encoding = XA_STRING;
@@ -217,6 +220,39 @@ int presenter_show(Presentation* p)
                 case 'c':
                     XClearArea (dpy, ev.xkey.window, 0, 0, 0, 0, True);
                     break;
+		case 'f':
+		    {
+			    XEvent xev;
+			    Atom wm_state = XInternAtom(dpy, "_NET_WM_STATE", False);
+			    Atom fullscreen = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
+
+			    memset(&xev, 0, sizeof(xev));
+			    xev.type = ClientMessage;
+			    xev.xclient.window = win;
+			    xev.xclient.message_type = wm_state;
+			    xev.xclient.format = 32;
+			    xev.xclient.data.l[0] = 1;
+			    xev.xclient.data.l[1] = fullscreen;
+			    xev.xclient.data.l[2] = 0;
+			    XSendEvent(dpy, DefaultRootWindow(dpy), False, SubstructureNotifyMask, &xev);
+		    }
+		    break;
+		case 'r':
+		    {
+			    XEvent xev;
+			    Atom wm_state = XInternAtom(dpy, "_NET_WM_STATE", False);
+			    Atom fullscreen = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
+
+			    memset(&xev, 0, sizeof(xev));
+			    xev.type = ClientMessage;
+			    xev.xclient.window = win;
+			    xev.xclient.message_type = wm_state;
+			    xev.xclient.format = 32;
+			    xev.xclient.data.l[0] = 0;
+			    xev.xclient.data.l[1] = fullscreen;
+			    xev.xclient.data.l[2] = 0;
+			    XSendEvent(dpy, DefaultRootWindow(dpy), False, SubstructureNotifyMask, &xev);
+		    }
                 }
             }
             break;

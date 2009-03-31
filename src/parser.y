@@ -10,6 +10,9 @@ static Slide* cr_slide;
 static CommandText* cr_txt_cmd = 0x0;
 static CommandImage* cr_img_cmd = 0x0;
 
+extern int yylex(void);
+int yyparse(void);
+
 void yyerror(const char *s)
 {
 	fprintf(stderr, "parser error: %s\n", s);
@@ -74,4 +77,4 @@ image_parameter:
 	       | Y COLON NUM { cr_img_cmd->y = $3; }
 	       | W COLON NUM { cr_img_cmd->w = $3; }
 	       | H COLON NUM { cr_img_cmd->h = $3; }
-               | SCALE COLON NUM { cr_img_cmd->scale = $3; printf("%0.2f\n", $3); }
+               | SCALE COLON NUM { cr_img_cmd->scale = $3; }

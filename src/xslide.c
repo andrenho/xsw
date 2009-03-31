@@ -28,10 +28,12 @@ void slide_draw(cairo_t *cr, int w, int h, Presentation* p, int slide)
 				CommandText* cmd = &p->slides[slide]->commands[i]->command.text;
 
 				if(cmd->y == -1) // default
+				{
 					if(cmd_txt)
 						cmd->y = cmd_txt->y + cmd->size;
 					else
 						cmd->y = 10;
+				}
 
 				cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 				cairo_set_font_size(cr, cmd->size * 4);
@@ -54,21 +56,6 @@ void slide_draw(cairo_t *cr, int w, int h, Presentation* p, int slide)
 
 				if(img->scale == 1)
 					cairo_set_source_surface(cr, image, img->x * HOR, img->y * VER);
-				else
-				{
-					// resize surface
-					int width = cairo_image_surface_get_width(image);
-					int height = cairo_image_surface_get_height(image);
-					cairo_surface_t *new_sf = cairo_surface_create_similar(image, CAIRO_CONTENT_COLOR, (float)width*img->scale, (float)height*img->scale);
-					cairo_t* ct = cairo_create(new_sf);
-					cairo_scale(ct, (float)width * img->scale, (float)height * img->scale);
-					cairo_set_source_surface(ct, image, 0, 0);
-					cairo_pattern_set_extend(cairo_get_source(ct), CAIRO_EXTEND_REFLECT);
-					cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
-					cairo_set_source(ct, cr);
-					cairo_paint(cr);
-					cairo_destroy(ct);
-				}
 
 				cairo_paint(cr);
 			}

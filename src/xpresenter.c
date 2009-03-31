@@ -102,7 +102,6 @@ int presenter_show(Presentation* p)
     XSetWindowAttributes    attr;
     int     scr;
     int     x = 0, y = 0;
-    int     geometryMask;
     int     border_width = 1;
     XSizeHints  sizeHints;
     XWMHints    wmHints;
@@ -174,7 +173,7 @@ int presenter_show(Presentation* p)
             depth = vi_ret->depth;
         }
     }
-    attr.background_pixel = BlackPixel (dpy, scr);
+    attr.background_pixel = WhitePixel (dpy, scr);
     attr.border_pixel = 0;
     attr.event_mask = ExposureMask|KeyPressMask|KeyReleaseMask|StructureNotifyMask;
     wm_delete_window = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
@@ -184,7 +183,7 @@ int presenter_show(Presentation* p)
                          window_mask,
                          &attr);
     pix = XCreatePixmap (dpy, win, width, height, depth);
-    gcv.foreground = BlackPixel (dpy, scr);
+    gcv.foreground = WhitePixel (dpy, scr);
     gc = XCreateGC (dpy, pix, GCForeground, &gcv);
     XFillRectangle(dpy, pix, gc, 0, 0, width, height);
     draw_to_pixmap (dpy, pix, p, 0);

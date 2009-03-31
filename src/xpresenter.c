@@ -201,7 +201,7 @@ int presenter_show(Presentation* p)
         }
         switch (ev.type) {
         case ConfigureNotify:
-            // handle_configure (dpy, &ev.xconfigure);
+            handle_configure (dpy, &ev.xconfigure);
             break;
         case Expose:
             if (QLength(dpy)) {

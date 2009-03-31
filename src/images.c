@@ -28,7 +28,8 @@ int images_process(Presentation* p)
 				}
 				int width = MagickGetImageWidth(mw);
 				int height = MagickGetImageHeight(mw);
-				MagickResizeImage(mw, width * img->scale, height * img->scale, LanczosFilter, 1.0);
+				printf("=== %0.2f", img->scale);
+				MagickResizeImage(mw, (float)width * img->scale, (float)height * img->scale, LanczosFilter, 1.0);
 				MagickSetFormat(mw, "png");
 				img->data = MagickGetImageBlob(mw, &img->data_length);
 			}

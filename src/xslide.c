@@ -1,9 +1,20 @@
 #include <assert.h>
 #include <stdlib.h>
+#include <wand/MagickWand.h>
 #include "xslide.h"
 
 #define HOR 8.1
 #define VER 8.1
+
+extern MagickWand *mw;
+
+cairo_status_t (* png_read_callback (void *closure, unsigned char *data, unsigned int length))
+{
+	CommandImage* img = (CommandImage*)closure;
+	memcpy(data, &img->data[img->_pos], length);
+	img->_pos += length;
+	return CAIRO_STATUS_SUCCESS;
+}
 
 void slide_draw(cairo_t *cr, int w, int h, Presentation* p, int slide)
 {
@@ -52,10 +63,11 @@ void slide_draw(cairo_t *cr, int w, int h, Presentation* p, int slide)
 			{
 				cairo_surface_t* image;
 				CommandImage* img = &p->slides[slide]->commands[i]->command.image;
-				image = cairo_image_surface_create_from_png(img->path);
 
-				if(img->scale == 1)
-					cairo_set_source_surface(cr, image, img->x * HOR, img->y * VER);
+				//image = cairo_image_surface_create_from_png(img->path);
+				img->_pos = 0;
+				image = cairo_image_surface_create_from_png_stream(png_read_callback, (void*)img);
+				cairo_set_source_surface(cr, image, img->x * HOR, img->y * VER);
 
 				cairo_paint(cr);
 			}

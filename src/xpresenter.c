@@ -201,7 +201,7 @@ int presenter_show(Presentation* p)
         }
         switch (ev.type) {
         case ConfigureNotify:
-            handle_configure (dpy, &ev.xconfigure);
+            // handle_configure (dpy, &ev.xconfigure);
             break;
         case Expose:
             if (QLength(dpy)) {
@@ -215,7 +215,7 @@ int presenter_show(Presentation* p)
             if (XLookupString ((XKeyEvent *) &ev, quit_string, sizeof (quit_string), 0, 0) == 1) {
                 switch (quit_string[0]) {
                 case 'q':
-                    exit (0);
+                    goto _exit;
                 case 'c':
                     XClearArea (dpy, ev.xkey.window, 0, 0, 0, 0, True);
                     break;
@@ -256,7 +256,11 @@ int presenter_show(Presentation* p)
             }
             break;
         case ClientMessage:
-            exit (0);
+            goto _exit;
         }
     }
+
+_exit:
+
+    return 1;
 }

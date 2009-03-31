@@ -5,13 +5,13 @@
 typedef struct {
 	char* text;
 	int x, y, w, h;
-	float size;
+	double size;
 } CommandText;
 
 typedef struct {
 	char* path;
 	int x, y, w, h;
-	float scale;
+	double scale;
 } CommandImage;
 
 typedef struct {

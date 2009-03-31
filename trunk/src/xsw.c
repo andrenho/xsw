@@ -2,6 +2,7 @@
 #include "presentation.h"
 #include "options.h"
 #include "file.h"
+#include "xpresenter.h"
 
 extern int parser_parse(Presentation *pres, char *filename);
 

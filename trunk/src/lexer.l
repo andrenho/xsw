@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "parser.h"
 %}
@@ -19,7 +20,8 @@ image			return IMAGE;
 \".*\"			yytext[strlen(yytext)-1] = '\0'; yylval = (int)strdup(yytext+1); return ID;
 \'.*\'			yytext[strlen(yytext)-1] = '\0'; yylval = (int)strdup(yytext+1); return ID;
 [a-zA-Z][a-zA-Z0-9]*    yylval = (int)strdup(yytext); return ID;
-[0-9\.]*		yylval = atof(yytext); return NUM;
+[0-9]*			yylval = atoi(yytext); return NUM;
+[0-9\.]*		yylval = atoi(yytext); return FLOAT;
 \-           		return HIFEN;
 \:           		return COLON;
 [\ \t\n]		; // ignore spaces

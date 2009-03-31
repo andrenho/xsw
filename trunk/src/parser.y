@@ -34,7 +34,7 @@ int parser_parse(Presentation *pres, char *filename)
 
 %}
 
-%token SLIDE COLON HIFEN ID TEXT X Y W H NUM IMAGE SIZE SCALE
+%token SLIDE COLON HIFEN ID TEXT X Y W H NUM IMAGE SIZE SCALE FLOAT
 
 %%
 
@@ -50,6 +50,8 @@ commands:
 command: text_command
        | image_command;
 
+float: NUM | FLOAT;
+
 
 /* 
  * Text command 
@@ -59,10 +61,9 @@ text_command: HIFEN TEXT COLON ID { cr_txt_cmd = slide_add_text_command(cr_slide
 text_parameters:
 	       | text_parameters text_parameter;
 
-text_parameter:
-	       | X COLON NUM { cr_txt_cmd->x = $3; }
-	       | Y COLON NUM { cr_txt_cmd->y = $3; }
-               | SIZE COLON NUM { cr_txt_cmd->size = $3; }
+text_parameter: X COLON NUM { cr_txt_cmd->x = $3; }
+	      | Y COLON NUM { cr_txt_cmd->y = $3; }
+              | SIZE COLON NUM { cr_txt_cmd->size = $3; }
 
 /*
  * Image command
@@ -72,9 +73,8 @@ image_command: HIFEN IMAGE COLON ID { cr_img_cmd = slide_add_image_command(cr_sl
 image_parameters:
 		| image_parameters image_parameter;
 
-image_parameter:
-	       | X COLON NUM { cr_img_cmd->x = $3; }
+image_parameter: X COLON NUM { cr_img_cmd->x = $3; }
 	       | Y COLON NUM { cr_img_cmd->y = $3; }
 	       | W COLON NUM { cr_img_cmd->w = $3; }
 	       | H COLON NUM { cr_img_cmd->h = $3; }
-               | SCALE COLON NUM { cr_img_cmd->scale = $3; }
+               | SCALE COLON float { cr_img_cmd->scale = $3; }

@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 #include <wand/MagickWand.h>
 #include "xslide.h"
 
@@ -64,9 +65,8 @@ void slide_draw(cairo_t *cr, int w, int h, Presentation* p, int slide)
 				cairo_surface_t* image;
 				CommandImage* img = &p->slides[slide]->commands[i]->command.image;
 
-				//image = cairo_image_surface_create_from_png(img->path);
 				img->_pos = 0;
-				image = cairo_image_surface_create_from_png_stream(png_read_callback, (void*)img);
+				image = cairo_image_surface_create_from_png_stream((void*)png_read_callback, (void*)img);
 				cairo_set_source_surface(cr, image, img->x * HOR, img->y * VER);
 
 				cairo_paint(cr);

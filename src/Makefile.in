@@ -47,10 +47,11 @@ PROGRAMS = $(bin_PROGRAMS)
 am_xsw_OBJECTS = xsw-xsw.$(OBJEXT) xsw-options.$(OBJEXT) \
 	xsw-file.$(OBJEXT) xsw-presentation.$(OBJEXT) \
 	xsw-xpresenter.$(OBJEXT) xsw-xslide.$(OBJEXT) \
-	xsw-parser.$(OBJEXT) xsw-lexer.$(OBJEXT)
+	xsw-images.$(OBJEXT) xsw-parser.$(OBJEXT) xsw-lexer.$(OBJEXT)
 xsw_OBJECTS = $(am_xsw_OBJECTS)
 am__DEPENDENCIES_1 =
-xsw_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+xsw_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 xsw_LINK = $(CCLD) $(xsw_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o \
 	$@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -100,6 +101,9 @@ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
+MAGICK_CFLAGS = @MAGICK_CFLAGS@
+MAGICK_LDFLAGS = @MAGICK_LDFLAGS@
+MAGICK_LIBS = @MAGICK_LIBS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
 OBJEXT = @OBJEXT@
@@ -163,12 +167,12 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 BUILT_SOURCES = parser.h
 AM_YFLAGS = -d
-xsw_SOURCES = xsw.c options.c file.c presentation.c xpresenter.c xslide.c \
-	          options.h file.h presentation.h xpresenter.h xslide.h \
+xsw_SOURCES = xsw.c options.c file.c presentation.c xpresenter.c xslide.c images.c \
+	          options.h file.h presentation.h xpresenter.h xslide.h images.h \
 		  parser.y lexer.l
 
-xsw_LDADD = $(X11) $(CAIRO_LIBS)
-xsw_CFLAGS = $(CAIRO_CFLAGS) -DDEBUG
+xsw_LDADD = $(X11) $(CAIRO_LIBS) $(MAGICK_LIBS) $(MAGICK_LDFLAGS)
+xsw_CFLAGS = $(CAIRO_CFLAGS) $(MAGICK_CFLAGS) -DDEBUG
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -242,6 +246,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-file.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-images.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-lexer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-options.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-parser.Po@am__quote@
@@ -347,6 +352,20 @@ xsw-xslide.obj: xslide.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xslide.c' object='xsw-xslide.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-xslide.obj `if test -f 'xslide.c'; then $(CYGPATH_W) 'xslide.c'; else $(CYGPATH_W) '$(srcdir)/xslide.c'; fi`
+
+xsw-images.o: images.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-images.o -MD -MP -MF $(DEPDIR)/xsw-images.Tpo -c -o xsw-images.o `test -f 'images.c' || echo '$(srcdir)/'`images.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-images.Tpo $(DEPDIR)/xsw-images.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='images.c' object='xsw-images.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-images.o `test -f 'images.c' || echo '$(srcdir)/'`images.c
+
+xsw-images.obj: images.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-images.obj -MD -MP -MF $(DEPDIR)/xsw-images.Tpo -c -o xsw-images.obj `if test -f 'images.c'; then $(CYGPATH_W) 'images.c'; else $(CYGPATH_W) '$(srcdir)/images.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-images.Tpo $(DEPDIR)/xsw-images.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='images.c' object='xsw-images.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-images.obj `if test -f 'images.c'; then $(CYGPATH_W) 'images.c'; else $(CYGPATH_W) '$(srcdir)/images.c'; fi`
 
 xsw-parser.o: parser.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-parser.o -MD -MP -MF $(DEPDIR)/xsw-parser.Tpo -c -o xsw-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c

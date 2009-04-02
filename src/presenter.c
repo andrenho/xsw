@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
+#include "SDL_ttf.h"
 #include "presenter.h"
 #include "command.h"
 
@@ -26,10 +27,16 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 		if(pr->scr == 0)
 		{
 			fprintf(stderr, "Could not set video mode: %s.\n", SDL_GetError());
-			return 0;
+			return NULL;
 		}
 		SDL_FillRect(pr->scr, NULL, SDL_MapRGB(pr->scr->format, 255, 255, 255));
 		SDL_Flip(pr->scr);
+	}
+
+	if(TTF_Init() == -1)
+	{
+		fprintf(stderr, "Error initializing SDL_ttf: %s.\n", TTF_GetError());
+		return NULL;
 	}
 
 	return pr;
@@ -81,6 +88,26 @@ void presenter_cache(Presenter* pr, int slide)
 
 void presenter_show(Presenter* pr, int slide)
 {
+	int i;
+	CommandImage* img;
+	SDL_Rect r;
+
+	for(i=0; i<pr->p->slides[slide]->n_commands; i++)
+	{
+		Command* cmd = pr->p->slides[slide]->commands[i];
+		switch(cmd->type)
+		{
+		case T_IMAGE:
+			img = &cmd->command.image;
+			r.x = (float)img->x / 100.0 * pr->scr->w;
+			r.y = (float)img->y / 75.0 * pr->scr->h;
+			SDL_BlitSurface(cmd->surface, NULL, pr->scr, &r);
+			printf("--> %0.2f\n", img->scale);
+			break;
+		}
+	}
+
+	SDL_Flip(pr->scr);
 }
 
 PresenterEvent presenter_get_event(Presenter* pr)
@@ -110,6 +137,8 @@ PresenterEvent presenter_get_event(Presenter* pr)
 				return PRESENTER_NEXT;
 			case SDLK_f:
 				return PRESENTER_FULLSCREEN;
+			default:
+				break;
 			}				
 		}
 	}

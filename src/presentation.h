@@ -10,18 +10,12 @@ typedef struct {
 	char* text;
 	int x, y, w, h;
 	double size;
-#ifdef USE_SDL
-	SDL_Surface* surface;
-#endif
 } CommandText;
 
 typedef struct {
 	char* path;
 	int x, y, w, h;
 	double scale;
-#ifdef USE_SDL
-	SDL_Surface* surface;
-#endif
 } CommandImage;
 
 typedef struct {
@@ -37,8 +31,11 @@ typedef union {
 
 typedef struct {
 	enum { T_TEXT, T_IMAGE } type;
-	int dirty;
 	CommandUnion command;
+	int dirty;
+#ifdef USE_SDL
+	SDL_Surface* surface;
+#endif
 } Command;
 
 // --

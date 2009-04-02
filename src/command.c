@@ -1,5 +1,6 @@
 #include "command.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 
 void command_parse(Command* cmd)
 {
@@ -13,7 +14,9 @@ void command_parse(Command* cmd)
 
 	case T_IMAGE:
 		img = &cmd->command.image;
-		img->surface = IMG_Load(img->path);
+		cmd->surface = IMG_Load(img->path);
+		if(!cmd->surface)
+			fprintf(stderr, "Error loading image %s: %s.\n", img->path, IMG_GetError());
 		break;
 
 	default:

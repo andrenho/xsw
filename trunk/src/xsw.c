@@ -2,8 +2,7 @@
 #include "presentation.h"
 #include "options.h"
 #include "file.h"
-#include "xpresenter.h"
-#include "images.h"
+#include "presenter.h"
 
 extern int parser_parse(Presentation *pres, char *filename);
 
@@ -23,11 +22,49 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	// process images
-	images_process(presentation);
-
 	// show
-	presenter_show(presentation);
+	int current = 0;
+	int running = 1;
+	Presenter* pr = presenter_initialize(presentation, 1);
+	if(!pr)
+		return 1;
+	presenter_cache(pr, current);
+	presenter_show(pr, current);
+	while(running)
+	{
+		switch(presenter_get_event(pr))
+		{
+			case PRESENTER_QUIT:
+				running = 0;
+				break;
+
+			case PRESENTER_FULLSCREEN:
+				presenter_fullscreen(pr);
+				break;
+
+			case PRESENTER_NEXT:
+				if(current < presentation->n_slides)
+				{
+					current++;
+					presenter_cache(pr, current);
+					presenter_show(pr, current);
+				}
+				break;
+
+			case PRESENTER_PREVIOUS:
+				if(current >= 0)
+				{
+					current--;
+					presenter_cache(pr, current);
+					presenter_show(pr, current);
+				}
+				break;
+
+			default:
+				abort();
+		}
+	}
+	presenter_quit(pr);
 
 	// exit
 	return 0;

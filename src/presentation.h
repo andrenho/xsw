@@ -12,9 +12,6 @@ typedef struct {
 	char* path;
 	int x, y, w, h;
 	double scale;
-	unsigned char* data;
-	size_t data_length;
-	size_t _pos;
 } CommandImage;
 
 typedef struct {

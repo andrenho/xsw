@@ -8,6 +8,10 @@ typedef enum { PRESENTER_QUIT, PRESENTER_FULLSCREEN, PRESENTER_NEXT, PRESENTER_P
 
 typedef struct {
 	SDL_Surface* scr;
+	SDL_Thread* thread;
+	int leave_thread;
+	int thread_running;
+	Presentation* p;
 } Presenter;
 
 Presenter* presenter_initialize(Presentation* p, int initialize_video);

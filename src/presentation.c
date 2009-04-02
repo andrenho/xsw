@@ -46,6 +46,7 @@ CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_t
 	slide->commands[slide->n_commands++] = cmd;
 
 	cmd->type = T_TEXT;
+	cmd->dirty = 1;
 	cmd->command.text.text = strdup(text);
 	cmd->command.text.x = df_x;
 	cmd->command.text.y = df_y;
@@ -62,6 +63,7 @@ CommandImage* slide_add_image_command(Slide* slide, char* path)
 	slide->commands[slide->n_commands++] = cmd;
 
 	cmd->type = T_IMAGE;
+	cmd->dirty = 1;
 	cmd->command.image.path = strdup(path);
 #ifdef DEBUG
 	printf("parser: new image command: %s.\n", path);

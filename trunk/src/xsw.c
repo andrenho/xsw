@@ -6,12 +6,16 @@
 
 extern int parser_parse(Presentation *pres, char *filename);
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	Presentation* presentation = presentation_new();
 
+#ifndef __TINYC__
 	// read options from command line
      	options_get(presentation, argc, argv);
+#else
+	presentation->filename = "tmp.xsw";
+#endif
 
 	// read file - TODO test if file exists
 	

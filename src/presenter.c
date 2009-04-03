@@ -39,6 +39,12 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 		fprintf(stderr, "Error initializing SDL_ttf: %s.\n", TTF_GetError());
 		return NULL;
 	}
+	pr->font = TTF_OpenFont("Vera.ttf", 12); // TODO
+	if(!pr->font)
+	{
+		fprintf(stderr, "Error loading font: %s.\n", TTF_GetError());
+		return NULL;
+	}
 
 	return pr;
 }
@@ -60,7 +66,7 @@ static int presenter_cache_thread(void* p_pr)
 				return 1;
 			}
 			if(pr->p->slides[i]->commands[j]->dirty)
-				command_parse(pr->p->slides[i]->commands[j]);
+				command_parse(pr, pr->p->slides[i]->commands[j]);
 		}
 
 	pr->thread_running = 0;
@@ -81,7 +87,7 @@ void presenter_cache(Presenter* pr, int slide)
 
 	// load the required slide images outside the thread
 	for(i=0; i<pr->p->slides[slide]->n_commands; i++)
-		command_parse(pr->p->slides[slide]->commands[i]);
+		command_parse(pr, pr->p->slides[slide]->commands[i]);
 
 	// load the rest of the images from the thread
 	pr->thread = SDL_CreateThread(presenter_cache_thread, pr);
@@ -91,6 +97,7 @@ void presenter_show(Presenter* pr, int slide)
 {
 	int i;
 	CommandImage* img;
+	CommandText* txt;
 	SDL_Rect r;
 
 	for(i=0; i<pr->p->slides[slide]->n_commands; i++)
@@ -103,9 +110,12 @@ void presenter_show(Presenter* pr, int slide)
 			r.x = (float)img->x / 100.0 * pr->scr->w;
 			r.y = (float)img->y / 75.0 * pr->scr->h;
 			SDL_BlitSurface(cmd->surface, NULL, pr->scr, &r);
-			printf("--> %0.2f\n", img->scale);
 			break;
 		case T_TEXT:
+			txt = &cmd->command.text;
+			r.x = (float)txt->x / 100.0 * pr->scr->w;
+			r.y = (float)txt->y / 75.0 * pr->scr->h;
+			SDL_BlitSurface(cmd->surface, NULL, pr->scr, &r);
 			break;
 		default:
 			abort();
@@ -113,6 +123,8 @@ void presenter_show(Presenter* pr, int slide)
 	}
 
 	SDL_Flip(pr->scr);
+
+	// FIXME - free stuff?
 }
 
 PresenterEvent presenter_get_event(Presenter* pr)

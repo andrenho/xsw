@@ -29,6 +29,7 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 			fprintf(stderr, "Could not set video mode: %s.\n", SDL_GetError());
 			return NULL;
 		}
+		SDL_WM_SetCaption("xsw", "xsw");
 		SDL_FillRect(pr->scr, NULL, SDL_MapRGB(pr->scr->format, 255, 255, 255));
 		SDL_Flip(pr->scr);
 	}
@@ -104,6 +105,10 @@ void presenter_show(Presenter* pr, int slide)
 			SDL_BlitSurface(cmd->surface, NULL, pr->scr, &r);
 			printf("--> %0.2f\n", img->scale);
 			break;
+		case T_TEXT:
+			break;
+		default:
+			abort();
 		}
 	}
 

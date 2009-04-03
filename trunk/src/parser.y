@@ -35,8 +35,7 @@ int parser_parse(Presentation *pres, char *filename)
 %}
 
 %token SLIDE COLON HIFEN TEXT X Y W H IMAGE SIZE SCALE
-%token <ival> NUM
-%token <dval> FLOAT
+%token <dval> NUM
 %token <cval> ID
 
 %union
@@ -59,9 +58,6 @@ commands:
 
 command: text_command
        | image_command;
-
-float: NUM | FLOAT;
-
 
 /* 
  * Text command 
@@ -87,4 +83,4 @@ image_parameter: X COLON NUM { cr_img_cmd->x = $3; }
 	       | Y COLON NUM { cr_img_cmd->y = $3; }
 	       | W COLON NUM { cr_img_cmd->w = $3; }
 	       | H COLON NUM { cr_img_cmd->h = $3; }
-               | SCALE COLON FLOAT { cr_img_cmd->scale = $3; }
+               | SCALE COLON NUM { cr_img_cmd->scale = $3; }

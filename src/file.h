@@ -1,6 +1,6 @@
 #ifndef FILE_H
 #define FILE_H
 
-char* file_read(const char* filename);
+int file_exists(const char* filename);
 
 #endif

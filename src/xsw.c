@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 #include "presentation.h"
 #include "options.h"
 #include "file.h"
@@ -8,32 +9,38 @@ extern int parser_parse(Presentation *pres, char *filename);
 
 int main(int argc, char *argv[])
 {
-	Presentation* presentation = presentation_new();
+	// create a new presentation
+	Presentation* p = presentation_new();
+	assert(p);
 
-#ifndef __TINYC__
 	// read options from command line
-     	options_get(presentation, argc, argv);
-#else
-	presentation->filename = "tmp.xsw";
-#endif
+     	options_get(p, argc, argv);
+	assert(p);
+	assert(p->filename);
 
-	// read file - TODO test if file exists
+	// read file - test if file exists
+	if(!file_exists(p->filename))
+	{
+		fprintf(stderr, "%s is not a valid file.\n", p->filename);
+		return 1;
+	}
 	
-	// parse
-	if(!parser_parse(presentation, presentation->filename))
+	// parse code in the file
+	if(!parser_parse(p, p->filename))
 	{
 		fprintf(stderr, "Invalid SSW file.");
 		return 1;
 	}
 
-	// show
+	// present slideshow
 	int current = 0;
 	int running = 1;
-	Presenter* pr = presenter_initialize(presentation, 1);
+	Presenter* pr = presenter_initialize(p, 1);
 	if(!pr)
-		return 1;
+		return 1; // message was already given in the function
 	presenter_cache(pr, current);
 	presenter_show(pr, current);
+
 	while(running)
 	{
 		switch(presenter_get_event(pr))
@@ -47,7 +54,7 @@ int main(int argc, char *argv[])
 				break;
 
 			case PRESENTER_NEXT:
-				if(current < presentation->n_slides)
+				if(current < (p->n_slides-1))
 				{
 					current++;
 					presenter_cache(pr, current);
@@ -56,7 +63,7 @@ int main(int argc, char *argv[])
 				break;
 
 			case PRESENTER_PREVIOUS:
-				if(current >= 0)
+				if(current > 0)
 				{
 					current--;
 					presenter_cache(pr, current);

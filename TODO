@@ -1,0 +1,40 @@
+Version 0.1:
+
+- templates
+- background
+- text color
+- correct Makefile
+- check license
+
+Version 0.2
+
+- tar
+- documentation
+- tutorial
+
+Version 0.3
+
+- text line breaks
+
+Version 0.4
+
+- auto reload
+
+Version 0.5
+
+- arrow
+- boxes
+
+Version 0.6
+
+- text shadows
+
+Version 0.7
+
+- PNG/HTML/... generation
+
+Someday
+
+- PDF generation
+- PPT/ODP conversion
+

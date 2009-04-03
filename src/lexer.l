@@ -5,6 +5,8 @@
 #include "parser.h"
 %}
 
+%option nounput
+
 %%
 
 #.*\n			; // ignore comments
@@ -17,6 +19,7 @@ scale                   return SCALE;
 slide			return SLIDE;
 text            	return TEXT;
 image			return IMAGE;
+template		return TEMPLATE;
 \".*\"			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return ID;
 \'.*\'			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return ID;
 [a-zA-Z][a-zA-Z0-9]*    yylval.cval = strdup(yytext); return ID;

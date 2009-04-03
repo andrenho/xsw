@@ -34,7 +34,7 @@ int parser_parse(Presentation *pres, char *filename)
 
 %}
 
-%token SLIDE COLON HIFEN TEXT X Y W H IMAGE SIZE SCALE
+%token SLIDE COLON HIFEN TEXT X Y W H IMAGE SIZE SCALE TEMPLATE
 %token <dval> NUM
 %token <cval> ID
 
@@ -47,17 +47,29 @@ int parser_parse(Presentation *pres, char *filename)
 
 %%
 
-slides:
+presentation: templates slides
+	    | slides;
+
+templates: template
+	 | templates template;
+
+template: TEMPLATE COLON ID { cr_slide = presentation_add_template(pr, $3, NULL); cr_txt_cmd = 0x0; } commands
+	| TEMPLATE COLON ID ID { cr_slide = presentation_add_template(pr, $3, $4); cr_txt_cmd = 0x0; } commands;
+
+slides: slide
       | slides slide;
 
-slide: SLIDE COLON
-     | SLIDE COLON { cr_slide = presentation_add_slide(pr); cr_txt_cmd = 0x0; } commands;
+slide: SLIDE COLON { cr_slide = presentation_add_slide(pr, NULL); cr_txt_cmd = 0x0; }
+     | SLIDE COLON { cr_slide = presentation_add_slide(pr, NULL); cr_txt_cmd = 0x0; } commands
+     | SLIDE COLON ID { cr_slide = presentation_add_slide(pr, $3); cr_txt_cmd = 0x0; }
+     | SLIDE COLON ID { cr_slide = presentation_add_slide(pr, $3); cr_txt_cmd = 0x0; } commands;
 
-commands:
+commands: command
 	| commands command;
 
 command: text_command
-       | image_command;
+       | image_command
+       | template_command;
 
 /* 
  * Text command 
@@ -84,3 +96,9 @@ image_parameter: X COLON NUM { cr_img_cmd->x = $3; }
 	       | W COLON NUM { cr_img_cmd->w = $3; }
 	       | H COLON NUM { cr_img_cmd->h = $3; }
                | SCALE COLON NUM { cr_img_cmd->scale = $3; }
+
+/*
+ * Template command
+ */
+template_command: HIFEN ID COLON text_parameters
+		| HIFEN ID COLON ID;

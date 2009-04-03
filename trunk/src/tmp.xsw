@@ -1,0 +1,6 @@
+template: global
+# - title: x:5 y:5
+ - image: "teste.png" x:50 y:37
+
+slide: global
+ - text: "Teste"

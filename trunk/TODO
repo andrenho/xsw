@@ -6,32 +6,48 @@ Version 0.1:
 - correct Makefile
 - check license
 
+Version 0.1.1:
+
+- better presentation code
+
 Version 0.2
 
-- tar
-- documentation
-- tutorial
+- text font
+- text color
+- text background
+- include templates
 
 Version 0.3
 
 - text line breaks
+- tar
 
 Version 0.4
 
-- auto reload
+- vim
+- documentation
+- tutorial
 
 Version 0.5
+
+- auto reload
+
+Version 0.6
 
 - arrow
 - boxes
 
-Version 0.6
+Version 0.7
 
 - text shadows
 
-Version 0.7
+Version 0.8
 
 - PNG/HTML/... generation
+
+Version 0.9
+
+- a better image resizer
 
 Someday
 

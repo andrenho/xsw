@@ -46,16 +46,20 @@ typedef struct {
 typedef struct {
 	Command* commands[COMMANDS_LIMIT];
 	int n_commands;
+	char* name;
 } Slide;
 
 typedef struct {
 	char* filename;
 	Slide* slides[SLIDES_LIMIT];
 	int n_slides;
+	Slide* templates[SLIDES_LIMIT];
+	int n_templates;
 } Presentation;
 
 Presentation* presentation_new();
-Slide* presentation_add_slide(Presentation* presentation);
+Slide* presentation_add_slide(Presentation* presentation, char* parent);
+Slide* presentation_add_template(Presentation* presentation, char* name, char* parent);
 CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_txt);
 CommandImage* slide_add_image_command(Slide* slide, char* path);
 

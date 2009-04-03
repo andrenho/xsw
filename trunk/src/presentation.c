@@ -16,6 +16,12 @@ Presentation* presentation_new()
 
 Slide* presentation_add_slide(Presentation* presentation)
 {
+	if(presentation->n_slides == SLIDES_LIMIT-1)
+	{
+		fprintf(stderr, "There's a fixed limit of %d slides in a presentation.\n", SLIDES_LIMIT);
+		exit(1);
+	}
+
 	Slide* s = malloc(sizeof(Slide));
 	s->n_commands = 0;
 	presentation->slides[presentation->n_slides++] = s;
@@ -27,6 +33,12 @@ Slide* presentation_add_slide(Presentation* presentation)
 
 CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_txt)
 {
+	if(slide->n_commands == COMMANDS_LIMIT-1)
+	{
+		fprintf(stderr, "There's a fixed limit of %d commands in a slide.\n", COMMANDS_LIMIT);
+		exit(1);
+	}
+
 	// get defaults
 	int df_size, df_x, df_y;
 	if(cmd_txt)

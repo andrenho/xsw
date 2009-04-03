@@ -5,6 +5,9 @@
 #include "SDL.h"
 #endif
 
+#define SLIDES_LIMIT 1024
+#define COMMANDS_LIMIT 1024
+
 // commands
 typedef struct {
 	char* text;
@@ -41,18 +44,13 @@ typedef struct {
 // --
 
 typedef struct {
-	char* key;
-	char* value;
-} Parameter;
-
-typedef struct {
-	Command* commands[1024];
+	Command* commands[COMMANDS_LIMIT];
 	int n_commands;
 } Slide;
 
 typedef struct {
 	char* filename;
-	Slide* slides[1024];
+	Slide* slides[SLIDES_LIMIT];
 	int n_slides;
 } Presentation;
 

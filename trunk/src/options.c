@@ -1,6 +1,4 @@
-#if 0
 #include <getopt.h>
-#endif
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -15,7 +13,6 @@ static void print_usage(FILE* stream, int exit_code)
 
 void options_get(Presentation* presentation, int argc, char* argv[])
 {
-#if 0
 	int next_option;
 
 	const char* const short_options = "h";
@@ -24,8 +21,6 @@ void options_get(Presentation* presentation, int argc, char* argv[])
 		{ NULL, 0, NULL, 0 }
 	};
 	
-	// options->program_name = argv[0];
-
 	do 
 	{
 		next_option = getopt_long(argc, argv, short_options, 
@@ -49,10 +44,4 @@ void options_get(Presentation* presentation, int argc, char* argv[])
 		presentation->filename = argv[optind];
 	else
 		print_usage(stderr, 1);
-#else
-	if(argc != 2)
-		print_usage(stderr, 1);
-	else
-		presentation->filename = argv[1];
-#endif
 }

@@ -20,13 +20,7 @@ image			return IMAGE;
 \".*\"			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return ID;
 \'.*\'			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return ID;
 [a-zA-Z][a-zA-Z0-9]*    yylval.cval = strdup(yytext); return ID;
-[0-9]*			yylval.ival = atoi(yytext); return NUM;
-[0-9\.]*		{
-				// printf("(%g) %d\n", atof(yytext), yyleng);
-				double d = strtod(yytext, (char**)NULL);
-				yylval.dval = d;
-				return FLOAT;
-			}
+[0-9\.]*		yylval.dval = strtod(yytext, (char**)NULL); return NUM;
 \-           		return HIFEN;
 \:           		return COLON;
 [\ \t\n]		; // ignore spaces

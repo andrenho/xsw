@@ -3883,6 +3883,8 @@ fi
 
 
 
+# TODO - add other libraries
+
 # Output files
 ac_config_headers="$ac_config_headers config.h"
 

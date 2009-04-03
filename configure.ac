@@ -13,6 +13,8 @@ AC_PROG_MAKE_SET
 AC_CHECK_PROG(SDL_CFLAGS, sdl-config, `sdl-config --cflags`)
 AC_CHECK_PROG(SDL_LIBS, sdl-config, `sdl-config --libs`)
 
+# TODO - add other libraries
+
 # Output files
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([

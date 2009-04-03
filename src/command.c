@@ -5,7 +5,7 @@
 void command_parse(Command* cmd)
 {
 	CommandImage* img;
-	CommandText* txt;
+	// CommandText* txt;
 
 	switch(cmd->type)
 	{

@@ -2,6 +2,7 @@
 #define PRESENTER_H
 
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "presentation.h"
 
 typedef enum { PRESENTER_QUIT, PRESENTER_FULLSCREEN, PRESENTER_NEXT, PRESENTER_PREVIOUS } PresenterEvent;
@@ -11,6 +12,7 @@ typedef struct {
 	SDL_Thread* thread;
 	int leave_thread;
 	int thread_running;
+	TTF_Font* font;
 	Presentation* p;
 } Presenter;
 

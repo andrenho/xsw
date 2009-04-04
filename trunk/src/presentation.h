@@ -10,15 +10,27 @@
 
 // commands
 typedef struct {
-	char* text;
+	char* text; // NULL means template
 	int x, y, w, h;
+	char* template_name;
+	char* font;
 	double size;
+	int italic;
+	int align_right;
+#ifdef USE_SDL
+	SDL_Surface* surface;
+	SDL_Surface* surface_inv;
+#endif
 } CommandText;
 
 typedef struct {
 	char* path;
 	int x, y, w, h;
 	double scale;
+	int background;
+#ifdef USE_SDL
+	SDL_Surface* surface;
+#endif
 } CommandImage;
 
 typedef struct {
@@ -36,17 +48,15 @@ typedef struct {
 	enum { T_TEXT, T_IMAGE } type;
 	CommandUnion command;
 	int dirty;
-#ifdef USE_SDL
-	SDL_Surface* surface;
-#endif
 } Command;
 
 // --
 
-typedef struct {
+typedef struct Slide {
 	Command* commands[COMMANDS_LIMIT];
 	int n_commands;
 	char* name;
+	struct Slide* parent;
 } Slide;
 
 typedef struct {
@@ -61,6 +71,8 @@ Presentation* presentation_new();
 Slide* presentation_add_slide(Presentation* presentation, char* parent);
 Slide* presentation_add_template(Presentation* presentation, char* name, char* parent);
 CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_txt);
+CommandText* slide_add_template_command(Slide* slide, CommandText* cmd_txt, char* template_name);
+CommandText* slide_add_templated_text(Slide* slide, char* template, char* text, CommandText* cmd_txt);
 CommandImage* slide_add_image_command(Slide* slide, char* path);
 
 #endif

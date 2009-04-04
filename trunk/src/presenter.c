@@ -4,6 +4,11 @@
 #include "presenter.h"
 #include "command.h"
 
+inline static clear_screen(SDL_Surface* scr)
+{
+	SDL_FillRect(scr, NULL, SDL_MapRGB(scr->format, 0, 0, 0));
+}
+
 Presenter* presenter_initialize(Presentation* p, int initialize_video)
 {
 	int st;
@@ -30,19 +35,13 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 			return NULL;
 		}
 		SDL_WM_SetCaption("xsw", "xsw");
-		SDL_FillRect(pr->scr, NULL, SDL_MapRGB(pr->scr->format, 255, 255, 255));
+		clear_screen(pr->scr);
 		SDL_Flip(pr->scr);
 	}
 
 	if(TTF_Init() == -1)
 	{
 		fprintf(stderr, "Error initializing SDL_ttf: %s.\n", TTF_GetError());
-		return NULL;
-	}
-	pr->font = TTF_OpenFont("Vera.ttf", 12); // TODO
-	if(!pr->font)
-	{
-		fprintf(stderr, "Error loading font: %s.\n", TTF_GetError());
 		return NULL;
 	}
 
@@ -100,6 +99,8 @@ void presenter_show(Presenter* pr, int slide)
 	CommandText* txt;
 	SDL_Rect r;
 
+	clear_screen(pr->scr);
+
 	for(i=0; i<pr->p->slides[slide]->n_commands; i++)
 	{
 		Command* cmd = pr->p->slides[slide]->commands[i];
@@ -109,13 +110,25 @@ void presenter_show(Presenter* pr, int slide)
 			img = &cmd->command.image;
 			r.x = (float)img->x / 100.0 * pr->scr->w;
 			r.y = (float)img->y / 75.0 * pr->scr->h;
-			SDL_BlitSurface(cmd->surface, NULL, pr->scr, &r);
+			SDL_BlitSurface(img->surface, NULL, pr->scr, &r);
 			break;
 		case T_TEXT:
 			txt = &cmd->command.text;
-			r.x = (float)txt->x / 100.0 * pr->scr->w;
+			r.x = (float)txt->x / 100.0 * pr->scr->w-1;
+			if(txt->align_right)
+				r.x -= txt->surface->w;
 			r.y = (float)txt->y / 75.0 * pr->scr->h;
-			SDL_BlitSurface(cmd->surface, NULL, pr->scr, &r);
+
+			SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
+			r.x += 2;
+			SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
+			r.x -= 1;
+			r.y -= 1;
+			SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
+			r.y += 2;
+			SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
+			r.y -= 1;
+			SDL_BlitSurface(txt->surface, NULL, pr->scr, &r);
 			break;
 		default:
 			abort();

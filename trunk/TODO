@@ -2,18 +2,13 @@ Version 0.1:
 
 - templates
 - background
-- text color
+- text color/decor/size
 - correct Makefile
 - check license
-
-Version 0.1.1:
-
-- better presentation code
 
 Version 0.2
 
 - text font
-- text color
 - text background
 - include templates
 
@@ -27,6 +22,7 @@ Version 0.4
 - vim
 - documentation
 - tutorial
+- items
 
 Version 0.5
 

@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include "presentation.h"
 
+const char* sans = "sans";
+const char* serif = "serif";
+
 Presentation* presentation_new()
 {
 	Presentation *p = malloc(sizeof(Presentation));
@@ -15,11 +18,11 @@ Presentation* presentation_new()
 	return p;
 }
 
-static void copy_from_parent(Presentation* p, Slide* s, char* parent)
+static Slide* copy_from_parent(Presentation* p, Slide* s, char* parent)
 {
 	// do we have a parent?
 	if(!parent)
-		return;
+		return NULL;
 
 	// who is this parent?
 	int i;
@@ -39,7 +42,14 @@ static void copy_from_parent(Presentation* p, Slide* s, char* parent)
 	
 	// import commands from parent
 	for(i=0; i<pnt->n_commands; i++)
+	{
+		if(pnt->commands[i]->type == T_TEXT)
+			if(pnt->commands[i]->command.text.text == NULL)
+				continue;
 		s->commands[s->n_commands++] = pnt->commands[i];
+	}
+
+	return pnt;
 }
 
 Slide* presentation_add_slide(Presentation* presentation, char* parent)
@@ -56,7 +66,7 @@ Slide* presentation_add_slide(Presentation* presentation, char* parent)
 #ifdef DEBUG
 	printf("parser: new slide.\n");
 #endif
-	copy_from_parent(presentation, s, parent);
+	s->parent = copy_from_parent(presentation, s, parent);
 
 	return s;
 }
@@ -71,12 +81,12 @@ Slide* presentation_add_template(Presentation* presentation, char* name, char* p
 
 	Slide* s = malloc(sizeof(Slide));
 	s->n_commands = 0;
-	s->name = name;
+	s->name = strdup(name);
 	presentation->templates[presentation->n_templates++] = s;
 #ifdef DEBUG
 	printf("parser: new slide.\n");
 #endif
-	copy_from_parent(presentation, s, parent);
+	s->parent = copy_from_parent(presentation, s, parent);
 
 	return s;	
 }
@@ -99,8 +109,8 @@ CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_t
 	}
 	else
 	{
-		df_x = df_y = 10;
-		df_size = 10;
+		df_x = df_y = 5;
+		df_size = 36;
 	}
 
 	// create command
@@ -109,10 +119,17 @@ CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_t
 
 	cmd->type = T_TEXT;
 	cmd->dirty = 1;
-	cmd->command.text.text = strdup(text);
+	cmd->command.text.template_name = NULL;
+	if(text)
+		cmd->command.text.text = strdup(text);
+	else
+		cmd->command.text.text = NULL;
 	cmd->command.text.x = df_x;
 	cmd->command.text.y = df_y;
 	cmd->command.text.size = df_size;
+	cmd->command.text.font = sans;
+	cmd->command.text.italic = 0;
+	cmd->command.text.align_right = 0;
 #ifdef DEBUG
 	printf("parser: new text command: %s.\n", text);
 #endif
@@ -126,9 +143,53 @@ CommandImage* slide_add_image_command(Slide* slide, char* path)
 
 	cmd->type = T_IMAGE;
 	cmd->dirty = 1;
-	cmd->command.image.path = strdup(path);
+
+	CommandImage* img = &cmd->command.image;
+	img->path = strdup(path);
+	img->scale = 1;
+	img->background = 0;
+	img->x = 0;
+	img->y = 0;
 #ifdef DEBUG
 	printf("parser: new image command: %s.\n", path);
 #endif
 	return &cmd->command.image;
+}
+
+CommandText* slide_add_template_command(Slide* slide, CommandText* cmd_txt, char* template_name)
+{
+	CommandText* txt = slide_add_text_command(slide, NULL, cmd_txt);
+	txt->template_name = strdup(template_name);
+	return txt;
+}
+
+CommandText* slide_add_templated_text(Slide* slide, char* template, char* text, CommandText* cmd_txt)
+{
+	// find origial
+	if(!slide->parent)
+	{
+		fprintf(stderr, "Slide doesn't have a template.\n");
+		exit(1);
+	}
+
+	int i;
+	CommandText* txt_cmd = NULL;
+	for(i=0; i<slide->parent->n_commands; i++)
+		if(slide->parent->commands[i]->type == T_TEXT)
+		{
+			CommandText* txt = &slide->parent->commands[i]->command.text;
+			if(txt->text == NULL)
+				if(strcmp(txt->template_name, template) == 0)
+					txt_cmd = txt;
+		}
+	if(!txt_cmd)
+	{
+		fprintf(stderr, "Template %s not found.\n", template);
+		exit(1);
+	}
+
+	CommandText* txt = slide_add_text_command(slide, text, cmd_txt);
+	memcpy(txt, txt_cmd, sizeof(CommandText));
+	txt->text = strdup(text);
+	return txt;
 }

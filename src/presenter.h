@@ -5,6 +5,9 @@
 #include "SDL_ttf.h"
 #include "presentation.h"
 
+#define SCR_W 800
+#define SCR_H 600
+
 typedef enum { PRESENTER_QUIT, PRESENTER_FULLSCREEN, PRESENTER_NEXT, PRESENTER_PREVIOUS } PresenterEvent;
 
 typedef struct {

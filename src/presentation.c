@@ -150,6 +150,7 @@ CommandImage* slide_add_image_command(Slide* slide, char* path)
 	img->background = 0;
 	img->x = 0;
 	img->y = 0;
+	img->expand_horiz = 0;
 #ifdef DEBUG
 	printf("parser: new image command: %s.\n", path);
 #endif

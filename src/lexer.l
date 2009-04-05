@@ -11,27 +11,36 @@
 %%
 
 #.*\n			; // ignore comments
+\/\*[.\n]*\*\/		;
+
+slide			return SLIDE;
+template		return TEMPLATE;
+\-[\ ]*           	return HIFEN;
+
+text            	return TEXT;
+image			return IMAGE;
+background		return BACKGROUND;
+
 x			return X;
 y			return Y;
 w			return W;
 h			return H;
 size			return SIZE;
 scale                   return SCALE;
-slide			return SLIDE;
-text            	return TEXT;
-image			return IMAGE;
-background		return BACKGROUND;
-template		return TEMPLATE;
 font			return FONT;
 style			return STYLE;
-italic			return ITALIC;
 align			return ALIGN;
+expand			return EXPAND;
+
+horizontal		return HORIZONTAL;
 right			return RIGHT;
+italic			return ITALIC;
+
 \".*\"			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return ID;
 \'.*\'			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return ID;
-[a-zA-Z][a-zA-Z0-9]*    yylval.cval = strdup(yytext); return ID;
-[0-9\.]*		yylval.dval = strtod(yytext, (char**)NULL); return NUM;
-\-           		return HIFEN;
+[a-zA-Z][a-zA-Z0-9\.]*	yylval.cval = strdup(yytext); return ID;
+[\-]?[0-9\.]*		yylval.dval = strtod(yytext, (char**)NULL); return NUM;
+
 \:           		return COLON;
 [\ \t\n]		; // ignore spaces
 

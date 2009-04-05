@@ -35,7 +35,7 @@ int parser_parse(Presentation *pres, char *filename)
 %}
 
 %token SLIDE COLON HIFEN TEXT X Y W H IMAGE SIZE SCALE TEMPLATE BACKGROUND FONT
-%token STYLE ITALIC ALIGN RIGHT
+%token STYLE ITALIC ALIGN RIGHT EXPAND HORIZONTAL
 %token <dval> NUM
 %token <cval> ID
 
@@ -92,7 +92,6 @@ text_parameter: X COLON NUM { cr_txt_cmd->x = $3; }
  * Image command
  */
 image_command: HIFEN IMAGE COLON ID { cr_img_cmd = slide_add_image_command(cr_slide, $4); } image_parameters;
-background_command: HIFEN BACKGROUND COLON ID { cr_img_cmd = slide_add_image_command(cr_slide, $4); cr_img_cmd->background = 1; } image_parameters;
 
 image_parameters:
 		| image_parameters image_parameter;
@@ -108,3 +107,16 @@ image_parameter: X COLON NUM { cr_img_cmd->x = $3; }
  */
 template_command: HIFEN ID COLON { cr_txt_cmd = slide_add_template_command(cr_slide, cr_txt_cmd, $2); } text_parameters
 		| HIFEN ID COLON ID { cr_txt_cmd = slide_add_templated_text(cr_slide, $2, $4, cr_txt_cmd); } text_parameters;
+
+/*
+ * Background command
+ */
+background_command: HIFEN BACKGROUND COLON ID { cr_img_cmd = slide_add_image_command(cr_slide, $4); cr_img_cmd->background = 1; } background_parameters;
+
+background_parameters:
+		     | background_parameters background_parameter;
+
+background_parameter: EXPAND COLON HORIZONTAL { cr_img_cmd->expand_horiz = 1; }
+                    | X COLON NUM { cr_img_cmd->x = $3; }
+	            | Y COLON NUM { cr_img_cmd->y = $3; }
+

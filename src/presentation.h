@@ -28,6 +28,7 @@ typedef struct {
 	int x, y, w, h;
 	double scale;
 	int background;
+	int expand_horiz;
 #ifdef USE_SDL
 	SDL_Surface* surface;
 #endif

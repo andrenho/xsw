@@ -4,7 +4,7 @@
 #include "presenter.h"
 #include "command.h"
 
-inline static clear_screen(SDL_Surface* scr)
+inline static void clear_screen(SDL_Surface* scr)
 {
 	SDL_FillRect(scr, NULL, SDL_MapRGB(scr->format, 0, 0, 0));
 }
@@ -92,7 +92,7 @@ void presenter_cache(Presenter* pr, int slide)
 	pr->thread = SDL_CreateThread(presenter_cache_thread, pr);
 }
 
-void presenter_show(Presenter* pr, int slide)
+void presenter_show(Presenter* pr, int slide, int developer)
 {
 	int i;
 	CommandImage* img;
@@ -135,12 +135,42 @@ void presenter_show(Presenter* pr, int slide)
 		}
 	}
 
+	if(developer)
+	{
+		int i;
+		Uint32 white = SDL_MapRGB(pr->scr->format, 255, 255, 255);
+
+		// vertical lines
+		for(i=10; i<100; i+=10)
+		{
+			r.x = (float)i / 100.0 * SCR_W;
+			r.y = 0;
+			r.h = SCR_H;
+			r.w = 1;
+			SDL_FillRect(pr->scr, &r, 0);
+			r.x++;
+			SDL_FillRect(pr->scr, &r, white);
+		}
+
+		// horizontal lines
+		for(i=10; i<80; i+=10)
+		{
+			r.y = (float)i / 100.0 * SCR_W;
+			r.x = 0;
+			r.w = SCR_W;
+			r.h = 1;
+			SDL_FillRect(pr->scr, &r, 0);
+			r.x++;
+			SDL_FillRect(pr->scr, &r, white);
+		}
+	}
+
 	SDL_Flip(pr->scr);
 
 	// FIXME - free stuff?
 }
 
-PresenterEvent presenter_get_event(Presenter* pr)
+PresenterEvent presenter_get_event()
 {
 	SDL_Event e;
 
@@ -165,6 +195,10 @@ PresenterEvent presenter_get_event(Presenter* pr)
 			case SDLK_DOWN:
 			case SDLK_RIGHT:
 				return PRESENTER_NEXT;
+			case SDLK_HOME:
+				return PRESENTER_FIRST;
+			case SDLK_END:
+				return PRESENTER_LAST;
 			case SDLK_f:
 				return PRESENTER_FULLSCREEN;
 			default:
@@ -179,7 +213,7 @@ void presenter_fullscreen(Presenter* pr)
 	SDL_WM_ToggleFullScreen(pr->scr);
 }
 
-void presenter_quit(Presenter* pr)
+void presenter_quit()
 {
 	SDL_Quit();
 }

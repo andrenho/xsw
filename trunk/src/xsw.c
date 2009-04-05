@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	assert(p);
 
 	// read options from command line
-     	options_get(p, argc, argv);
+     	Options* options = options_get(p, argc, argv);
 	assert(p);
 	assert(p->filename);
 
@@ -34,16 +34,18 @@ int main(int argc, char *argv[])
 
 	// present slideshow
 	int current = 0;
+	if(options->last)
+		current = p->n_slides - 1;
 	int running = 1;
 	Presenter* pr = presenter_initialize(p, 1);
 	if(!pr)
 		return 1; // message was already given in the function
 	presenter_cache(pr, current);
-	presenter_show(pr, current);
+	presenter_show(pr, current, options->developer);
 
 	while(running)
 	{
-		switch(presenter_get_event(pr))
+		switch(presenter_get_event())
 		{
 			case PRESENTER_QUIT:
 				running = 0;
@@ -58,7 +60,7 @@ int main(int argc, char *argv[])
 				{
 					current++;
 					presenter_cache(pr, current);
-					presenter_show(pr, current);
+					presenter_show(pr, current, options->developer);
 				}
 				break;
 
@@ -67,15 +69,27 @@ int main(int argc, char *argv[])
 				{
 					current--;
 					presenter_cache(pr, current);
-					presenter_show(pr, current);
+					presenter_show(pr, current, options->developer);
 				}
+				break;
+
+			case PRESENTER_FIRST:
+				current = 0;
+				presenter_cache(pr, current);
+				presenter_show(pr, current, options->developer);
+				break;
+
+			case PRESENTER_LAST:
+				current = p->n_slides - 1;
+				presenter_cache(pr, current);
+				presenter_show(pr, current, options->developer);
 				break;
 
 			default:
 				abort();
 		}
 	}
-	presenter_quit(pr);
+	presenter_quit();
 
 	// exit
 	return 0;

@@ -3,6 +3,11 @@
 
 #include "presentation.h"
 
-void options_get(Presentation* presentation, int argc, char* argv[]);
+typedef struct {
+	int developer;
+	int last;
+} Options;
+
+Options* options_get(Presentation* presentation, int argc, char* argv[]);
 
 #endif

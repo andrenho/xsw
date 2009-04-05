@@ -6,6 +6,8 @@
 
 void command_parse(Presenter* pr, Command* cmd)
 {
+	pr = pr; // avoid warnings
+
 	if(cmd->dirty == 0)
 		return;
 
@@ -70,8 +72,17 @@ void command_parse(Presenter* pr, Command* cmd)
 		}
 		else
 		{
-			float h = (float)SCR_H / (float)tmp->h; // we'll value the height over the width
-			float w = ((float)tmp->w / (float)tmp->h * (float)SCR_H) / (float)tmp->w;
+			float w, h;
+			if(img->expand_horiz)
+			{
+				w = (float)SCR_W / (float)tmp->w; // we'll value the width over the height
+				h = ((float)tmp->h / (float)tmp->w * (float)SCR_W) / (float)tmp->h;
+			}
+			else
+			{
+				h = (float)SCR_H / (float)tmp->h; // we'll value the height over the width
+				w = ((float)tmp->w / (float)tmp->h * (float)SCR_H) / (float)tmp->w;
+			}
 			if(h != 1 || w != 1)
 			{
 				img->surface = zoomSurface(tmp, w, h, 1);

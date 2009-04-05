@@ -8,16 +8,26 @@ static void print_usage(FILE* stream, int exit_code)
 {
 	fprintf(stream, "Usage: presenter [options] FILE\n");
 	fprintf(stream, "Start a presentation.\n");
+	fprintf(stream, "\n");
+	fprintf(stream, "Options:\n");
+	fprintf(stream, "  -d, --developer          developer mode\n");
+	fprintf(stream, "  -l, --last               start at the last slide\n");
 	exit(exit_code);
 }
 
-void options_get(Presentation* presentation, int argc, char* argv[])
+Options* options_get(Presentation* presentation, int argc, char* argv[])
 {
 	int next_option;
 
-	const char* const short_options = "h";
+	Options* options = malloc(sizeof(Options));
+	options->last = 0;
+	options->developer = 0;
+
+	const char* const short_options = "hld";
 	const struct option long_options[] = {
 		{ "help", 0, NULL, 'h' },
+		{ "last", 0, NULL, 'l' },
+		{ "developer", 0, NULL, 'd' },
 		{ NULL, 0, NULL, 0 }
 	};
 	
@@ -29,6 +39,12 @@ void options_get(Presentation* presentation, int argc, char* argv[])
 		{
 			case 'h':
 				print_usage(stdout, 0);
+				break;
+			case 'l':
+				options->last = 1;
+				break;
+			case 'd':
+				options->developer = 1;
 				break;
 			case '?':
 				print_usage(stderr, 1);
@@ -44,4 +60,6 @@ void options_get(Presentation* presentation, int argc, char* argv[])
 		presentation->filename = argv[optind];
 	else
 		print_usage(stderr, 1);
+
+	return options;
 }

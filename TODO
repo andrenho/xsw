@@ -6,6 +6,8 @@ Version 0.1:
 - correct Makefile
 - check license
 - README
+- man page
+- vim support
 
 Version 0.2
 

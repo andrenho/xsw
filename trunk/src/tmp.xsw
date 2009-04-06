@@ -1,3 +1,8 @@
-slide:
- - text: '- Arch' x:50 y:20
- + text: ' Linux'
+template: father
+ - text: 'Father'
+
+template: test father
+ - title: x:50 align:center y:10
+
+slide: test
+ - title: 'Test'

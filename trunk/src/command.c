@@ -38,7 +38,7 @@ void command_parse(Presenter* pr, Command* cmd)
 			fprintf(stderr, "warning: Font %s not found, defaulting to Sans.", txt->font);
 			font = TTF_OpenFont(DATADIR "VeraBd.ttf", txt->size);
 		}
-		assert(txt->font);
+		assert(font);
 
 		if(txt->italic)
 			TTF_SetFontStyle(font, TTF_STYLE_ITALIC);

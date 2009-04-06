@@ -6,10 +6,11 @@
 
 static void print_usage(FILE* stream, int exit_code)
 {
-	fprintf(stream, "Usage: presenter [options] FILE\n");
+	fprintf(stream, "Usage: xsw [options] FILE\n");
 	fprintf(stream, "Start a presentation.\n");
 	fprintf(stream, "\n");
 	fprintf(stream, "Options:\n");
+	fprintf(stream, "  -h, --help               see this help\n");
 	fprintf(stream, "  -d, --developer          developer mode\n");
 	fprintf(stream, "  -l, --last               start at the last slide\n");
 	exit(exit_code);

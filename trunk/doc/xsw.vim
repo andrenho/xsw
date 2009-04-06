@@ -16,8 +16,8 @@ syn region  xswString     start="\'" end="\'"
 syn match   xswNumber     "-\=\<\d*\.\=[0-9_]\>"
 syn keyword xswStatement	slide template
 syn keyword xswCommand		text image background
-syn keyword xswParameter	x y w h size scale font style align expand 
-syn keyword xswConstant		right italic horizontal sans serif
+syn keyword xswParameter	x y w h size scale font style align expand
+syn keyword xswConstant		right center italic horizontal sans serif
 
 hi def link xswComment 		Comment
 hi def link xswStatement 	Statement

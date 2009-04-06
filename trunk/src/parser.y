@@ -35,7 +35,7 @@ int parser_parse(Presentation *pres, char *filename)
 %}
 
 %token SLIDE COLON HIFEN TEXT X Y W H IMAGE SIZE SCALE TEMPLATE BACKGROUND FONT
-%token STYLE ITALIC ALIGN RIGHT EXPAND HORIZONTAL
+%token STYLE ITALIC ALIGN RIGHT EXPAND HORIZONTAL CENTER PLUS
 %token <dval> NUM
 %token <cval> ID
 
@@ -76,7 +76,8 @@ command: text_command
 /* 
  * Text command 
  */
-text_command: HIFEN TEXT COLON ID { cr_txt_cmd = slide_add_text_command(cr_slide, $4, cr_txt_cmd); } text_parameters;
+text_command: HIFEN TEXT COLON ID { cr_txt_cmd = slide_add_text_command(cr_slide, $4, cr_txt_cmd, 0); } text_parameters
+            | PLUS TEXT COLON ID { cr_txt_cmd = slide_add_text_command(cr_slide, $4, cr_txt_cmd, 1); } text_parameters
 
 text_parameters:
 	       | text_parameters text_parameter;
@@ -86,7 +87,8 @@ text_parameter: X COLON NUM { cr_txt_cmd->x = $3; }
               | SIZE COLON NUM { cr_txt_cmd->size = $3; }
               | FONT COLON ID { cr_txt_cmd->font = strdup($3); }
               | STYLE COLON ITALIC { cr_txt_cmd->italic = 1; }
-              | ALIGN COLON RIGHT { cr_txt_cmd->align_right = 1; }
+              | ALIGN COLON RIGHT { cr_txt_cmd->align = 2; }
+              | ALIGN COLON CENTER { cr_txt_cmd->align = 1; }
 
 /*
  * Image command

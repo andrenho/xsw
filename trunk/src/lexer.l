@@ -16,6 +16,7 @@
 slide			return SLIDE;
 template		return TEMPLATE;
 \-[\ ]*           	return HIFEN;
+\+[\ ]*			return PLUS;
 
 text            	return TEXT;
 image			return IMAGE;
@@ -34,6 +35,7 @@ expand			return EXPAND;
 
 horizontal		return HORIZONTAL;
 right			return RIGHT;
+center			return CENTER;
 italic			return ITALIC;
 
 \".*\"			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return ID;

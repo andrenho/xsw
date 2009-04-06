@@ -85,6 +85,11 @@ int main(int argc, char *argv[])
 				presenter_show(pr, current, options->developer);
 				break;
 
+			case PRESENTER_DEVELOPER:
+				options->developer = !options->developer;
+				presenter_show(pr, current, options->developer);
+				break;
+
 			default:
 				abort();
 		}

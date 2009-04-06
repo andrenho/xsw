@@ -45,6 +45,7 @@ void command_parse(Presenter* pr, Command* cmd)
 
 		txt->surface = TTF_RenderUTF8_Blended(font, txt->text, white);
 		txt->surface_inv = TTF_RenderUTF8_Blended(font, txt->text, black);
+		txt->h = (float)TTF_FontLineSkip(font) / (float)SCR_W * 100;
 #ifdef DEBUG
 		printf("done!\n");
 #endif

@@ -2,13 +2,15 @@ Version 0.1:
 
 - templates
 - background
-- text color/decor/size
+- text decor/size/center
 - correct Makefile
 - check license
+- README
 
 Version 0.2
 
 - text font
+- text color
 - text background
 - include templates
 

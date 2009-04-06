@@ -13,7 +13,19 @@ AC_PROG_MAKE_SET
 AC_CHECK_PROG(SDL_CFLAGS, sdl-config, `sdl-config --cflags`)
 AC_CHECK_PROG(SDL_LIBS, sdl-config, `sdl-config --libs`)
 
-# TODO - add other libraries
+# add other libraries
+AC_CHECK_LIB(SDL_image, IMG_Load, [], [
+	echo "Error: you need SDL_image in order to use xsw."
+	exit -1
+])
+AC_CHECK_LIB(SDL_ttf, TTF_Init, [], [
+	echo "Error: you need SDL_ttf in order to use xsw."
+	exit -1
+])
+AC_CHECK_LIB(SDL_gfx, zoomSurface, [], [
+	echo "Error: you need SDL_image in order to use xsw."
+	exit -1
+])
 
 # Output files
 AC_CONFIG_HEADERS([config.h])

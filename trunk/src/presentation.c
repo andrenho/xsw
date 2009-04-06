@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include "presentation.h"
 
-const char* sans = "sans";
-const char* serif = "serif";
+char* sans = "sans";
+char* serif = "serif";
 
 Presentation* presentation_new()
 {
@@ -91,26 +91,12 @@ Slide* presentation_add_template(Presentation* presentation, char* name, char* p
 	return s;	
 }
 
-CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_txt)
+CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_txt, int _continue)
 {
 	if(slide->n_commands == COMMANDS_LIMIT-1)
 	{
 		fprintf(stderr, "There's a fixed limit of %d commands in a slide.\n", COMMANDS_LIMIT);
 		exit(1);
-	}
-
-	// get defaults
-	int df_size, df_x, df_y;
-	if(cmd_txt)
-	{
-		df_x = cmd_txt->x;
-		df_y = -1;
-		df_size = cmd_txt->size;
-	}
-	else
-	{
-		df_x = df_y = 5;
-		df_size = 36;
 	}
 
 	// create command
@@ -119,17 +105,33 @@ CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_t
 
 	cmd->type = T_TEXT;
 	cmd->dirty = 1;
-	cmd->command.text.template_name = NULL;
+	CommandText *txt = &cmd->command.text;
+	txt->template_name = NULL;
 	if(text)
-		cmd->command.text.text = strdup(text);
+		txt->text = strdup(text);
 	else
-		cmd->command.text.text = NULL;
-	cmd->command.text.x = df_x;
-	cmd->command.text.y = df_y;
-	cmd->command.text.size = df_size;
-	cmd->command.text.font = sans;
-	cmd->command.text.italic = 0;
-	cmd->command.text.align_right = 0;
+		txt->text = NULL;
+	txt->x = 4;
+	txt->y = 3;
+	txt->size = 36;
+	txt->font = sans;
+	txt->italic = 0;
+	txt->align = 0;
+	txt->h = 0;
+	txt->previous = cmd_txt;
+	txt->_continue = _continue;
+
+	// get from previous
+	if(cmd_txt && _continue)
+	{
+		txt->x = cmd_txt->x;
+		txt->y = LINESKIP;
+		txt->size = cmd_txt->size;
+		txt->align = cmd_txt->align;
+		txt->font = cmd_txt->font;
+		txt->italic = 0;
+		txt->previous = cmd_txt;
+	}
 #ifdef DEBUG
 	printf("parser: new text command: %s.\n", text);
 #endif
@@ -159,7 +161,7 @@ CommandImage* slide_add_image_command(Slide* slide, char* path)
 
 CommandText* slide_add_template_command(Slide* slide, CommandText* cmd_txt, char* template_name)
 {
-	CommandText* txt = slide_add_text_command(slide, NULL, cmd_txt);
+	CommandText* txt = slide_add_text_command(slide, NULL, cmd_txt, 0);
 	txt->template_name = strdup(template_name);
 	return txt;
 }
@@ -189,7 +191,7 @@ CommandText* slide_add_templated_text(Slide* slide, char* template, char* text, 
 		exit(1);
 	}
 
-	CommandText* txt = slide_add_text_command(slide, text, cmd_txt);
+	CommandText* txt = slide_add_text_command(slide, text, cmd_txt, 0);
 	memcpy(txt, txt_cmd, sizeof(CommandText));
 	txt->text = strdup(text);
 	return txt;

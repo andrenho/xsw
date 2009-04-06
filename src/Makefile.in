@@ -163,8 +163,8 @@ xsw_SOURCES = xsw.c options.c file.c presentation.c presenter.c command.c \
 	          options.h file.h presentation.h presenter.h command.h \
 		  parser.y lexer.l
 
-xsw_LDADD = $(SDL_LIBS) -lSDL_image -lSDL_ttf -lSDL_gfx # TODO
-xsw_CFLAGS = $(SDL_CFLAGS) -Wall -Wextra -DUSE_SDL -DDEBUG -DDATADIR=\""$(datadir)/xsw/"\"
+xsw_LDADD = $(SDL_LIBS) #-lSDL_image -lSDL_ttf -lSDL_gfx # TODO
+xsw_CFLAGS = $(SDL_CFLAGS) -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" #-DDEBUG
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -560,7 +560,6 @@ uninstall-am: uninstall-binPROGRAMS
 	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
 	uninstall-am uninstall-binPROGRAMS
 
-#xsw_CFLAGS=$(SDL_CFLAGS) -Wall -DUSE_SDL -NDEBUG 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

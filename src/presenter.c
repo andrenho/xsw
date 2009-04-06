@@ -4,6 +4,8 @@
 #include "presenter.h"
 #include "command.h"
 
+static TTF_Font* dev_font;
+
 inline static void clear_screen(SDL_Surface* scr)
 {
 	SDL_FillRect(scr, NULL, SDL_MapRGB(scr->format, 0, 0, 0));
@@ -44,6 +46,7 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 		fprintf(stderr, "Error initializing SDL_ttf: %s.\n", TTF_GetError());
 		return NULL;
 	}
+	dev_font = TTF_OpenFont(DATADIR "VeraMono.ttf", 9);
 
 	return pr;
 }
@@ -92,6 +95,69 @@ void presenter_cache(Presenter* pr, int slide)
 	pr->thread = SDL_CreateThread(presenter_cache_thread, pr);
 }
 
+static inline void developer_write(Presenter* pr, int x, int y, char* text)
+{
+	SDL_Color black = { 0, 0, 0, 0 };
+	SDL_Color white = { 255, 255, 255, 0 };
+	SDL_Surface *sf, *sf_b;
+	SDL_Rect r;
+	int i, j;
+	
+	sf = TTF_RenderUTF8_Blended(dev_font, text, white);
+	sf_b = TTF_RenderUTF8_Blended(dev_font, text, black);
+
+	for(i=x-1; i<=x+1; i++)
+		for(j=y-1; j<=y+1; j++)
+			if(i != x || j != y)
+			{
+				r.x = i;
+				r.y = j;
+				SDL_BlitSurface(sf_b, NULL, pr->scr, &r);
+			}
+
+	r.x = x;
+	r.y = y;
+	SDL_BlitSurface(sf, NULL, pr->scr, &r);
+}
+
+static inline void developer_grid(Presenter* pr)
+{
+		int i;
+		SDL_Rect r;
+		Uint32 white = SDL_MapRGB(pr->scr->format, 255, 255, 255);
+		char buf[4];
+
+		developer_write(pr, 0, 0, "0");
+
+		// vertical lines
+		for(i=10; i<100; i+=10)
+		{
+			r.x = (float)i / 100.0 * SCR_W;
+			r.y = 0;
+			r.h = SCR_H;
+			r.w = 1;
+			SDL_FillRect(pr->scr, &r, 0);
+			r.x++;
+			SDL_FillRect(pr->scr, &r, white);
+			sprintf(buf, "%d", i);
+			developer_write(pr, r.x + 5, r.y, buf);
+		}
+
+		// horizontal lines
+		for(i=10; i<80; i+=10)
+		{
+			r.y = (float)i / 100.0 * SCR_W;
+			r.x = 0;
+			r.w = SCR_W;
+			r.h = 1;
+			SDL_FillRect(pr->scr, &r, 0);
+			r.x++;
+			SDL_FillRect(pr->scr, &r, white);
+			sprintf(buf, "%d", i);
+			developer_write(pr, r.x, r.y + 3, buf);
+		}
+}
+
 void presenter_show(Presenter* pr, int slide, int developer)
 {
 	int i;
@@ -115,8 +181,12 @@ void presenter_show(Presenter* pr, int slide, int developer)
 		case T_TEXT:
 			txt = &cmd->command.text;
 			r.x = (float)txt->x / 100.0 * pr->scr->w-1;
-			if(txt->align_right)
+			if(txt->align == 1)
+				r.x -= (txt->surface->w / 2);
+			else if(txt->align == 2)
 				r.x -= txt->surface->w;
+			if(txt->y == LINESKIP && txt->_continue)
+				txt->y = txt->previous->y + txt->previous->h;
 			r.y = (float)txt->y / 75.0 * pr->scr->h;
 
 			SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
@@ -136,34 +206,7 @@ void presenter_show(Presenter* pr, int slide, int developer)
 	}
 
 	if(developer)
-	{
-		int i;
-		Uint32 white = SDL_MapRGB(pr->scr->format, 255, 255, 255);
-
-		// vertical lines
-		for(i=10; i<100; i+=10)
-		{
-			r.x = (float)i / 100.0 * SCR_W;
-			r.y = 0;
-			r.h = SCR_H;
-			r.w = 1;
-			SDL_FillRect(pr->scr, &r, 0);
-			r.x++;
-			SDL_FillRect(pr->scr, &r, white);
-		}
-
-		// horizontal lines
-		for(i=10; i<80; i+=10)
-		{
-			r.y = (float)i / 100.0 * SCR_W;
-			r.x = 0;
-			r.w = SCR_W;
-			r.h = 1;
-			SDL_FillRect(pr->scr, &r, 0);
-			r.x++;
-			SDL_FillRect(pr->scr, &r, white);
-		}
-	}
+		developer_grid(pr);
 
 	SDL_Flip(pr->scr);
 
@@ -201,6 +244,10 @@ PresenterEvent presenter_get_event()
 				return PRESENTER_LAST;
 			case SDLK_f:
 				return PRESENTER_FULLSCREEN;
+			case SDLK_d:
+				if(e.key.keysym.mod & KMOD_CTRL)
+					return PRESENTER_DEVELOPER;
+				break;
 			default:
 				break;
 			}				

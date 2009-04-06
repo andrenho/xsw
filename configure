@@ -3883,7 +3883,247 @@ fi
 
 
 
-# TODO - add other libraries
+# add other libraries
+
+{ $as_echo "$as_me:$LINENO: checking for IMG_Load in -lSDL_image" >&5
+$as_echo_n "checking for IMG_Load in -lSDL_image... " >&6; }
+if test "${ac_cv_lib_SDL_image_IMG_Load+set}" = set; then
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lSDL_image  $LIBS"
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char IMG_Load ();
+int
+main ()
+{
+return IMG_Load ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
+$as_echo "$ac_try_echo") >&5
+  (eval "$ac_link") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest$ac_exeext && {
+	 test "$cross_compiling" = yes ||
+	 $as_test_x conftest$ac_exeext
+       }; then
+  ac_cv_lib_SDL_image_IMG_Load=yes
+else
+  $as_echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_cv_lib_SDL_image_IMG_Load=no
+fi
+
+rm -rf conftest.dSYM
+rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:$LINENO: result: $ac_cv_lib_SDL_image_IMG_Load" >&5
+$as_echo "$ac_cv_lib_SDL_image_IMG_Load" >&6; }
+if test "x$ac_cv_lib_SDL_image_IMG_Load" = x""yes; then
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBSDL_IMAGE 1
+_ACEOF
+
+  LIBS="-lSDL_image $LIBS"
+
+else
+
+	echo "Error: you need SDL_image in order to use xsw."
+	exit -1
+
+fi
+
+
+{ $as_echo "$as_me:$LINENO: checking for TTF_Init in -lSDL_ttf" >&5
+$as_echo_n "checking for TTF_Init in -lSDL_ttf... " >&6; }
+if test "${ac_cv_lib_SDL_ttf_TTF_Init+set}" = set; then
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lSDL_ttf  $LIBS"
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char TTF_Init ();
+int
+main ()
+{
+return TTF_Init ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
+$as_echo "$ac_try_echo") >&5
+  (eval "$ac_link") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest$ac_exeext && {
+	 test "$cross_compiling" = yes ||
+	 $as_test_x conftest$ac_exeext
+       }; then
+  ac_cv_lib_SDL_ttf_TTF_Init=yes
+else
+  $as_echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_cv_lib_SDL_ttf_TTF_Init=no
+fi
+
+rm -rf conftest.dSYM
+rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:$LINENO: result: $ac_cv_lib_SDL_ttf_TTF_Init" >&5
+$as_echo "$ac_cv_lib_SDL_ttf_TTF_Init" >&6; }
+if test "x$ac_cv_lib_SDL_ttf_TTF_Init" = x""yes; then
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBSDL_TTF 1
+_ACEOF
+
+  LIBS="-lSDL_ttf $LIBS"
+
+else
+
+	echo "Error: you need SDL_ttf in order to use xsw."
+	exit -1
+
+fi
+
+
+{ $as_echo "$as_me:$LINENO: checking for zoomSurface in -lSDL_gfx" >&5
+$as_echo_n "checking for zoomSurface in -lSDL_gfx... " >&6; }
+if test "${ac_cv_lib_SDL_gfx_zoomSurface+set}" = set; then
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lSDL_gfx  $LIBS"
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char zoomSurface ();
+int
+main ()
+{
+return zoomSurface ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
+$as_echo "$ac_try_echo") >&5
+  (eval "$ac_link") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest$ac_exeext && {
+	 test "$cross_compiling" = yes ||
+	 $as_test_x conftest$ac_exeext
+       }; then
+  ac_cv_lib_SDL_gfx_zoomSurface=yes
+else
+  $as_echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_cv_lib_SDL_gfx_zoomSurface=no
+fi
+
+rm -rf conftest.dSYM
+rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:$LINENO: result: $ac_cv_lib_SDL_gfx_zoomSurface" >&5
+$as_echo "$ac_cv_lib_SDL_gfx_zoomSurface" >&6; }
+if test "x$ac_cv_lib_SDL_gfx_zoomSurface" = x""yes; then
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBSDL_GFX 1
+_ACEOF
+
+  LIBS="-lSDL_gfx $LIBS"
+
+else
+
+	echo "Error: you need SDL_image in order to use xsw."
+	exit -1
+
+fi
+
 
 # Output files
 ac_config_headers="$ac_config_headers config.h"

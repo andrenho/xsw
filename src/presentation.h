@@ -8,15 +8,19 @@
 #define SLIDES_LIMIT 1024
 #define COMMANDS_LIMIT 1024
 
+#define LINESKIP -31241
+
 // commands
-typedef struct {
+typedef struct CommandText {
 	char* text; // NULL means template
-	int x, y, w, h;
+	double x, y, w, h;
 	char* template_name;
 	char* font;
 	double size;
 	int italic;
-	int align_right;
+	int align;
+	int _continue;
+	struct CommandText* previous;
 #ifdef USE_SDL
 	SDL_Surface* surface;
 	SDL_Surface* surface_inv;
@@ -71,7 +75,7 @@ typedef struct {
 Presentation* presentation_new();
 Slide* presentation_add_slide(Presentation* presentation, char* parent);
 Slide* presentation_add_template(Presentation* presentation, char* name, char* parent);
-CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_txt);
+CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_txt, int _continue);
 CommandText* slide_add_template_command(Slide* slide, CommandText* cmd_txt, char* template_name);
 CommandText* slide_add_templated_text(Slide* slide, char* template, char* text, CommandText* cmd_txt);
 CommandImage* slide_add_image_command(Slide* slide, char* path);

@@ -1,8 +1,6 @@
-template: father
- - text: 'Father'
+template: mytemplate
+  - background: "mycompanylogo.jpg"
+  - title: x:50 y:6 align:center size:48
 
-template: test father
- - title: x:50 align:center y:10
-
-slide: test
- - title: 'Test'
+slide: mytemplate
+  - title: "My Company"

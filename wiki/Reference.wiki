@@ -1,3 +1,94 @@
 #summary Reference for xsw language
+#labels Featured,Phase-Support
 
-To be done.
+== xsw Reference ==
+
+{{{
+template: NAME
+  - [commands...]
+  - CUSTOM_COMMAND: [text_parameters]
+
+slide: [template]
+  - text: "my string" [text_parameters]
+  - image: "image_path.jpg" [image_parameters]
+  - background: "image_path.jpg" [background_parameters]
+  - [CUSTOM_COMMAND]: "my string"
+}}}
+
+Every minus sign (-) is a new command to be executed. A plus sign (+) in a text command means the parameters will be copied from the previous command - this can be used to write multiple lines of text.
+
+== Commands and Parameters ==
+
+=== text ===
+
+The text command writes a text on the screen. The parameters are:
+
+||x||the horizontal position (`0~100`, default: `4`)||
+||y||the vertical position (`0~75`, default: `3`)||
+||size||font size (default: `36`)||
+||font||font face, must be one of: `sans`, `serif` or `mono` (default: `sans`)||
+||style||font style, must be one of: `italic` (default: `no style`)||
+||align||alignment of the x position, must be one of: `center`, `right` (default: `no alignment`)||
+
+=== image ===
+
+The image command pastes a image on the screen. The parameters are:
+
+||x||the horizontal position (`0~100`, default: `4`). Negative values can be used.||
+||y||the vertical position (`0~75`, default: `3`)||
+||scale||the image zoom, `1` being 100% (default: `1`). Values higher than 1 make the image grow, values less than 1 make the image shrink (ex: `0.4`)||
+
+=== background ===
+
+Similar to the image command, but automaticly scale the image to the screen
+size. The parameters are:
+
+||x||the horizontal position (`0~100`, default: `0`). It can be used to move the background image. Negative values can be used.||
+||y||the vertical position (`0~75`, default: `0`)||
+||expand||this parameters defines what happens when the aspect ration of the image is not the same as the screen. If `horizontal` is chosen, the left and right sides of the image will be anchored with the left and right side of the screen. (default: `vertical`)||
+
+
+== Templates ==
+
+Templates can be used to write a slide layout that is used by many slides in 
+the presentation. It's similar to what !MS PowerPoint calls "master slide".
+
+Example:
+
+{{{
+template: mytemplate
+  - background: "mylogo.jpg"
+
+slide: mytemplate
+  - text: "Title"
+}}}
+
+In this case, the slide will be created with the mylogo.jpg background. Any
+number of templates can be created and used on any number of slides.
+
+A template can also contain a custom command. This can be used to create a text
+that'll have the same properties in all slides. Example:
+
+{{{
+template: mytemplate
+  - title: x:50 y:10 align:center
+
+slide: mytemplate
+  - title: "My Title"
+}}}
+
+In this case, a "title" command is created containing some parameters (but not
+a text). The text is referenced in the first slide.
+
+A template can also be referenced from another slide, such as this:
+
+{{{
+template: mycompany
+  - background: "logo.png"
+
+template: cover mycompany
+  - title: x:50 y:10 align:center
+
+slide: cover
+  - title: "My Company"
+}}}

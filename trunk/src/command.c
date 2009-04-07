@@ -59,7 +59,10 @@ void command_parse(Presenter* pr, Command* cmd)
 #endif
 		tmp = IMG_Load(img->path);
 		if(!tmp)
+		{
 			fprintf(stderr, "Error loading image %s: %s.\n", img->path, IMG_GetError());
+			exit(1);
+		}
 		
 		if(!img->background)
 		{

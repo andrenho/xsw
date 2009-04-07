@@ -1,4 +1,4 @@
-#summary Reference for xsw language
+﻿#summary Reference for xsw language
 #labels Featured,Phase-Support
 
 == xsw Reference ==
@@ -51,7 +51,7 @@ size. The parameters are:
 == Templates ==
 
 Templates can be used to write a slide layout that is used by many slides in 
-the presentation. It's similar to what !MS PowerPoint calls "master slide".
+the presentation. It's similar to what !MS !PowerPoint calls "master slide".
 
 Example:
 

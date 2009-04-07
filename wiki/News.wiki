@@ -1,5 +1,9 @@
-#summary News about the xsw project
+﻿#summary News about the xsw project
 #labels Featured,Phase-Support
+
+== Version 0.1.1 ==
+
+ * A problem was corrected when building in a system where one of the libraries was in /usr/local/.
 
 == Version 0.1 ==
 

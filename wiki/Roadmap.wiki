@@ -1,56 +1,54 @@
 ﻿#summary What the next versions of xsw will contain?
+#labels Phase-Requirements
 
-== Version 0.1 ==
+== ~~Version 0.1~~ ==
 
- * templates
- * background image
- * text decoration, size and alignment
- * GNU install system
- * Documentation (wiki, [http://code.google.com/p/xsw/ README], INSTALL, man page, [http://code.google.com/p/xsw/wiki/Reference] reference)
- * vim syntax support
+ * ~~templates~~
+ * ~~background image~~
+ * ~~text decoration, size and alignment~~
+ * ~~GNU install system~~
+ * ~~Documentation (wiki, [http://code.google.com/p/xsw/ README], INSTALL, man page, [http://code.google.com/p/xsw/wiki/Reference] reference)~~
+ * ~~vim syntax support~~
 
-Version 0.2
+== Version 0.2 == 
 
-- text font
-- text color
-- text background
-- include templates
+ * text font
+ * text color
+ * text background
+ * include templates
 
-Version 0.3
+== Version 0.3 ==
 
-- text line breaks
-- tar
+ * text line breaks
+ * tar
 
-Version 0.4
+== Version 0.4 ==
 
-- vim
-- documentation
-- tutorial
-- items
+ * tutorial
+ * items
 
-Version 0.5
+== Version 0.5 ==
 
-- auto reload
+ * auto reload
 
-Version 0.6
+== Version 0.6 ==
 
-- arrow
-- boxes
+ * arrow
+ * boxes
 
-Version 0.7
+== Version 0.7 ==
 
-- text shadows
+ * text shadows
 
-Version 0.8
+== Version 0.8 ==
 
-- PNG/HTML/... generation
+ * PNG/HTML/... generation
 
-Version 0.9
+== Version 0.9 ==
 
-- a better image resizer
+ * a better image resizer
 
-Someday
+== Someday ==
 
-- PDF generation
-- PPT/ODP conversion
-
+ * PDF generation
+ * PPT/ODP conversion

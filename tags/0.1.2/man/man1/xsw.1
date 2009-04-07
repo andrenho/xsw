@@ -1,0 +1,47 @@
+.\" Process with
+.\" groff -man -Tascii xsw.1
+.\"
+
+.TH XSW 6 "April 2009" Linux "User Manuals"
+.SH NAME
+xsw \- a slideshow presentation tool
+
+.SH SYNOPSIS
+.B xsw [options] FILE
+
+.br
+.SH DESCRIPTION
+xsw is a slideshow presentation tool for all those who are frustrated with
+Microsoft PowerPoint and its clones. 
+
+It uses SDL as backend and reads from a input file, that should be written
+by the user in the xsw language described in the manual.
+
+.SH OPTIONS
+.TP
+\fB-l\fR, \fB\-\-last\fR
+Starts in the last slide. This can be used as a help when writing the 
+presentation, since the user will usually be writing the last slide.
+.TP
+\fB-d\fR, \fB\-\-developer\fR
+Starts in developer mode. This means a grid will be shown to help the developer
+to position his strings and images. This grid can also be turned on and off by
+pressing CTRL+D.
+.TP
+\fB-h\fR, \fB\-\-help\fR
+display application help
+
+.SH AUTHOR
+Andre' Wagner <andre.nho@gmail.com>.
+.PP
+All development is done at http://xsw.googlecode.com/
+.PP
+This manual page was written by Andre' Wagner <andre.nho@gmail.com>.
+
+.SH COPYRIGHT
+Copyright  (C)  2009 Andre' Wagner
+.PP
+There is NO warranty.
+You may redistribute this software under the terms of  the  GNU
+General  Public License.  For more information about these matters, see
+the files named COPYING.

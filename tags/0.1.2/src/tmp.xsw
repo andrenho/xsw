@@ -1,0 +1,6 @@
+template: mytemplate
+  - background: "mycompanylogo.jpg"
+  - title: x:50 y:6 align:center size:48
+
+slide: mytemplate
+  - title: "My Company"

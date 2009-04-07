@@ -1,6 +1,6 @@
 #summary News about the xsw project
 #labels Featured,Phase-Support
 
-= Version 0.1 =
+== Version 0.1 ==
 
 First public release.

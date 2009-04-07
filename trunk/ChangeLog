@@ -1,3 +1,9 @@
+Version 0.1.1
+-------------
+
+- corrected a problem where the compilation would fail if one of the libraries
+was installed in /usr/local.
+
 Version 0.1
 -----------
 

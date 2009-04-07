@@ -1,15 +1,13 @@
 ﻿#summary What the next versions of xsw will contain?
 
-Version 0.1:
+== Version 0.1 ==
 
-- templates
-- background
-- text decor/size/center
-- correct Makefile
-- check license
-- README
-- man page
-- vim support
+ * templates
+ * background image
+ * text decoration, size and alignment
+ * GNU install system
+ * Documentation (wiki, [http://code.google.com/p/xsw/ README], INSTALL, man page, [http://code.google.com/p/xsw/wiki/Reference] reference)
+ * vim syntax support
 
 Version 0.2
 

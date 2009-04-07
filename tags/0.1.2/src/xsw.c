@@ -3,18 +3,24 @@
 #include "presentation.h"
 #include "options.h"
 #include "file.h"
-#include "presenter.h"
+// #include "presenter.h"
+#include "list.h"
 
 extern int parser_parse(Presentation *pres, char *filename);
 
 int main(int argc, char *argv[])
 {
+	List* l = NULL;
+
+	return 0;
+
 	// create a new presentation
 	Presentation* p = presentation_new();
 	assert(p);
 
 	// read options from command line
      	Options* options = options_get(p, argc, argv);
+	options = options; // FIXME
 	assert(p);
 	assert(p->filename);
 
@@ -33,6 +39,7 @@ int main(int argc, char *argv[])
 	}
 
 	// present slideshow
+	/*
 	int current = 0;
 	if(options->last)
 		current = p->n_slides - 1;
@@ -95,6 +102,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	presenter_quit();
+	*/
 
 	// exit
 	return 0;

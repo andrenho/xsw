@@ -1,5 +1,5 @@
 ﻿#summary What the next versions of xsw will contain?
-#labels Phase-Requirements
+#labels Phase-Requirements,Featured
 
 == ~~Version 0.1~~ ==
 

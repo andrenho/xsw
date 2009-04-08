@@ -4,3 +4,4 @@ template: mytemplate
 
 slide: mytemplate
   - title: "My Company"
+  + text: "Bla"

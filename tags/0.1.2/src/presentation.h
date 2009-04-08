@@ -5,10 +5,8 @@
 #include "SDL.h"
 #endif
 
-#define SLIDES_LIMIT 1024
-#define COMMANDS_LIMIT 1024
-
-#define LINESKIP -31241
+#include "list.h"
+#include "slide.h"
 
 // commands
 typedef struct CommandText {
@@ -38,15 +36,9 @@ typedef struct {
 #endif
 } CommandImage;
 
-typedef struct {
-	char* path;
-	enum { full, horizontal, vertical } anchor;
-} CommandBackground;
-
 typedef union {
 	CommandText text;
 	CommandImage image;
-	CommandBackground background;
 } CommandUnion;
 
 typedef struct {
@@ -57,27 +49,14 @@ typedef struct {
 
 // --
 
-typedef struct Slide {
-	Command* commands[COMMANDS_LIMIT];
-	int n_commands;
-	char* name;
-	struct Slide* parent;
-} Slide;
-
 typedef struct {
 	char* filename;
-	Slide* slides[SLIDES_LIMIT];
-	int n_slides;
-	Slide* templates[SLIDES_LIMIT];
-	int n_templates;
+	List* slides;
+	List* templates;
 } Presentation;
 
 Presentation* presentation_new();
-Slide* presentation_add_slide(Presentation* presentation, char* parent);
-Slide* presentation_add_template(Presentation* presentation, char* name, char* parent);
-CommandText* slide_add_text_command(Slide* slide, char* text, CommandText* cmd_txt, int _continue);
-CommandText* slide_add_template_command(Slide* slide, CommandText* cmd_txt, char* template_name);
-CommandText* slide_add_templated_text(Slide* slide, char* template, char* text, CommandText* cmd_txt);
-CommandImage* slide_add_image_command(Slide* slide, char* path);
+void pr_add_slide(Presentation* p, Slide* sl);
+void pr_add_slide_from(Presentation* p, Slide* sl, char* template_id);
 
 #endif

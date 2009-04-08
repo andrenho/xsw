@@ -4,6 +4,7 @@
 == Version 0.1.1 ==
 
  * A problem was corrected when building in a system where one of the libraries was in /usr/local/.
+ * A Win32 version was released.
 
 == Version 0.1 ==
 

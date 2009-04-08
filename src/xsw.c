@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include "presentation.h"
-#include "options.h"
+// #include "options.h" // FIXME
 #include "file.h"
 // #include "presenter.h"
 #include "list.h"
@@ -10,17 +10,13 @@ extern int parser_parse(Presentation *pres, char *filename);
 
 int main(int argc, char *argv[])
 {
-	List* l = NULL;
-
-	return 0;
-
 	// create a new presentation
 	Presentation* p = presentation_new();
 	assert(p);
 
 	// read options from command line
-     	Options* options = options_get(p, argc, argv);
-	options = options; // FIXME
+     	// Options* options = options_get(p, argc, argv); FIXME
+	p->filename = "tmp.xsw";
 	assert(p);
 	assert(p->filename);
 

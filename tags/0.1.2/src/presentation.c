@@ -19,15 +19,17 @@ Presentation* presentation_new()
 	return p;
 }
 
-void pr_add_slide(Presentation* p, Slide* sl)
+Slide* pr_add_slide(Presentation* p, Slide* sl)
 {
 	if(sl->type == T_SLIDE)
 		p->slides = append(p->slides, sl);
 	else
 		p->templates = append(p->templates, sl);
+
+	return sl;
 }
 
-void pr_add_slide_from(Presentation* p, Slide* sl, char* _template)
+Slide* pr_add_slide_from(Presentation* p, Slide* sl, char* _template)
 {
 	// find template
 	List* tpl = p->templates;
@@ -49,4 +51,6 @@ void pr_add_slide_from(Presentation* p, Slide* sl, char* _template)
 
 	sl->parent = tpl->data;
 	pr_add_slide(p, sl);
+
+	return sl;
 }

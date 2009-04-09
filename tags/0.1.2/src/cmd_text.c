@@ -24,7 +24,8 @@ CommandText* cmd_txt_new_plus(char* id, char* text, CommandText* previous)
 	CommandText* cmd_txt = malloc(sizeof(CommandText));
 
 	// copy from previous
-	memcpy(cmd_txt, previous, sizeof(CommandText));
+	if(previous)
+		memcpy(cmd_txt, previous, sizeof(CommandText));
 	cmd_txt->previous = previous;
 	
 	return cmd_txt;

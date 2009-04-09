@@ -2,7 +2,7 @@
 #include <string.h>
 #include "cmd_text.h"
 
-CommandText* cmd_txt_new(char* id, char* text)
+CommandText* cmd_txt_new(char* id, char* text, CommandText* previous)
 {
 	CommandText* cmd_txt = malloc(sizeof(CommandText));
 	cmd_txt->id = id;
@@ -15,7 +15,7 @@ CommandText* cmd_txt_new(char* id, char* text)
 	cmd_txt->italic = DEFAULT_ITALIC;
 	cmd_txt->align = DEFAULT_ALIGN;
 	cmd_txt->dirty = 1;
-	cmd_txt->previous = NULL;
+	cmd_txt->previous = previous;
 	return cmd_txt;
 }
 

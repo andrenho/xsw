@@ -62,8 +62,8 @@ template: TEMPLATE COLON ID { cr_slide = pr_add_slide(pr, template_new($3)); } c
 slides: slide
       | slides slide;
 
-slide: SLIDE COLON { cr_slide = pr_add_slide(pr, slide_new()); } commands
-     | SLIDE COLON ID { cr_slide = pr_add_slide_from(pr, slide_new(), $3); } commands;
+slide: SLIDE COLON { cr_slide = pr_add_slide(pr, slide_new()); cr_cmd_txt = NULL; } commands
+     | SLIDE COLON ID { cr_slide = pr_add_slide_from(pr, slide_new(), $3); cr_cmd_txt = NULL; } commands;
 
 commands: 
 	| commands command;
@@ -76,7 +76,7 @@ command: text_command
 /* 
  * Text command 
  */
-text_command: HIFEN TEXT COLON ID { cr_cmd_txt = (CommandText*)slide_add_command(cr_slide, T_IMAGE, cmd_txt_new(NULL, $4)); } text_parameters
+text_command: HIFEN TEXT COLON ID { cr_cmd_txt = (CommandText*)slide_add_command(cr_slide, T_IMAGE, cmd_txt_new(NULL, $4, (CommandText*)cr_cmd_txt)); } text_parameters
             | PLUS TEXT COLON ID { cr_cmd_txt = (CommandText*)slide_add_command(cr_slide, T_IMAGE, cmd_txt_new_plus(NULL, $4, (CommandText*)cr_cmd_txt)); } text_parameters
 
 text_parameters:

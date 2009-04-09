@@ -1,8 +1,10 @@
 #ifndef CMD_TEXT_H
 #define CMD_TEXT_H
 
+#define SET_ON_RUNTIME	-56734
+
 #define DEFAULT_X 	4
-#define DEFAULT_Y 	3
+#define DEFAULT_Y 	SET_ON_RUNTIME
 #define DEFAULT_FONT	"sans"
 #define DEFAULT_SIZE	36
 #define DEFAULT_ITALIC	0
@@ -24,7 +26,7 @@ typedef struct CommandText {
 #endif
 } CommandText;
 
-CommandText* cmd_txt_new(char* id, char* text);
+CommandText* cmd_txt_new(char* id, char* text, CommandText* previous);
 CommandText* cmd_txt_new_plus(char* id, char* text, CommandText* previous);
 
 #endif

@@ -1,6 +1,10 @@
 #ifndef CMD_TEXT_H
 #define CMD_TEXT_H
 
+#ifdef USE_SDL
+#	include "SDL.h"
+#endif
+
 #define SET_ON_RUNTIME	-56734
 
 #define DEFAULT_X 	4
@@ -10,6 +14,8 @@
 #define DEFAULT_ITALIC	0
 #define DEFAULT_ALIGN	center
 
+typedef enum { left, center, align } Alignment;
+
 typedef struct CommandText {
 	char* id;
 	char* text;
@@ -17,7 +23,7 @@ typedef struct CommandText {
 	char* font;
 	double size;
 	int italic;
-	enum { left, center, right } align;
+	Alignment align;
 	int dirty;
 	struct CommandText* previous;
 #ifdef USE_SDL

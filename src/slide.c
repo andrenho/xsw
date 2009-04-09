@@ -21,7 +21,7 @@ Slide* template_new(char* id)
 	return sl;
 }
 
-void* slide_add_command(Slide* slide, enum CommandType type, void* command)
+void* slide_add_command(Slide* slide, CommandType type, void* command)
 {
 	slide->commands = append(slide->commands, command);
 	return command;

@@ -18,6 +18,7 @@
  * text background color
  * include templates from other files
  * presentation tutorial to be run as `xsw --tutorial`
+ * allow viewing presentation even with invalid images
 
 == Version 0.3 ==
 

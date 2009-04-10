@@ -3,7 +3,7 @@
 
 <wiki:toc max_depth="3" />
 
-== xsw Reference ==
+= xsw Reference =
 
 {{{
 # This is a comment
@@ -23,13 +23,13 @@ slide: [template]
 
 Every minus sign (-) is a new command to be executed. A plus sign (+) in a text command means the parameters will be copied from the previous command - this can be used to write multiple lines of text.
 
-== Commands and Parameters ==
+= Commands and Parameters =
 
-=== comments ===
+== comments ==
 
 Everything that starts with a "#" is considered a comment and is ignored by the program. Comments can start in the middle of the line.
 
-=== image_path ===
+== image_path ==
 Gives xsw a image path, where it'll look for images. For example,
 
 {{{
@@ -40,7 +40,7 @@ slide:
 
 will look for `test.jpg` in the current directory. If not found, it'll look in `~/myimages`.
 
-=== text (or nothing) ===
+== text (or nothing) ==
 
 The text command writes a text on the screen. The parameters are:
 
@@ -53,7 +53,7 @@ The text command writes a text on the screen. The parameters are:
 
 The keyword "text" is not necessary.
 
-=== image (or img) ===
+== image (or img) ==
 
 The image command pastes a image on the screen. The parameters are:
 
@@ -61,7 +61,7 @@ The image command pastes a image on the screen. The parameters are:
 ||y||the vertical position (`0~75`, default: `3`)||
 ||scale||the image zoom, `1` being 100% (default: `1`). Values higher than 1 make the image grow, values less than 1 make the image shrink (ex: `0.4`)||
 
-=== background (or bg) ===
+== background (or bg) ==
 
 Similar to the image command, but automaticly scale the image to the screen
 size. The parameters are:
@@ -71,7 +71,7 @@ size. The parameters are:
 ||expand||this parameters defines what happens when the aspect ration of the image is not the same as the screen. If `horizontal` is chosen, the left and right sides of the image will be anchored with the left and right side of the screen. (default: `vertical`)||
 
 
-== Templates ==
+= Templates =
 
 Templates can be used to write a slide layout that is used by many slides in 
 the presentation. It's similar to what !MS !PowerPoint calls "master slide".
@@ -116,7 +116,7 @@ slide: cover
   - title: "My Company"
 }}}
 
-== Running the program ==
+= Running the program =
 
 The program can be run as:
 

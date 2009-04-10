@@ -25,6 +25,8 @@ slide: [template]
 
 Every minus sign (-) is a new command to be executed. A plus sign (+) in a text command means the parameters will be copied from the previous command - this can be used to write multiple lines of text.
 
+A source file must be written using UTF-8 encoding.
+
 = Commands and Parameters =
 
 == comments ==

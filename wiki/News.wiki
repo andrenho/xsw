@@ -1,6 +1,16 @@
 ﻿#summary News about the xsw project
 #labels Featured,Phase-Support
 
+== Version 0.1.2 ==
+
+ * the keyword "text" is no longer needed, and it'll be ignored in new versions
+ * the limit of 1024 slides/commands was removed. There's no limit now.
+ * the keywords "image" and "background" can be used as "img" and "bg"
+ * a "-v" option was added the show the program version
+ * a syntax error now shows the line where the error ocurred
+ * a option called "image_path" was added, so that xsw will look for images in that directory as well
+ * documentation was corrected to inform about comments and keys that can be used during the execution of the program
+
 == Version 0.1.1 ==
 
  * A problem was corrected when building in a system where one of the libraries was in /usr/local/.

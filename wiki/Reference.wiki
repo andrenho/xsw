@@ -17,6 +17,7 @@ template: NAME
   - CUSTOM_COMMAND: [text_parameters]
 
 slide: [template]
+  - "my string" [text_parameters]
   - text: "my string" [text_parameters]
   - image: "image_path.jpg" [image_parameters]
   - background: "image_path.jpg" [background_parameters]

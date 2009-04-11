@@ -51,4 +51,4 @@
  * PPT/ODP export
  * PPT/ODP import
 
-This list is not written on stone. Changes of course may occur, specially if I receive good suggestions from user.
+This list is not written on stone. Changes of course may occur, specially if I receive good [http://code.google.com/p/xsw/issues/list suggestions] from users.

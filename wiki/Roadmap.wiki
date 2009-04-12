@@ -25,6 +25,7 @@
  * text line breaks (with `width` property)
  * text font (user can use custom fonts)
  * make-like tool to generate a presentation with one file containing all needed files (images + fonts)
+ * text markup - italic, bold (?)
 
 == Version 0.4 ==
 

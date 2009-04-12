@@ -7,8 +7,7 @@
  * an option `--intro` was added to show a introductory slideshow.
  * the presentation now can be started from any directory - the program will look for the images starting on the presentation path.
  * the file [InstallationInstructions INSTALL] was overwritten by autoconf and was recovered.
- * in developer mode, now xsw shows the fine position of the mouse in a box at
-the bottom right.
+ * in developer mode, now xsw shows the fine position of the mouse in a box at the bottom right.
 
 == Version 0.1.2 ==
 

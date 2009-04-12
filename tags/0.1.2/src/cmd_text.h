@@ -7,14 +7,15 @@
 
 #define SET_ON_RUNTIME	-56734
 
-#define DEFAULT_X 	4
-#define DEFAULT_Y 	SET_ON_RUNTIME
+#define DEFAULT_TXT_X 	4
+#define DEFAULT_TXT_Y 	3
 #define DEFAULT_FONT	"sans"
 #define DEFAULT_SIZE	36
-#define DEFAULT_ITALIC	0
-#define DEFAULT_ALIGN	center
+#define DEFAULT_STYLE	nostyle
+#define DEFAULT_ALIGN	left
 
-typedef enum { left, center, align } Alignment;
+typedef enum { left, center, right } Alignment;
+typedef enum { nostyle, italic } StyleType;
 
 typedef struct CommandText {
 	char* id;
@@ -22,9 +23,8 @@ typedef struct CommandText {
 	double x, y, h;
 	char* font;
 	double size;
-	int italic;
+	StyleType style;
 	Alignment align;
-	int dirty;
 	struct CommandText* previous;
 #ifdef USE_SDL
 	SDL_Surface* surface;
@@ -32,7 +32,9 @@ typedef struct CommandText {
 #endif
 } CommandText;
 
-CommandText* cmd_txt_new(char* id, char* text, CommandText* previous);
-CommandText* cmd_txt_new_plus(char* id, char* text, CommandText* previous);
+CommandText* cmd_txt_new(char* text, CommandText* previous);
+CommandText* cmd_txt_new_plus(char* text, CommandText* previous);
+CommandText* cmd_txt_new_custom(char* text, CommandText* custom);
+CommandText* cmd_txt_new_template(char* id);
 
 #endif

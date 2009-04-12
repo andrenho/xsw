@@ -11,11 +11,10 @@ Presentation* presentation_new()
 {
 	Presentation *p = malloc(sizeof(Presentation));
 	p->filename = NULL;
+	p->path = NULL;
 	p->slides = NULL;
 	p->templates = NULL;
-#ifdef DEBUG
-	printf("parser: new presentation.\n");
-#endif
+	p->image_path = NULL;
 	return p;
 }
 
@@ -51,6 +50,18 @@ Slide* pr_add_slide_from(Presentation* p, Slide* sl, char* _template)
 
 	sl->parent = tpl->data;
 	pr_add_slide(p, sl);
+
+	// copy parent slide commands
+	List* cmd = sl->parent->commands;
+	while(cmd)
+	{
+		if(cmd->type == T_TEXT)
+			if(!((CommandText*)cmd->data)->text)
+				goto skip;
+		sl->commands = append_t(sl->commands, cmd->data, cmd->type);
+skip:
+		cmd = cmd->next;
+	}
 
 	return sl;
 }

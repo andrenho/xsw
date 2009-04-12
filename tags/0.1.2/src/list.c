@@ -1,14 +1,20 @@
 #include <stdlib.h>
+#include <assert.h>
 #include "list.h"
 
-List* append(List* list, void* data)
+List* append_t(List* list, void* data, int type)
 {
+	List* original = list;
+
 	if(!list)
 	{
 		list = malloc(sizeof(List));
 		list->prev = NULL;
 		list->next = NULL;
 		list->data = data;
+		list->type = type;
+		list->dirty = 1;
+		original = list;
 	}
 	else
 	{
@@ -18,10 +24,17 @@ List* append(List* list, void* data)
 		list->next = malloc(sizeof(List));
 		list->next->prev = list;
 		list->next->data = data;
+		list->next->type = type;
+		list->next->dirty = 1;
 		list->next->next = NULL;		
 	}
 
-	return list;
+	return original;
+}
+
+List* append(List* list, void* data)
+{
+	return append_t(list, data, 0);
 }
 
 int count(List* list)
@@ -37,5 +50,19 @@ int count(List* list)
 		c++;
 	}
 
-	return 0;
+	return c;
+}
+
+void* nth(List* list, int n)
+{
+	assert(list);
+
+	int i;
+	for(i=0; i<n; i++)
+	{
+		list = list->next;
+		assert(list);
+	}
+
+	return list->data;
 }

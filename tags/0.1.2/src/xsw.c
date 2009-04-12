@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <assert.h>
 #include "presentation.h"
-// #include "options.h" // FIXME
+#include "options.h"
 #include "file.h"
-// #include "presenter.h"
+#include "presenter.h"
 #include "list.h"
 
 extern int parser_parse(Presentation *pres, char *filename);
@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
 	assert(p);
 
 	// read options from command line
-     	// Options* options = options_get(p, argc, argv); FIXME
-	p->filename = "tmp.xsw";
+     	Options* options = options_get(p, argc, argv);
+	// p->filename = "tmp.xsw";
 	assert(p);
 	assert(p->filename);
 
@@ -26,6 +26,9 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "%s is not a valid file.\n", p->filename);
 		return 1;
 	}
+
+	// get file path
+	p->path = file_path(p->filename);
 	
 	// parse code in the file
 	if(!parser_parse(p, p->filename))
@@ -35,20 +38,18 @@ int main(int argc, char *argv[])
 	}
 
 	// present slideshow
-	/*
 	int current = 0;
 	if(options->last)
-		current = p->n_slides - 1;
+		current = count(p->slides) - 1;
 	int running = 1;
 	Presenter* pr = presenter_initialize(p, 1);
 	if(!pr)
 		return 1; // message was already given in the function
-	presenter_cache(pr, current);
 	presenter_show(pr, current, options->developer);
 
 	while(running)
 	{
-		switch(presenter_get_event())
+		switch(presenter_get_event(pr, options->developer))
 		{
 			case PRESENTER_QUIT:
 				running = 0;
@@ -59,10 +60,9 @@ int main(int argc, char *argv[])
 				break;
 
 			case PRESENTER_NEXT:
-				if(current < (p->n_slides-1))
+				if(current < count(p->slides)-1)
 				{
 					current++;
-					presenter_cache(pr, current);
 					presenter_show(pr, current, options->developer);
 				}
 				break;
@@ -71,20 +71,17 @@ int main(int argc, char *argv[])
 				if(current > 0)
 				{
 					current--;
-					presenter_cache(pr, current);
 					presenter_show(pr, current, options->developer);
 				}
 				break;
 
 			case PRESENTER_FIRST:
 				current = 0;
-				presenter_cache(pr, current);
 				presenter_show(pr, current, options->developer);
 				break;
 
 			case PRESENTER_LAST:
-				current = p->n_slides - 1;
-				presenter_cache(pr, current);
+				current = count(p->slides) - 1;
 				presenter_show(pr, current, options->developer);
 				break;
 
@@ -98,7 +95,6 @@ int main(int argc, char *argv[])
 		}
 	}
 	presenter_quit();
-	*/
 
 	// exit
 	return 0;

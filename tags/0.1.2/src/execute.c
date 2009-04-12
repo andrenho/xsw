@@ -1,29 +1,22 @@
 #include <assert.h>
-#include "command.h"
+#include "execute.h"
+#include "cmd_img.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 #include "SDL_rotozoom.h"
 
-void command_parse(Presenter* pr, Command* cmd)
+void execute_parse(Presenter* pr, void* cmd, CommandType type)
 {
-	pr = pr; // avoid warnings
-
-	if(cmd->dirty == 0)
-		return;
-
 	SDL_Surface* tmp;
 	CommandImage* img;
 	CommandText* txt;
 	SDL_Color black = { 0, 0, 0, 0 };
 	SDL_Color white = { 255, 255, 255, 0 };
 
-	switch(cmd->type)
+	switch(type)
 	{
 	case T_TEXT:
-		txt = &cmd->command.text;
-#ifdef DEBUG
-		printf("building: %s...", txt->text);
-#endif
+		txt = (CommandText*)cmd;
 		TTF_Font* font;
 
 		// load font - TODO slow, someday we'll not do this for every text block
@@ -38,26 +31,46 @@ void command_parse(Presenter* pr, Command* cmd)
 			fprintf(stderr, "warning: Font %s not found, defaulting to Sans.", txt->font);
 			font = TTF_OpenFont(DATADIR "VeraBd.ttf", txt->size);
 		}
-		assert(font);
+		if(!font)
+		{
+			fprintf(stderr, "Default font %s could not be found. Are you sure you typed 'make install' after compiling xsd?", DATADIR "VeraBd.ttf");
+			exit(1);
+		}
 
-		if(txt->italic)
+		if(txt->style == italic)
 			TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
 
 		txt->surface = TTF_RenderUTF8_Blended(font, txt->text, white);
 		txt->surface_inv = TTF_RenderUTF8_Blended(font, txt->text, black);
-		txt->h = (float)TTF_FontLineSkip(font) / (float)SCR_W * 100;
-#ifdef DEBUG
-		printf("done!\n");
-#endif
+		txt->h = (double)TTF_FontLineSkip(font) / (double)SCR_W * 100;
+
+		/* If the text is empty, then the surface generated is NULL.
+		 * The user might want to use an empty text to show a empty
+		 * line, so we'll create a transparent rectangle with the 
+		 * text height. */
+		if(!txt->surface)
+		{
+			txt->surface = SDL_CreateRGBSurface(SDL_SWSURFACE|SDL_SRCCOLORKEY, 1, txt->h, 0, 0, 0, 0, 0);
+			txt->surface_inv = txt->surface;
+		}
+		assert(txt->surface);
+
 		break;
 
-
 	case T_IMAGE:
-		img = &cmd->command.image;
+		img = (CommandImage*)cmd;
 #ifdef DEBUG
-		printf("building: %s...", img->path);
+		printf("Preloading %s...", img->path);
 #endif
-		tmp = IMG_Load(img->path);
+		char buf[512];
+		sprintf(buf, "%s/%s", pr->p->path, img->path);
+		tmp = IMG_Load(buf);
+		if(!tmp && pr->p->image_path) // search alternative path
+		{
+			sprintf(buf, "%s/%s/%s", pr->p->path, pr->p->image_path, img->path);
+			tmp = IMG_Load(buf);
+		}
+
 		if(!tmp)
 		{
 			fprintf(stderr, "Error loading image %s: %s.\n", img->path, IMG_GetError());
@@ -77,12 +90,12 @@ void command_parse(Presenter* pr, Command* cmd)
 		else
 		{
 			float w, h;
-			if(img->expand_horiz)
+			if(img->expand == horizontal)
 			{
 				w = (float)SCR_W / (float)tmp->w; // we'll value the width over the height
 				h = ((float)tmp->h / (float)tmp->w * (float)SCR_W) / (float)tmp->h;
 			}
-			else
+			else // vertical
 			{
 				h = (float)SCR_H / (float)tmp->h; // we'll value the height over the width
 				w = ((float)tmp->w / (float)tmp->h * (float)SCR_H) / (float)tmp->w;
@@ -98,10 +111,10 @@ void command_parse(Presenter* pr, Command* cmd)
 #ifdef DEBUG
 		printf("done!\n");
 #endif
+		assert(img->surface);
 		break;
-
 	default:
 		abort();
 	}
-	cmd->dirty = 0;
+	
 }

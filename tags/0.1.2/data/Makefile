@@ -87,16 +87,16 @@ OBJEXT = o
 PACKAGE = xsw
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = xsw
-PACKAGE_STRING = xsw 0.1.2
+PACKAGE_STRING = xsw 0.1.3
 PACKAGE_TARNAME = xsw
-PACKAGE_VERSION = 0.1.2
+PACKAGE_VERSION = 0.1.3
 PATH_SEPARATOR = :
 SDL_CFLAGS = -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
 SDL_LIBS = -L/usr/lib -lSDL -lpthread
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 0.1.2
+VERSION = 0.1.3
 YACC = bison -y
 YFLAGS = 
 abs_builddir = /home/andre/projects/xsw-0.1.2/data
@@ -141,7 +141,11 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-nobase_dist_pkgdata_DATA = VeraBd.ttf VeraMono.ttf VeraSeBd.ttf
+nobase_dist_pkgdata_DATA = VeraBd.ttf VeraMono.ttf VeraSeBd.ttf \
+			   intro/background.png intro/bloc.bmp intro/camembert.png \
+			   intro/firefox.png intro/fleche.bmp intro/Tux.png \
+			   intro/ligne.bmp intro/xsw.xsw
+
 all: all-am
 
 .SUFFIXES:

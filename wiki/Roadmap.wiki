@@ -51,5 +51,6 @@
  * PDF export
  * PPT/ODP export
  * PPT/ODP import
+ * play video
 
-This list is not written on stone. Changes of course may occur, specially if I receive good [http://code.google.com/p/xsw/issues/list suggestions] from users.
+This list is not written on stone. Changes may happen, of course, specially if I receive good [http://code.google.com/p/xsw/issues/list suggestions] from users.

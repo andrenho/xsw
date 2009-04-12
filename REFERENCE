@@ -4,11 +4,16 @@ See README for a tutorial-like introduction.
 xsw Reference
 *************
 
+# This is a comment
+#
+image_path: "~/myimages"
+
 template: NAME
   - [commands...]
   - CUSTOM_COMMAND: [text_parameters]
 
 slide: [template]
+  - "my string" [text_parameters]
   - text: "my string" [text_parameters]
   - image: "image_path.jpg" [image_parameters]
   - background: "image_path.jpg" [background_parameters]
@@ -22,20 +27,37 @@ can be used to write multiple lines of text.
 Commands and Parameters
 ***********************
 
-text
-----
+comments
+--------
+Everything that starts with a "#" is considered a comment and is ignored by
+the program. Comments can start in the middle of the line.
+
+image_path
+----------
+Gives xsw a image path, where it'll look for images. For example,
+
+image_path: "~/myimages"
+slide:
+  - image: "test.jpg"
+
+will look for test.jpg in the current directory. If not found, it'll look in
+~/myimages.
+
+text (or nothing)
+-----------------
 The text command writes a text on the screen. The parameters are:
 
      x: the horizontal position (0~100, default: 4)
      y: the vertical position (0~75, default: 3)
   size: font size (default: 36)
   font: font face, must be one of: sans, serif or mono (default: sans)
- style: font style, must be one of: italic (default: no style)
- align: alignment of the x position, must be one of: center, right (default:
-                                                                  no alignment)
+ style: font style, must be one of: nostyle, italic (default: nostyle)
+ align: alignment of the x position, must be one of: left, center, right 
+                                                                (default: left)
+The keyword "text" is not necessary.
 
-image
------
+image (or img)
+--------------
 The image command pastes a image on the screen. The parameters are:
 
      x: the horizontal position (0~100, default: 4). Negative values can be 
@@ -44,8 +66,8 @@ The image command pastes a image on the screen. The parameters are:
  scale: the image zoom, 1 being 100% (default: 1). Values higher than 1 make
         the image grow, values less than 1 make the image shrink (ex: 0.4)
 
-background
-----------
+background (or bg)
+------------------
 Similar to the image command, but automaticly scale the image to the screen
 size. The parameters are:
 
@@ -97,3 +119,24 @@ A template can also be referenced from another slide, such as this:
 
     slide: cover
       - title: "My Company"
+
+
+Running the program
+*******************
+
+The program can be run as:
+
+$ xsw mypresentation.xsw
+
+A "-l" option opens the presentation in the last slide. This can be used to
+speed up development, as usually the user is editing the last slide.
+
+The following keys can be used during the presentation:
+
+ - RIGHT / PAGE DOWN: go to the next slide
+ - LEFT / PAGE UP: go to the previous slide
+ - HOME: go to the first slide
+ - END: go to the last slide
+ - F: fullscreen
+ - Ctrl+D: developer mode
+ - Q: quits presentation

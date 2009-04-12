@@ -9,8 +9,8 @@ By using xsw, you create your presentation "by hand", using the xsw language
 described in the manual. A exemple of a file is:
 
     slide:
-      - text: "Hello" x:50 y:30 align:center
-      + text: "World!"
+      - "Hello" x:50 y:30 align:center
+      + "World!"
 
 The first line says we're writing a slide. The second one says: "add the text
 'Hello' centered at the position 50x30 (each slide is 100x75)". The third line

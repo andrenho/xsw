@@ -2,6 +2,7 @@
 #define SLIDE_H
 
 #include "list.h"
+#include "cmd_text.h"
 
 typedef enum { T_TEXT, T_IMAGE } CommandType;
 typedef enum { T_SLIDE, T_TEMPLATE } SlideType;
@@ -18,5 +19,6 @@ typedef struct Slide {
 Slide* slide_new();
 Slide* template_new(char *id);
 void* slide_add_command(Slide* slide, CommandType type, void* command);
+void* slide_add_custom_command(Slide* slide, char* id, char* text);
 
 #endif

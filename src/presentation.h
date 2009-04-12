@@ -10,8 +10,10 @@
 
 typedef struct {
 	char* filename;
+	char* path;
 	List* slides;
 	List* templates;
+	char* image_path;
 } Presentation;
 
 Presentation* presentation_new();

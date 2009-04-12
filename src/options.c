@@ -10,9 +10,19 @@ static void print_usage(FILE* stream, int exit_code)
 	fprintf(stream, "Start a presentation.\n");
 	fprintf(stream, "\n");
 	fprintf(stream, "Options:\n");
-	fprintf(stream, "  -h, --help               see this help\n");
-	fprintf(stream, "  -d, --developer          developer mode\n");
-	fprintf(stream, "  -l, --last               start at the last slide\n");
+	fprintf(stream, "  -I, --intro         display a introduction about what xsw is and how it works\n");
+	fprintf(stream, "  -h, --help          see this help\n");
+	fprintf(stream, "  -v, --version       show version\n");
+	fprintf(stream, "  -d, --developer     developer mode\n");
+	fprintf(stream, "  -l, --last          start at the last slide\n");
+	exit(exit_code);
+}
+
+static void print_version(FILE* stream, int exit_code)
+{
+	fprintf(stream, "xsw " VERSION ", a slideshow presentation tool.\n");
+	fprintf(stream, "xsw is free software.\n");
+	fprintf(stream, "Copyleft (C) 2009 André Wagner <andre.nho@gmail.com> - all wrongs reserved\n");
 	exit(exit_code);
 }
 
@@ -24,11 +34,13 @@ Options* options_get(Presentation* presentation, int argc, char* argv[])
 	options->last = 0;
 	options->developer = 0;
 
-	const char* const short_options = "hld";
+	const char* const short_options = "hldvI";
 	const struct option long_options[] = {
 		{ "help", 0, NULL, 'h' },
+		{ "version", 0, NULL, 'v' },
 		{ "last", 0, NULL, 'l' },
 		{ "developer", 0, NULL, 'd' },
+		{ "intro", 0, NULL, 'I' },
 		{ NULL, 0, NULL, 0 }
 	};
 	
@@ -47,8 +59,14 @@ Options* options_get(Presentation* presentation, int argc, char* argv[])
 			case 'd':
 				options->developer = 1;
 				break;
+			case 'v':
+				print_version(stdout, 0);
+				break;
 			case '?':
 				print_usage(stderr, 1);
+				break;
+			case 'I':
+				presentation->filename = DATADIR "intro/xsw.xsw";
 				break;
 			case -1: // done
 				break;
@@ -57,10 +75,13 @@ Options* options_get(Presentation* presentation, int argc, char* argv[])
 		}
 	} while (next_option != -1);
 
-	if(argc > optind)
-		presentation->filename = argv[optind];
-	else
-		print_usage(stderr, 1);
+	if(!presentation->filename)
+	{
+		if(argc > optind)
+			presentation->filename = argv[optind];
+		else
+			print_usage(stderr, 1);
+	}
 
 	return options;
 }

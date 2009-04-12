@@ -1,0 +1,31 @@
+#summary One-sentence summary of this page.
+
+= Installation Instructions =
+
+== Requirements ==
+
+ * [http://www.libdsl.org/ SDL]
+ * [http://www.libdsl.org/projects/SDL_ttf/ SDL_ttf]
+ * [http://www.libdsl.org/projects/SDL_image/ SDL_image]
+ * [http://www.ferzkopp.net/Software/SDL_gfx-2.0/ SDL_gfx]
+
+
+== Instalation instructions ==
+
+Once you have all requirements installed, you can just type the basic installation commands of the Unix world:
+
+{{{
+$ ./configure
+$ make
+$ su -
+# make install
+}}}
+
+
+== Installing vim support ==
+
+To install vim support, copy the `doc/xsd.vim` file to your `~/.vim/syntax` directory. Then edit your `~/.vimrc` (or `~/.gvimrc`) and add:
+
+{{{
+au BufNewFile,BufRead *.xsw source ~/.vim/syntax/xsw.vim
+}}}

@@ -1,29 +1,3 @@
-image_path: "img"
-
-template: mytemplate
- - text: "Template text" align:right x:95 y:68
- - custom: align:right x:95 y:60
-
-slide: mytemplate
- - text: "Default"
- - text: "Second line"
- - "x=50 / y=25" x:50 y:25 align:center
- + "plus"
- - text: "Size: 60" size:60
- - text: "Serif" font:serif
- - text: "Mono" font:mono
- - text: "Italic" style:italic
- - custom: "Custom"
-
 slide:
- - bg: "bg.jpg"
- - image: "Linux.jpg" x:10 y:10
- - image: "Linux.jpg" x:-5 y:-5
- - image: "Linux.jpg" x:10 y:30 scale:.5
- - image: "Linux.jpg" x:30 y:10 scale:2
- - "Teste 1"
- + ""
- + "Teste 2"
-
-slide:
- - bg: "Linux.jpg" expand:horizontal
+ - bg: white
+ - "A" color:orange

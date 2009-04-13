@@ -12,6 +12,8 @@ typedef enum { T_SLIDE, T_TEMPLATE } SlideType;
 typedef struct Slide {
 	List* commands;
 	char* id;
+	unsigned char bg_color[3];
+	unsigned char bg_gradient[3];
 	struct Slide* parent;
 	SlideType type;
 } Slide;

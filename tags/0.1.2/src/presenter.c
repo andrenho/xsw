@@ -130,7 +130,7 @@ static inline void developer_grid(Presenter* pr)
 		r.w = SCR_W;
 		r.h = 1;
 		SDL_FillRect(pr->scr, &r, 0);
-		r.x++;
+		r.y++;
 		SDL_FillRect(pr->scr, &r, white);
 		sprintf(buf, "%d", i);
 		developer_write(pr, r.x, r.y + 3, buf);

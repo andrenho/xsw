@@ -38,17 +38,21 @@ int parser_parse(Presentation *pres, char *filename)
 
 %}
 
+%code requires { typedef struct { unsigned char c; } Color; }
+
 %token SLIDE COLON HIFEN TEXT X Y W H IMAGE SIZE SCALE TEMPLATE BACKGROUND FONT
 %token STYLE ALIGN EXPAND PLUS IMAGE_PATH
 %token <dval> NUM
 %token <cval> ID STRING
 %token <ival> STYLE_TYPE ALIGN_TYPE EXPAND_TYPE
+%token <color> COLOR
 
 %union
 {
 	double dval;
 	char* cval;
 	int ival;
+	Color color;
 }
 
 %%
@@ -127,7 +131,8 @@ custom_command: HIFEN ID COLON STRING { cr_cmd_txt = (CommandText*)slide_add_cus
 /*
  * Background command
  */
-background_command: HIFEN BACKGROUND COLON STRING { cr_cmd_img = (CommandImage*)slide_add_command(cr_slide, T_IMAGE, cmd_img_new($4, 1)); } background_parameters;
+background_command: HIFEN BACKGROUND COLON STRING { cr_cmd_img = (CommandImage*)slide_add_command(cr_slide, T_IMAGE, cmd_img_new($4, 1)); } background_parameters
+		  | HIFEN BACKGROUND COLON COLOR 
 
 background_parameters:
 		     | background_parameters background_parameter;

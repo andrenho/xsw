@@ -62,6 +62,8 @@ nostyle|italic		{
 				return STYLE_TYPE;
 			}
 
+\$[0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f]	return COLOR;
+
 \".*\"			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return STRING;
 \'.*\'			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return STRING;
 [a-zA-Z][a-zA-Z0-9\.]*	yylval.cval = strdup(yytext); return ID;

@@ -1,0 +1,127 @@
+template: bga
+  - bg: "background.png" expand:horizontal
+  - title: x:95 y:2 align:right size:32
+  - tip: x:5 y:66 size:18 style:italic
+  - texte: x:5 y:12 size:28
+  - "xsw introduction (c)2009" x:50 y:73 align:center size:10 
+  - img: "ligne.bmp" x:0 y:72
+  - img: "ligne.bmp" x:20 y:72
+  - img: "ligne.bmp" x:40 y:72
+  - img: "ligne.bmp" x:60 y:72
+  - img: "ligne.bmp" x:80 y:72
+
+template: cover
+  - bg: "background.png" expand:horizontal
+  - "INTRODUCTION TO XSW" x:50 y:2 align:center
+
+slide: cover
+  - "xsw: a free presentation tool" x:90 y:40 align:right
+  + ""
+  + "http://xsw.googlecode.com/" font:mono
+  + "" font:sans
+  + "press right key to continue..." style:italic size:24
+
+slide: bga
+  - title: "Introduction to xsw"
+  - texte: "This is a short introduction for xsw." 
+  + ""
+  + ""
+  + ""
+  + ""
+  + "Navigate through this little presentation"
+  + "to know what is xsw and how it works."
+  - img: "fleche.bmp" x:2 y:70
+  - tip: "Tip: You can go back by pressing the left key, and " 
+  + "go forward by pressing the right key."
+
+slide: bga
+  - title: "xsw usage"
+  - texte: "xsw is used to create slideshow presentations."
+  - img: "camembert.png" x:6 y:23
+  - img: "fleche.bmp" x:22 y:70
+  - tip: "Tip: You can enter and leave fullscreen by pressing the f key"
+
+slide: bga
+  - title: "xsw usage"
+  - texte: "With xsw, you create slides" 
+  + "mixing pictures and text."
+  + ""
+  + "Example of text with font serif" font:serif
+  + "Another example of text with font mono" font:mono size:24
+  - img: "Tux.png" x:50 y:28 scale:0.3
+  - "You can put a image behind text," x:5 y:32 size:28
+  - "or in front of the text" x:5 y:42 size:28
+  - img: "Tux.png" x:12 y:38 scale:0.3
+  - "Now, let's see the magic behind that." x:5 y:55 size:28
+  - img: "fleche.bmp" x:42 y:70
+
+slide: bga
+  - title: "A xsw file skeleton"
+  - texte: "Everyting is defined in a single file:"
+  + "Templates, slides, and positioning."
+  + ""
+  + "xsw Reference:" size:32
+  + ""
+  + "template: NAME" size:22 font:mono
+  + "  - [commands...]"
+  + "  - CUSTOM_COMMAND: [text_parameters]"
+  + " "
+  + "slide: [template]"
+  + "  - "my string" [text_parameters]"
+  + "  - image: "image_path.jpg" [image_parameters]"
+  + "  - background: "image_path.jpg" [background_parameters]"
+  + "  - [CUSTOM_COMMAND]: "my string""
+  - img: "fleche.bmp" x:62 y:70
+  - tip: "Tip: Did you notice the small arrow below on the timeline?"
+
+#slide: bg
+#  - title: "Reference of xsw file"
+#  - texte: "Parameters are:"
+#  - texte: "The text command writes text on a screen"
+#  + "x:  the horizontal position (0~100, default: 4)" size:22
+#  + "y:  the vertical position (0~75, default: 3)"
+#  + "size:  font size (default: 36)"
+#  + "font:  font face, must be one of: sans, serif or mono"
+#  + "      (default: sans)"
+#  + "style:  font style, must be one of: italic (default: no style)"
+#  + "align:  alignment of the x position, must be one of: center,"
+#  + "      right (default: no alignment)"
+#  + ""  
+#  + "The img command pastes a img." size:28 
+#  + "x:  the horizontal position (0~100, default: 4). Negative " size:22
+#  + "    values can be used." 
+#  + "y:  the vertical position (0~75, default: 3)"
+#  + "scale:  the img zoom, 1 being 100% (default: 1). Values"
+#  + "   higher than 1 make the img grow, values less than 1"
+#  + "    make the img shrink (ex: 0.4)"
+
+slide: bga
+  - title: "Reference of xsw file"
+  - texte: "Read the website for command and "
+  + "parameters."
+  + " "
+  + "Other tips you should know:"
+  + "1. text and images are printed in the order"
+  + "   there are read in the file."
+  + "2. You can use template on template."
+  + "3. Images can be zoomable:"
+  - img: "firefox.png" x:5 y:45 scale:0.33
+  - img: "firefox.png" x:25 y:45 scale:0.66
+  - img: "firefox.png" x:50 y:45
+  - img: "firefox.png" x:75 y:45 scale:1.33
+  - img: "fleche.bmp" x:82 y:70
+  - tip: "Tip: You can press Ctrl-D to see the positioning grid"
+
+slide: bga
+  - "Short introduction to xsw" x:50 y:2 align:center
+  - "Thank you for reading it" x:5 y:20 size:28
+  + ""
+  + ""
+  + "You can read the source of this presentation"
+  + "in order to get some other hints at"
+  + "@prefix@/share/xsw/intro/xsw.xsw" font:mono size:28
+  + "" font:sans size:28
+  + "Don't forget to visit the website for the"
+  + "lastest versions and documentation."
+  - img: "fleche.bmp" x:95 y:70
+  - "Tip: You can press q to quit" x:5 y:66 size:18 style:italic

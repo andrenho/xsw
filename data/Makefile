@@ -52,11 +52,11 @@ am__installdirs = "$(DESTDIR)$(pkgdatadir)"
 nobase_dist_pkgdataDATA_INSTALL = $(install_sh_DATA)
 DATA = $(nobase_dist_pkgdata_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/andre/projects/xsw/missing --run aclocal-1.10
-AMTAR = ${SHELL} /home/andre/projects/xsw/missing --run tar
-AUTOCONF = ${SHELL} /home/andre/projects/xsw/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/andre/projects/xsw/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/andre/projects/xsw/missing --run automake-1.10
+ACLOCAL = ${SHELL} /home/andre/projects/xsw-0.1.2/missing --run aclocal-1.10
+AMTAR = ${SHELL} /home/andre/projects/xsw-0.1.2/missing --run tar
+AUTOCONF = ${SHELL} /home/andre/projects/xsw-0.1.2/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/andre/projects/xsw-0.1.2/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/andre/projects/xsw-0.1.2/missing --run automake-1.10
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -81,28 +81,28 @@ LEX_OUTPUT_ROOT = lex.yy
 LIBOBJS = 
 LIBS = -lSDL_gfx -lSDL_ttf -lSDL_image 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/andre/projects/xsw/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/andre/projects/xsw-0.1.2/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = xsw
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = xsw
-PACKAGE_STRING = xsw 0.1.1
+PACKAGE_STRING = xsw 0.2.0
 PACKAGE_TARNAME = xsw
-PACKAGE_VERSION = 0.1.1
+PACKAGE_VERSION = 0.2.0
 PATH_SEPARATOR = :
 SDL_CFLAGS = -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
 SDL_LIBS = -L/usr/lib -lSDL -lpthread
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 0.1.1
+VERSION = 0.2.0
 YACC = bison -y
 YFLAGS = 
-abs_builddir = /home/andre/projects/xsw/data
-abs_srcdir = /home/andre/projects/xsw/data
-abs_top_builddir = /home/andre/projects/xsw
-abs_top_srcdir = /home/andre/projects/xsw
+abs_builddir = /home/andre/projects/xsw-0.1.2/data
+abs_srcdir = /home/andre/projects/xsw-0.1.2/data
+abs_top_builddir = /home/andre/projects/xsw-0.1.2
+abs_top_srcdir = /home/andre/projects/xsw-0.1.2
 ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
@@ -121,7 +121,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = $(SHELL) /home/andre/projects/xsw/install-sh
+install_sh = $(SHELL) /home/andre/projects/xsw-0.1.2/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -141,7 +141,11 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-nobase_dist_pkgdata_DATA = VeraBd.ttf VeraMono.ttf VeraSeBd.ttf
+nobase_dist_pkgdata_DATA = VeraBd.ttf VeraMono.ttf VeraSeBd.ttf \
+			   intro/background.png intro/bloc.bmp intro/camembert.png \
+			   intro/firefox.png intro/fleche.bmp intro/Tux.png \
+			   intro/ligne.bmp intro/xsw.xsw
+
 all: all-am
 
 .SUFFIXES:

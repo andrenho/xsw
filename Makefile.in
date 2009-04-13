@@ -32,8 +32,9 @@ POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(dist_man_MANS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(srcdir)/config.h.in $(top_srcdir)/configure AUTHORS COPYING \
-	ChangeLog INSTALL NEWS TODO compile depcomp install-sh missing \
+	$(srcdir)/config.h.in $(top_srcdir)/configure \
+	$(top_srcdir)/data/intro/xsw.xsw.in AUTHORS COPYING ChangeLog \
+	INSTALL NEWS THANKS TODO compile depcomp install-sh missing \
 	ylwrap
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -43,7 +44,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = data/intro/xsw.xsw
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -165,7 +166,7 @@ top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = gnu
 SUBDIRS = src data
 dist_man_MANS = man/man1/xsw.1
-EXTRA_DIST = REFERENCE doc/xsw.vim
+EXTRA_DIST = REFERENCE THANKS doc/xsw.vim
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -220,6 +221,8 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
+data/intro/xsw.xsw: $(top_builddir)/config.status $(top_srcdir)/data/intro/xsw.xsw.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 install-man1: $(man1_MANS) $(man_MANS)
 	@$(NORMAL_INSTALL)
 	test -z "$(man1dir)" || $(MKDIR_P) "$(DESTDIR)$(man1dir)"

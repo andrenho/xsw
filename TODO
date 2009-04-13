@@ -9,12 +9,30 @@ Version 0.1:
 - man page
 - vim support
 
+Version 0.1.2:
+
+- remove "text"
+- parser - diferentiate between ids and strings
+- abbrev: image -> img; background -> bg
+- version option
+- "parse error" line
+- default image path
+
+Version 0.1.3:
+
+- check empty string
+- add tutorial
+- load images from the right path
+- recreate INSTALL
+- developer navigation
+
 Version 0.2
 
 - text font
 - text color
 - text background
 - include templates
+- treat invalid images
 
 Version 0.3
 

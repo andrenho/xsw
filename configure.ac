@@ -1,6 +1,7 @@
 # Start
-AC_INIT([xsw], [0.1.1])
+AC_INIT([xsw], [0.2.0])
 AM_INIT_AUTOMAKE([-Wall -Werror])
+AC_DEFINE(VERSION, ["AC_PACKAGE_VERSION"])
 
 # Check for progams
 AC_PROG_CC
@@ -33,5 +34,6 @@ AC_CONFIG_FILES([
 		 Makefile
 		 src/Makefile
 		 data/Makefile
+		 data/intro/xsw.xsw:data/intro/xsw.xsw.in
 		 ])
 AC_OUTPUT

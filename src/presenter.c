@@ -6,6 +6,8 @@
 #include "list.h"
 #include "cmd_img.h"
 
+#define RATIO 1.0
+
 static TTF_Font* dev_font;
 
 inline static void clear_screen(SDL_Surface* scr)
@@ -32,7 +34,7 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 
 	if(initialize_video)
 	{
-		pr->scr = SDL_SetVideoMode(800, 600, 8, SDL_SWSURFACE|SDL_ANYFORMAT);
+		pr->scr = SDL_SetVideoMode(800, 600, 0, SDL_SWSURFACE|SDL_ANYFORMAT);
 		if(pr->scr == 0)
 		{
 			fprintf(stderr, "Could not set video mode: %s.\n", SDL_GetError());
@@ -176,6 +178,34 @@ static int presenter_cache_thread(void* p_pr)
 	return 0;
 }
 
+static void gradient(Slide* slide, SDL_Surface* screen)
+{
+	int r = slide->bg_color[0];
+	int g = slide->bg_color[1];
+	int b = slide->bg_color[2];
+	int r2 = slide->bg_gradient[0];
+	int g2 = slide->bg_gradient[1];
+	int b2 = slide->bg_gradient[2];
+
+	double cr = r, cg = g, cb = b;
+
+	double r_ratio = (double)(r2-r) / (double)SCR_H * RATIO;
+	double g_ratio = (double)(g2-g) / (double)SCR_H * RATIO;
+	double b_ratio = (double)(b2-b) / (double)SCR_H * RATIO;
+
+	int i;
+	for(i=0; i<SCR_H; i+=RATIO)
+	{
+		SDL_Rect r = { 0, i, SCR_W, RATIO };
+		Uint32 color = SDL_MapRGB(screen->format, (unsigned char)cr, (unsigned char)cg, (unsigned char)cb);
+		SDL_FillRect(screen, &r, color);
+		// printf("%d - %d %d %d\n", i, (unsigned char)cr, (unsigned char)cg, (unsigned char)cb);
+		cr += r_ratio;
+		cg += g_ratio;
+		cb += b_ratio;
+	}
+}
+
 void presenter_cache(Presenter* pr, int n)
 {
 	assert(n < count(pr->p->slides));
@@ -213,10 +243,17 @@ void presenter_show(Presenter* pr, int n, int developer)
 
 	presenter_cache(pr, n);
 
-	clear_screen(pr->scr);
-
 	// go to slide
 	Slide* slide = (Slide*)nth(pr->p->slides, n);
+
+	// clear screen
+	if(strncmp(slide->bg_color, slide->bg_gradient, 3) == 0)
+	{
+		Uint32 bg = SDL_MapRGB(pr->scr->format, slide->bg_color[0], slide->bg_color[1], slide->bg_color[2]);
+		SDL_FillRect(pr->scr, NULL, bg);
+	}
+	else
+		gradient(slide, pr->scr);
 
 	List* commands = slide->commands;
 	while(commands)

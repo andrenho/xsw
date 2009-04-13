@@ -8,6 +8,8 @@ Slide* slide_new()
 	sl->id = NULL;
 	sl->parent = NULL;
 	sl->type = T_SLIDE;
+	memcpy(sl->bg_color, "000", 3);
+	memcpy(sl->bg_gradient, "000", 3);
 	return sl;
 }
 

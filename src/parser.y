@@ -38,21 +38,17 @@ int parser_parse(Presentation *pres, char *filename)
 
 %}
 
-%code requires { typedef struct { unsigned char c; } Color; }
-
 %token SLIDE COLON HIFEN TEXT X Y W H IMAGE SIZE SCALE TEMPLATE BACKGROUND FONT
-%token STYLE ALIGN EXPAND PLUS IMAGE_PATH
+%token STYLE ALIGN EXPAND PLUS IMAGE_PATH GRADIENT COLOR_PAR
 %token <dval> NUM
-%token <cval> ID STRING
+%token <cval> ID STRING COLOR
 %token <ival> STYLE_TYPE ALIGN_TYPE EXPAND_TYPE
-%token <color> COLOR
 
 %union
 {
 	double dval;
-	char* cval;
+	unsigned char* cval;
 	int ival;
-	Color color;
 }
 
 %%
@@ -105,6 +101,7 @@ text_parameter: X COLON NUM { cr_cmd_txt->x = $3; }
               | FONT COLON ID { cr_cmd_txt->font = $3; }
               | STYLE COLON STYLE_TYPE { cr_cmd_txt->style = $3; }
               | ALIGN COLON ALIGN_TYPE { cr_cmd_txt->align = $3; }
+              | COLOR_PAR COLON COLOR { memcpy(cr_cmd_txt->color, $3, 3); }
 
 /*
  * Image command
@@ -132,7 +129,7 @@ custom_command: HIFEN ID COLON STRING { cr_cmd_txt = (CommandText*)slide_add_cus
  * Background command
  */
 background_command: HIFEN BACKGROUND COLON STRING { cr_cmd_img = (CommandImage*)slide_add_command(cr_slide, T_IMAGE, cmd_img_new($4, 1)); } background_parameters
-		  | HIFEN BACKGROUND COLON COLOR 
+		  | HIFEN BACKGROUND COLON COLOR { memcpy(cr_slide->bg_color, $4, 3); memcpy(cr_slide->bg_gradient, $4, 3); } bg_color_parameters;
 
 background_parameters:
 		     | background_parameters background_parameter;
@@ -141,3 +138,7 @@ background_parameter: EXPAND COLON EXPAND_TYPE { cr_cmd_img->expand = $3; }
                     | X COLON NUM  { cr_cmd_img->x = $3; }
 	            | Y COLON NUM  { cr_cmd_img->y = $3; }
 
+bg_color_parameters: 
+		   | bg_color_parameters bg_color_parameter;
+
+bg_color_parameter: GRADIENT COLON COLOR { memcpy(cr_slide->bg_gradient, $3, 3); }

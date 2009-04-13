@@ -18,6 +18,7 @@ void execute_parse(Presenter* pr, void* cmd, CommandType type)
 	case T_TEXT:
 		txt = (CommandText*)cmd;
 		TTF_Font* font;
+		SDL_Color color = { txt->color[0], txt->color[1], txt->color[2] };
 
 		// load font - TODO slow, someday we'll not do this for every text block
 		if(strcmp(txt->font, "sans") == 0)

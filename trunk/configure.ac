@@ -1,5 +1,5 @@
 # Start
-AC_INIT([xsw], [0.2.0])
+AC_INIT([xsw], [0.2.1])
 AM_INIT_AUTOMAKE([-Wall -Werror])
 AC_DEFINE(VERSION, ["AC_PACKAGE_VERSION"])
 

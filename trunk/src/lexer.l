@@ -83,7 +83,6 @@ nostyle|italic		{
 				return COLOR;
 			}
 
-[a-zA-Z]*		{ yylval.cval = color_get(yytext); return COLOR; }
 
 \".*\"			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return STRING;
 \'.*\'			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return STRING;

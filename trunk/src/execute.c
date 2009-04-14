@@ -5,6 +5,8 @@
 #include "SDL_ttf.h"
 #include "SDL_rotozoom.h"
 
+#define COLOR_LIMIT 96
+
 void execute_parse(Presenter* pr, void* cmd, CommandType type)
 {
 	SDL_Surface* tmp;
@@ -18,7 +20,7 @@ void execute_parse(Presenter* pr, void* cmd, CommandType type)
 	case T_TEXT:
 		txt = (CommandText*)cmd;
 		TTF_Font* font;
-		SDL_Color color = { txt->color[0], txt->color[1], txt->color[2] };
+		SDL_Color color = { txt->color[0], txt->color[1], txt->color[2], 0 };
 
 		// load font - TODO slow, someday we'll not do this for every text block
 		if(strcmp(txt->font, "sans") == 0)
@@ -41,8 +43,12 @@ void execute_parse(Presenter* pr, void* cmd, CommandType type)
 		if(txt->style == italic)
 			TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
 
-		txt->surface = TTF_RenderUTF8_Blended(font, txt->text, white);
-		txt->surface_inv = TTF_RenderUTF8_Blended(font, txt->text, black);
+		SDL_Color border = black;
+		if(color.r < COLOR_LIMIT && color.g < COLOR_LIMIT && color.b < COLOR_LIMIT)
+			border = white;
+
+		txt->surface = TTF_RenderUTF8_Blended(font, txt->text, color);
+		txt->surface_inv = TTF_RenderUTF8_Blended(font, txt->text, border);
 		txt->h = (double)TTF_FontLineSkip(font) / (double)SCR_W * 100;
 
 		/* If the text is empty, then the surface generated is NULL.

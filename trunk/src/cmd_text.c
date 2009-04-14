@@ -18,7 +18,7 @@ CommandText* cmd_txt_new(char* text, CommandText* previous)
 	cmd_txt->style = DEFAULT_STYLE;
 	cmd_txt->align = DEFAULT_ALIGN;
 	cmd_txt->previous = previous;
-	memcpy(cmd_txt->color, "\255\255\255", 3);
+	cmd_txt->color[0] = cmd_txt->color[1] = cmd_txt->color[2] = 0xff;
 	return cmd_txt;
 }
 

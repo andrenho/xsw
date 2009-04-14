@@ -47,7 +47,7 @@ int parser_parse(Presentation *pres, char *filename)
 %union
 {
 	double dval;
-	unsigned char* cval;
+	char* cval;
 	int ival;
 }
 

@@ -1,6 +1,10 @@
 ﻿#summary News about the xsw project
 #labels Featured,Phase-Support
 
+== Version 0.2.1 ==
+
+ * fixed a serious bug where previous presentations would not work.
+
 == Version 0.2.0 ==
 
  * added options color and gradient to the background.

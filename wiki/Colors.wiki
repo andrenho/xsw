@@ -1,25 +1,4 @@
-#summary How to use colors in xsw.
+﻿#summary How to use colors in xsw.
 #labels Phase-Support
 
-= Introduction =
-
-Colors can be referred to in two ways: by their code or by their name.
-
-== By code ==
-
 Colors can be refered by code, such as this: `$FF00FF` (this is pink). It's just like the [http://www.w3.org/TR/REC-html40/types.html#h-6.5 HTML color standard], except that it uses the character `$` instead of `#`.
-
-== By name ==
-
-_*The use of named colors is broken in the current version.*_
-
-Colors can by used by name, using the colors defined in the file `/usr/share/X11/rgb.txt`. The color names follow these rules:
-
- * the names are case sensitive
- * when there's only one word, it's all lowercase: `black`, `white`, `orange`
- * when there are two words, it's !CamelCase: `DarkBlue`, `ForestGreen` , `DarkSeaGreen4`
-
-Here are two color lists:
-
- * http://www.farb-tabelle.de/en/table-of-color.htm
- * http://www.graphviz.org/doc/info/colors.html (case sensitivity is different from xsw)

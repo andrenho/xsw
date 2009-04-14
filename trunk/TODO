@@ -1,74 +1,56 @@
-Version 0.1:
+== Version 0.2 == 
 
-- templates
-- background
-- text decor/size/center
-- correct Makefile
-- check license
-- README
-- man page
-- vim support
+ * ~~background color and gradients~~
+ * ~~text color~~
+ * ~~allow changing text height~~
+ * image automatic scale when informing width
+ * allow viewing presentation even with invalid images
+ * include templates from other files
+ * presentation tutorial to be run as `xsw --tutorial`
 
-Version 0.1.2:
+== Version 0.3 ==
 
-- remove "text"
-- parser - diferentiate between ids and strings
-- abbrev: image -> img; background -> bg
-- version option
-- "parse error" line
-- default image path
+ * text line breaks (with `width` property)
+ * text background color
+ * text font (user can use custom fonts)
+ * make-like tool to generate a presentation with one file containing all needed files (images + fonts)
+ * text markup - italic, bold (?)
 
-Version 0.1.3:
+== Version 0.4 ==
 
-- check empty string
-- add tutorial
-- load images from the right path
-- recreate INSTALL
-- developer navigation
+ * multi-step slides (for example, to show one item at the time)
+ * auto reload when saving file (to help the developers)
 
-Version 0.2
+== Version 0.5 ==
 
-- text font
-- text color
-- text background
-- include templates
-- treat invalid images
+ * arrow
+ * boxes
+ * other goodies
+ * image rotation
 
-Version 0.3
+== Version 0.6 ==
 
-- text line breaks
-- tar
+ * PNG/HTML/...(other formats) exportation
 
-Version 0.4
+== Version 0.7 ==
 
-- vim
-- documentation
-- tutorial
-- items
+ * variables
 
-Version 0.5
+== Version 0.8 ==
 
-- auto reload
+ * slide transition
 
-Version 0.6
+== Version 0.9 ==
 
-- arrow
-- boxes
+ * a better image resizer, that will be faster and resize better when there's a photo or a illustation
 
-Version 0.7
+== Someday ==
 
-- text shadows
+ * PDF export
+ * PPT/ODP export
+ * PPT/ODP import
+ * play video
+ * tables
 
-Version 0.8
-
-- PNG/HTML/... generation
-
-Version 0.9
-
-- a better image resizer
-
-Someday
-
-- PDF generation
-- PPT/ODP conversion
+This list is not written on stone. Changes may happen, of course, specially if I receive good [http://code.google.com/p/xsw/issues/list suggestions] from users.
 

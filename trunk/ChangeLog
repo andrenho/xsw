@@ -1,3 +1,15 @@
+Version 0.2.2
+-------------
+
+* named colors: now colors can be referred by their X11 names.
+* IDs (template names and custom commands) and named colors are no longer case
+sensitive.
+
+Version 0.2.1
+-------------
+
+* fixed a serious bug where previous presentations would not work.
+
 Version 0.2.0
 -------------
 

@@ -6,6 +6,7 @@
 #include "parser.h"
 #include "cmd_text.h"
 #include "cmd_img.h"
+#include "color.h"
 
 extern FILE *yyin;
 static Presentation* pr;
@@ -83,6 +84,12 @@ command: text_command
        | template_command;
 
 /* 
+ * Information
+ */
+color: COLOR { $<cval>$ = $1; }
+     | ID { $<cval>$ = color_get($1); }
+
+/* 
  * Text command 
  */
 text:
@@ -102,8 +109,8 @@ text_parameter: X COLON NUM { cr_cmd_txt->x = $3; }
               | FONT COLON ID { cr_cmd_txt->font = $3; }
               | STYLE COLON STYLE_TYPE { cr_cmd_txt->style = $3; }
               | ALIGN COLON ALIGN_TYPE { cr_cmd_txt->align = $3; }
-              | COLOR_PAR COLON COLOR { memcpy(cr_cmd_txt->color, $3, 3); }
-              | BORDER COLON COLOR { memcpy(cr_cmd_txt->border, $3, 3); }
+	      | COLOR_PAR COLON color { memcpy(cr_cmd_txt->color, $<cval>3, 3); }
+              | BORDER COLON color { memcpy(cr_cmd_txt->border, $<cval>3, 3); }
               | BORDER COLON NONE { cr_cmd_txt->has_border = 0; }
 
 /*
@@ -132,7 +139,7 @@ custom_command: HIFEN ID COLON STRING { cr_cmd_txt = (CommandText*)slide_add_cus
  * Background command
  */
 background_command: HIFEN BACKGROUND COLON STRING { cr_cmd_img = (CommandImage*)slide_add_command(cr_slide, T_IMAGE, cmd_img_new($4, 1)); } background_parameters
-		  | HIFEN BACKGROUND COLON COLOR { memcpy(cr_slide->bg_color, $4, 3); memcpy(cr_slide->bg_gradient, $4, 3); } bg_color_parameters;
+		  | HIFEN BACKGROUND COLON color { memcpy(cr_slide->bg_color, $<cval>4, 3); memcpy(cr_slide->bg_gradient, $<cval>4, 3); } bg_color_parameters;
 
 background_parameters:
 		     | background_parameters background_parameter;
@@ -144,4 +151,4 @@ background_parameter: EXPAND COLON EXPAND_TYPE { cr_cmd_img->expand = $3; }
 bg_color_parameters: 
 		   | bg_color_parameters bg_color_parameter;
 
-bg_color_parameter: GRADIENT COLON COLOR { memcpy(cr_slide->bg_gradient, $3, 3); }
+bg_color_parameter: GRADIENT COLON color { memcpy(cr_slide->bg_gradient, $<cval>3, 3); }

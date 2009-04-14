@@ -56,8 +56,8 @@ The text command writes a text on the screen. The parameters are:
 ||font||font face, must be one of: `sans`, `serif` or `mono` (default: `sans`)||
 ||style||font style, must be one of: `nostyle`, `italic` (default: `nostyle`)||
 ||align||alignment of the x position, must be one of: `left`, `center`, `right` (default: `left`)||
-||color||the [Color] of the text. Default: `white`.||
-||border||the border [Color] of the text. Can be a [Color] or `none` for no border. Default: `black`.||
+||color||the [Colors color] of the text. Default: `white`.||
+||border||the border [Colors color] of the text. Can be a [Colors color] or `none` for no border. Default: `black`.||
 
 The keyword "text" is not necessary.
 

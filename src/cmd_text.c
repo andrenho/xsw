@@ -18,7 +18,9 @@ CommandText* cmd_txt_new(char* text, CommandText* previous)
 	cmd_txt->style = DEFAULT_STYLE;
 	cmd_txt->align = DEFAULT_ALIGN;
 	cmd_txt->previous = previous;
-	cmd_txt->color[0] = cmd_txt->color[1] = cmd_txt->color[2] = 0xff;
+	cmd_txt->color[0] = cmd_txt->color[1] = cmd_txt->color[2] = 0xff; // white
+	cmd_txt->has_border = 1;
+	cmd_txt->border[0] = cmd_txt->border[1] = cmd_txt->border[2] = 0x0; // black
 	return cmd_txt;
 }
 

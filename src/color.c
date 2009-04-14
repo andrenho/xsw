@@ -5,6 +5,8 @@
 
 unsigned char* color_get(char* desc)
 {
+	// TODO - this can be faster
+	
 	unsigned char* c = malloc(3);
 	if(strcmp(desc, "snow") == 0)
 	{

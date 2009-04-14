@@ -272,7 +272,7 @@ void presenter_show(Presenter* pr, int n, int developer)
 		case T_TEXT:
 			txt = (CommandText*)commands->data;
 			assert(txt->surface);
-			r.x = (float)txt->x / 100.0 * pr->scr->w-1;
+			r.x = (float)txt->x / 100.0 * pr->scr->w;
 			if(txt->align == 1)
 				r.x -= (txt->surface->w / 2);
 			else if(txt->align == 2)
@@ -281,15 +281,19 @@ void presenter_show(Presenter* pr, int n, int developer)
 				txt->y = txt->previous->y + txt->previous->h;
 			r.y = (float)txt->y / 75.0 * pr->scr->h;
 
-			SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
-			r.x += 2;
-			SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
-			r.x -= 1;
-			r.y -= 1;
-			SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
-			r.y += 2;
-			SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
-			r.y -= 1;
+			if(txt->has_border)
+			{
+				r.x -= 1;
+				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
+				r.x += 2;
+				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
+				r.x -= 1;
+				r.y -= 1;
+				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
+				r.y += 2;
+				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
+				r.y -= 1;
+			}
 			SDL_BlitSurface(txt->surface, NULL, pr->scr, &r);
 			break;
 		default:

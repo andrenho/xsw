@@ -49,11 +49,16 @@ The text command writes a text on the screen. The parameters are:
 
      x: the horizontal position (0~100, default: 4)
      y: the vertical position (0~75, default: 3)
+     h: vertical space between lines (default: one line, defined by the font)
   size: font size (default: 36)
   font: font face, must be one of: sans, serif or mono (default: sans)
  style: font style, must be one of: nostyle, italic (default: nostyle)
  align: alignment of the x position, must be one of: left, center, right 
-                                                                (default: left)
+        (default: left)
+ color: the color of the text. Default: white. See "Colors" section.
+border: the border color of the text. Can be a color or `none` for no border. 
+        Default: black.
+
 The keyword "text" is not necessary.
 
 image (or img)
@@ -79,6 +84,14 @@ size. The parameters are:
          left and right sides of the image will be anchored with the left and
          right side of the screen. (default: vertical)
 
+The background can also be used to display a color, such as `background: pink`. 
+The default background is black. In this case, the following parameters can be 
+used:
+
+ gradient: a color to display a vertical gradient. The default is the same color 
+           as the background (that is - no gradient).||
+
+See "Colors" section for more information.
 
 Templates
 *********
@@ -119,6 +132,33 @@ A template can also be referenced from another slide, such as this:
 
     slide: cover
       - title: "My Company"
+
+
+Colors
+******
+
+Colors can be referred to in two ways: by their code or by their name.
+
+By code
+-------
+Colors can be refered by code, such as this: $FF00FF (this is pink). It's just
+like the HTML color standard, except that it uses the character $ instead of #.
+
+By name
+-------
+
+Colors can by used by name, using the colors defined in the file 
+/usr/share/X11/rgb.txt. The color names follow these rules:
+
+ * the names are case sensitive
+ * when there's only one word, it's all lowercase: black, white, orange
+ * when there are two words, it's CamelCase: DarkBlue, ForestGreen
+
+Here are two useful color lists:
+
+ * http://www.farb-tabelle.de/en/table-of-color.htm
+ * http://www.graphviz.org/doc/info/colors.html (case sensitivity is different 
+   from xsw)
 
 
 Running the program

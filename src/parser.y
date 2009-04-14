@@ -39,7 +39,7 @@ int parser_parse(Presentation *pres, char *filename)
 %}
 
 %token SLIDE COLON HIFEN TEXT X Y W H IMAGE SIZE SCALE TEMPLATE BACKGROUND FONT
-%token STYLE ALIGN EXPAND PLUS IMAGE_PATH GRADIENT COLOR_PAR
+%token STYLE ALIGN EXPAND PLUS IMAGE_PATH GRADIENT COLOR_PAR BORDER NONE
 %token <dval> NUM
 %token <cval> ID STRING COLOR
 %token <ival> STYLE_TYPE ALIGN_TYPE EXPAND_TYPE
@@ -96,12 +96,15 @@ text_parameters:
 
 text_parameter: X COLON NUM { cr_cmd_txt->x = $3; }
 	      | Y COLON NUM { cr_cmd_txt->y = $3; }
+              | H COLON NUM { cr_cmd_txt->h = $3; }
               | SIZE COLON NUM { cr_cmd_txt->size = $3; }
               | FONT COLON STRING { cr_cmd_txt->font = $3; }
               | FONT COLON ID { cr_cmd_txt->font = $3; }
               | STYLE COLON STYLE_TYPE { cr_cmd_txt->style = $3; }
               | ALIGN COLON ALIGN_TYPE { cr_cmd_txt->align = $3; }
               | COLOR_PAR COLON COLOR { memcpy(cr_cmd_txt->color, $3, 3); }
+              | BORDER COLON COLOR { memcpy(cr_cmd_txt->border, $3, 3); }
+              | BORDER COLON NONE { cr_cmd_txt->has_border = 0; }
 
 /*
  * Image command

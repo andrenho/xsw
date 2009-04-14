@@ -1,7 +1,7 @@
 slide:
- - bg: $ff00ff
+ - bg: grey
  - "A" h:10
  + "B"
  + "C"
- - "D"
+ - "D" color:Green
  - "E"

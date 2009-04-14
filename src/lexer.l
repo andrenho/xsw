@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "parser.h"
 #include "cmd_text.h"
 #include "cmd_img.h"
@@ -86,7 +87,18 @@ nostyle|italic		{
 
 \".*\"			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return STRING;
 \'.*\'			yytext[strlen(yytext)-1] = '\0'; yylval.cval = strdup(yytext+1); return STRING;
-[a-zA-Z][a-zA-Z0-9\.]*	yylval.cval = strdup(yytext); return ID;
+
+[a-zA-Z][a-zA-Z0-9\.]*	{
+				int i = 0;
+				yylval.cval = strdup(yytext);
+				while(yylval.cval[i])
+				{
+					yylval.cval[i] = tolower(yylval.cval[i]);
+					i++;
+				}
+				return ID;
+			}
+
 [\-]?[0-9]*[\.]?[0-9]*	yylval.dval = strtod(yytext, (char**)NULL); return NUM;
 
 \:           		return COLON;

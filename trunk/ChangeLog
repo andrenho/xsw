@@ -1,36 +1,43 @@
+Version 0.2.0
+-------------
+
+* added options color and gradient to the background.
+* added options color and border to the text.
+* added option h (height) to the text.
+
 Version 0.1.3
 -------------
 
-- a bug was segfaulting xsw when a empty string (or spaces) was about to be
+* a bug was segfaulting xsw when a empty string (or spaces) was about to be
 shown. This was corrected, and now a empty string can be used as a line
 spacer.
-- an option '--intro' was added to show a introductory slideshow.
-- the presentation now can be started from any directory - the program will
+* an option '--intro' was added to show a introductory slideshow.
+* the presentation now can be started from any directory - the program will
 look for the images starting on the presentation path.
-- the file INSTALL was overwritten by autoconf and was recovered.
-- in developer mode, now xsw shows the fine position of the mouse in a box at
+* the file INSTALL was overwritten by autoconf and was recovered.
+* in developer mode, now xsw shows the fine position of the mouse in a box at
 the bottom right.
 
 Version 0.1.2
 -------------
 
-- the keyword "text" is no longer needed, and it'll be ignored in new versions
-- the limit of 1024 slides/commands was removed. There's no limit now.
-- the keywords "image" and "background" can be used as "img" and "bg"
-- a "-v" option was added the show the program version
-- a syntax error now shows the line where the error ocurred
-- a option called "image_path" was added, so that xsw will look for images in
+* the keyword "text" is no longer needed, and it'll be ignored in new versions
+* the limit of 1024 slides/commands was removed. There's no limit now.
+* the keywords "image" and "background" can be used as "img" and "bg"
+* a "-v" option was added the show the program version
+* a syntax error now shows the line where the error ocurred
+* a option called "image_path" was added, so that xsw will look for images in
 that directory as well
-- documentation was corrected to inform about comments and keys that can be
+* documentation was corrected to inform about comments and keys that can be
 used during the execution of the program
 
 Version 0.1.1
 -------------
 
-- corrected a problem where the compilation would fail if one of the libraries
+* corrected a problem where the compilation would fail if one of the libraries
 was installed in /usr/local.
 
 Version 0.1
 -----------
 
-- first public release
+* first public release

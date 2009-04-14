@@ -5,15 +5,11 @@
 #include "SDL_ttf.h"
 #include "SDL_rotozoom.h"
 
-#define COLOR_LIMIT 96
-
 void execute_parse(Presenter* pr, void* cmd, CommandType type)
 {
 	SDL_Surface* tmp;
 	CommandImage* img;
 	CommandText* txt;
-	SDL_Color black = { 0, 0, 0, 0 };
-	SDL_Color white = { 255, 255, 255, 0 };
 
 	switch(type)
 	{
@@ -22,7 +18,7 @@ void execute_parse(Presenter* pr, void* cmd, CommandType type)
 		TTF_Font* font;
 		SDL_Color color = { txt->color[0], txt->color[1], txt->color[2], 0 };
 
-		// load font - TODO slow, someday we'll not do this for every text block
+		// load font - TOD slow, someday we'll not do this for every text block
 		if(strcmp(txt->font, "sans") == 0)
 			font = TTF_OpenFont(DATADIR "VeraBd.ttf", txt->size);
 		else if(strcmp(txt->font, "serif") == 0)
@@ -43,13 +39,15 @@ void execute_parse(Presenter* pr, void* cmd, CommandType type)
 		if(txt->style == italic)
 			TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
 
-		SDL_Color border = black;
-		if(color.r < COLOR_LIMIT && color.g < COLOR_LIMIT && color.b < COLOR_LIMIT)
-			border = white;
-
 		txt->surface = TTF_RenderUTF8_Blended(font, txt->text, color);
-		txt->surface_inv = TTF_RenderUTF8_Blended(font, txt->text, border);
-		txt->h = (double)TTF_FontLineSkip(font) / (double)SCR_W * 100;
+		if(txt->h == 0)
+			txt->h = (double)TTF_FontLineSkip(font) / (double)SCR_W * 100;
+
+		if(txt->has_border)
+		{
+			SDL_Color border = { txt->border[0], txt->border[1], txt->border[2], 0 };
+			txt->surface_inv = TTF_RenderUTF8_Blended(font, txt->text, border);
+		}
 
 		/* If the text is empty, then the surface generated is NULL.
 		 * The user might want to use an empty text to show a empty

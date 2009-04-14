@@ -1,3 +1,7 @@
 slide:
- - bg: LightBlue
- - "André" color:DarkOliveGreen
+ - bg: $ff00ff
+ - "A" h:10
+ + "B"
+ + "C"
+ - "D"
+ - "E"

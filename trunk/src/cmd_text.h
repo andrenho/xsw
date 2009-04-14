@@ -26,6 +26,8 @@ typedef struct CommandText {
 	StyleType style;
 	Alignment align;
 	unsigned char color[3];
+	unsigned char border[3];
+	int has_border;
 	struct CommandText* previous;
 #ifdef USE_SDL
 	SDL_Surface* surface;

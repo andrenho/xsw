@@ -30,6 +30,8 @@ background|bg		return BACKGROUND;
 image_path		return IMAGE_PATH;
 x			return X;
 y			return Y;
+h			return H;
+w			return W;
 size			return SIZE;
 scale                   return SCALE;
 font			return FONT;
@@ -38,6 +40,9 @@ align			return ALIGN;
 expand			return EXPAND;
 gradient		return GRADIENT;
 color			return COLOR_PAR;
+border			return BORDER;
+
+none			return NONE;
 
 horizontal|vertical	{
 				if(strcmp(yytext, "horizontal") == 0)

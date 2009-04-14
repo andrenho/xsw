@@ -51,10 +51,13 @@ The text command writes a text on the screen. The parameters are:
 
 ||x||the horizontal position (`0~100`, default: `4`)||
 ||y||the vertical position (`0~75`, default: `3`)||
+||h||vertical space between lines (default: one line, defined by the font)||
 ||size||font size (default: `36`)||
 ||font||font face, must be one of: `sans`, `serif` or `mono` (default: `sans`)||
 ||style||font style, must be one of: `nostyle`, `italic` (default: `nostyle`)||
 ||align||alignment of the x position, must be one of: `left`, `center`, `right` (default: `left`)||
+||color||the [Color] of the text. Default: `white`.||
+||border||the border [Color] of the text. Can be a [Color] or `none` for no border. Default: `black`.||
 
 The keyword "text" is not necessary.
 
@@ -68,13 +71,17 @@ The image command pastes a image on the screen. The parameters are:
 
 == background (or bg) ==
 
-Similar to the image command, but automaticly scale the image to the screen
-size. The parameters are:
+Similar to the image command, but automaticly scale the image to the screen size. The parameters are:
 
 ||x||the horizontal position (`0~100`, default: `0`). It can be used to move the background image. Negative values can be used.||
 ||y||the vertical position (`0~75`, default: `0`)||
 ||expand||this parameters defines what happens when the aspect ration of the image is not the same as the screen. If `horizontal` is chosen, the left and right sides of the image will be anchored with the left and right side of the screen. (default: `vertical`)||
 
+The background can also be used to display a color, such as `background: pink`. The default background is black. In this case, the following parameters can be used:
+
+||gradient||a color to display a vertical gradient. The default is the same color as the background (that is - no gradient).||
+
+See [Colors] for more information.
 
 = Templates =
 

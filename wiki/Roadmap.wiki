@@ -9,20 +9,22 @@
  * ~~GNU install system~~
  * ~~Documentation (wiki, ~~[http://code.google.com/p/xsw/ README]~~, INSTALL, man page, ~~[http://code.google.com/p/xsw/wiki/Reference reference]~~)~~
  * ~~vim syntax support~~
+ * ~~presentation intro to be run as `xsw --intro`~~
 
 == Version 0.2 == 
 
- * background color and gradients
+ * ~~background color and gradients~~
+ * ~~text color~~
+ * allow changing text height
  * image automatic scale when informing width
- * text color
- * text background color
+ * allow viewing presentation even with invalid images
  * include templates from other files
  * presentation tutorial to be run as `xsw --tutorial`
- * allow viewing presentation even with invalid images
 
 == Version 0.3 ==
 
  * text line breaks (with `width` property)
+ * text background color
  * text font (user can use custom fonts)
  * make-like tool to generate a presentation with one file containing all needed files (images + fonts)
  * text markup - italic, bold (?)
@@ -37,12 +39,21 @@
  * arrow
  * boxes
  * other goodies
+ * image rotation
 
 == Version 0.6 ==
 
  * PNG/HTML/...(other formats) exportation
 
 == Version 0.7 ==
+
+ * variables
+
+== Version 0.8 ==
+
+ * slide transition
+
+== Version 0.9 ==
 
  * a better image resizer, that will be faster and resize better when there's a photo or a illustation
 
@@ -52,5 +63,6 @@
  * PPT/ODP export
  * PPT/ODP import
  * play video
+ * tables
 
 This list is not written on stone. Changes may happen, of course, specially if I receive good [http://code.google.com/p/xsw/issues/list suggestions] from users.

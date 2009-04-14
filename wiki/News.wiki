@@ -1,6 +1,12 @@
 ﻿#summary News about the xsw project
 #labels Featured,Phase-Support
 
+== Version 0.2.0 ==
+
+ * added options color and gradient to the background.
+ * added options color and border to the text.
+ * added option h (height) to the text.
+
 == Version 0.1.3 ==
 
  * a bug was segfaulting xsw when a empty string (or spaces) was about to be shown. This was corrected, and now a empty string can be used as a line spacer.

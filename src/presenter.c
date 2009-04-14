@@ -247,7 +247,7 @@ void presenter_show(Presenter* pr, int n, int developer)
 	Slide* slide = (Slide*)nth(pr->p->slides, n);
 
 	// clear screen
-	if(strncmp(slide->bg_color, slide->bg_gradient, 3) == 0)
+	if(strncmp((char*)slide->bg_color, (char*)slide->bg_gradient, 3) == 0)
 	{
 		Uint32 bg = SDL_MapRGB(pr->scr->format, slide->bg_color[0], slide->bg_color[1], slide->bg_color[2]);
 		SDL_FillRect(pr->scr, NULL, bg);

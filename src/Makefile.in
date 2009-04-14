@@ -49,7 +49,7 @@ am_xsw_OBJECTS = xsw-xsw.$(OBJEXT) xsw-options.$(OBJEXT) \
 	xsw-slide.$(OBJEXT) xsw-cmd_text.$(OBJEXT) \
 	xsw-cmd_img.$(OBJEXT) xsw-list.$(OBJEXT) \
 	xsw-presenter.$(OBJEXT) xsw-execute.$(OBJEXT) \
-	xsw-parser.$(OBJEXT) xsw-lexer.$(OBJEXT)
+	xsw-color.$(OBJEXT) xsw-parser.$(OBJEXT) xsw-lexer.$(OBJEXT)
 xsw_OBJECTS = $(am_xsw_OBJECTS)
 am__DEPENDENCIES_1 =
 xsw_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -161,8 +161,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 BUILT_SOURCES = parser.h
 AM_YFLAGS = -d
-xsw_SOURCES = xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c \
-	          options.h file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h \
+xsw_SOURCES = xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
+	          options.h file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h \
 		  parser.y lexer.l
 
 xsw_LDADD = $(SDL_LIBS) -L/usr/local/lib
@@ -241,6 +241,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-cmd_img.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-cmd_text.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-color.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-execute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-file.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-lexer.Po@am__quote@
@@ -405,6 +406,20 @@ xsw-execute.obj: execute.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='execute.c' object='xsw-execute.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-execute.obj `if test -f 'execute.c'; then $(CYGPATH_W) 'execute.c'; else $(CYGPATH_W) '$(srcdir)/execute.c'; fi`
+
+xsw-color.o: color.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-color.o -MD -MP -MF $(DEPDIR)/xsw-color.Tpo -c -o xsw-color.o `test -f 'color.c' || echo '$(srcdir)/'`color.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-color.Tpo $(DEPDIR)/xsw-color.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='color.c' object='xsw-color.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-color.o `test -f 'color.c' || echo '$(srcdir)/'`color.c
+
+xsw-color.obj: color.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-color.obj -MD -MP -MF $(DEPDIR)/xsw-color.Tpo -c -o xsw-color.obj `if test -f 'color.c'; then $(CYGPATH_W) 'color.c'; else $(CYGPATH_W) '$(srcdir)/color.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw-color.Tpo $(DEPDIR)/xsw-color.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='color.c' object='xsw-color.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-color.obj `if test -f 'color.c'; then $(CYGPATH_W) 'color.c'; else $(CYGPATH_W) '$(srcdir)/color.c'; fi`
 
 xsw-parser.o: parser.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -MT xsw-parser.o -MD -MP -MF $(DEPDIR)/xsw-parser.Tpo -c -o xsw-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c

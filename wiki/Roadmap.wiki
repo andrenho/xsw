@@ -15,7 +15,7 @@
 
  * ~~background color and gradients~~
  * ~~text color~~
- * allow changing text height
+ * ~~allow changing text height~~
  * image automatic scale when informing width
  * allow viewing presentation even with invalid images
  * include templates from other files

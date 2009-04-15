@@ -1,5 +1,7 @@
-slide:
- - bg: grey
+template: aaa
+
+slide: aaa
+ - bg:pink gradient:$00ff00
  - "A" h:10
  + "B"
  + "C"

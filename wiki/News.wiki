@@ -4,8 +4,7 @@
 == Version 0.2.2 ==
 
  * named colors: now colors can be referred by their X11 names (see [Colors])
- * !IDs (template names and custom commands) and named colors are no longer case
-sensitive.
+ * IDs (template names and custom commands) and named colors are no longer case sensitive.
  * corrected a bug where the background color was not working when using templates
  * added license information to source files
 

@@ -1,9 +1,4 @@
 template: aaa
-
+ - bg:pink
 slide: aaa
- - bg:pink gradient:$00ff00
- - "A" h:10
- + "B"
- + "C"
- - "D" color:Green
- - "E"
+ - bg:cyan

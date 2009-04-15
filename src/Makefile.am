@@ -4,9 +4,12 @@
 BUILT_SOURCES=parser.h
 AM_YFLAGS=-d
 
-bin_PROGRAMS=xsw
+bin_PROGRAMS=xsw xsw2html
+
 xsw_SOURCES=xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
 	          options.h file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h \
 		  parser.y lexer.l
 xsw_LDADD=$(SDL_LIBS) -L/usr/local/lib
 xsw_CFLAGS=$(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\" -DDEBUG
+
+xsw2html_SOURCES=output/xsw2html.c

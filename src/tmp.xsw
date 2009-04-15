@@ -1,8 +1,15 @@
-template: aaa
- - bg:pink gradient:grey
- - bg: "teste.png"
- - "Orange" color:orange
-slide: aaa
-# - bg:white
- - "Green" y:20 color:green
- + "DarkBlue" color:Blue border:white
+template: default
+ - background: $FF00FF
+
+slide: default
+
+
+
+slide: default
+
+
+
+slide:
+ - background: $FF00FF
+ - gradient: $00FF00
+

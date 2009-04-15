@@ -11,7 +11,7 @@ Colors can be refered by code, such as this: `$FF00FF` (this is pink). It's just
 
 == By name ==
 
-Colors can by used by name, using the colors defined in the file `/usr/share/X11/rgb.txt`. Examples: `green, black, snow, !LemonChiffon, !LavenderBlush, !DeepPink2, grey68`, etc...
+Colors can by used by name, using the colors defined in the file `/usr/share/X11/rgb.txt`. Examples: `green, black, snow, LemonChiffon, LavenderBlush, DeepPink2, grey68`, etc...
 
 Here are two color lists, for reference:
 

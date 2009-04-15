@@ -16,12 +16,19 @@
  * ~~background color and gradients~~
  * ~~text color~~
  * ~~allow changing text height~~
+
+== Version 0.3 ==
+
+ * PNG/HTML/...(other formats) exportation
+
+== Version 0.4 ==
+
  * image automatic scale when informing width
  * allow viewing presentation even with invalid images
  * include templates from other files
  * presentation tutorial to be run as `xsw --tutorial`
 
-== Version 0.3 ==
+== Version 0.5 ==
 
  * text line breaks (with `width` property)
  * text background color
@@ -29,31 +36,31 @@
  * make-like tool to generate a presentation with one file containing all needed files (images + fonts)
  * text markup - italic, bold (?)
 
-== Version 0.4 ==
+== Version 0.6 ==
 
  * multi-step slides (for example, to show one item at the time)
  * auto reload when saving file (to help the developers)
 
-== Version 0.5 ==
+== Version 0.7 ==
 
  * arrow
  * boxes
  * other goodies
  * image rotation
 
-== Version 0.6 ==
-
- * PNG/HTML/...(other formats) exportation
-
-== Version 0.7 ==
+== Version 0.8 ==
 
  * variables
 
-== Version 0.8 ==
+== Version 0.9 ==
 
  * slide transition
 
-== Version 0.9 ==
+== Version 1.0 ==
+
+ * stable version
+
+== Version 1.1 ==
 
  * a better image resizer, that will be faster and resize better when there's a photo or a illustation
 

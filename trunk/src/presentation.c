@@ -63,5 +63,9 @@ skip:
 		cmd = cmd->next;
 	}
 
+	// background
+	memcpy(sl->bg_color, sl->parent->bg_color, 3);
+	memcpy(sl->bg_gradient, sl->parent->bg_gradient, 3);
+
 	return sl;
 }

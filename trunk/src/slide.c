@@ -21,6 +21,9 @@ Slide* template_new(char* id)
 	sl->id = id;
 	sl->parent = NULL;
 	sl->type = T_TEMPLATE;
+	sl->bg_color[0] = sl->bg_gradient[0] = 
+			sl->bg_color[1] = sl->bg_gradient[1] = 
+			sl->bg_color[2] = sl->bg_gradient[2] = 0;
 	return sl;
 }
 

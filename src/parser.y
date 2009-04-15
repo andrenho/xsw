@@ -1,6 +1,6 @@
 %{
 /* Source file covered by the GNU Public License v3 
- * See LICENSE file or <http://gplv3.fsf.org/> */
+ * See LICENSE file or <http://www.gnu.org/licenses/gpl-3.0.txt/> */
 
 #include <stdio.h>
 #include <stdlib.h>

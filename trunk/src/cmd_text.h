@@ -1,3 +1,6 @@
+/* Source file covered by the GNU Public License v3 
+ * See LICENSE file or <http://gplv3.fsf.org/> */
+
 #ifndef CMD_TEXT_H
 #define CMD_TEXT_H
 

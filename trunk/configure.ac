@@ -1,3 +1,6 @@
+# Source file covered by the GNU Public License v3 
+# See LICENSE file or <http://gplv3.fsf.org/>
+
 # Start
 AC_INIT([xsw], [0.2.2])
 AM_INIT_AUTOMAKE([-Wall -Werror])

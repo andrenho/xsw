@@ -1,3 +1,6 @@
+/* Source file covered by the GNU Public License v3 
+ * See LICENSE file or <http://gplv3.fsf.org/> */
+
 #ifndef CMD_IMG_H
 #define CMD_IMG_H
 

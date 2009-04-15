@@ -1,3 +1,6 @@
+" Source file covered by the GNU Public License v3 
+" See LICENSE file or <http://gplv3.fsf.org/>
+
 " xsw sytax file <http://xsw.googlecode.com/>
 " Maintainer:	André Wagner <andre.nho@gmail.com>
 " Last Change:	2009 Apr 05

@@ -1,4 +1,7 @@
 %{
+/* Source file covered by the GNU Public License v3 
+ * See LICENSE file or <http://gplv3.fsf.org/> */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

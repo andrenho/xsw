@@ -14,6 +14,9 @@
 
 @SET_MAKE@
 
+# Source file covered by the GNU Public License v3 
+# See LICENSE file or <http://www.gnu.org/licenses/gpl-3.0.txt/>
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -30,7 +33,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = xsw$(EXEEXT)
+bin_PROGRAMS = xsw$(EXEEXT) xsw2html$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in lexer.c \
 	parser.c parser.h
@@ -55,6 +58,9 @@ am__DEPENDENCIES_1 =
 xsw_DEPENDENCIES = $(am__DEPENDENCIES_1)
 xsw_LINK = $(CCLD) $(xsw_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o \
 	$@
+am_xsw2html_OBJECTS = xsw2html.$(OBJEXT)
+xsw2html_OBJECTS = $(am_xsw2html_OBJECTS)
+xsw2html_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -65,8 +71,8 @@ LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 LEXCOMPILE = $(LEX) $(LFLAGS) $(AM_LFLAGS)
 YLWRAP = $(top_srcdir)/ylwrap
 YACCCOMPILE = $(YACC) $(YFLAGS) $(AM_YFLAGS)
-SOURCES = $(xsw_SOURCES)
-DIST_SOURCES = $(xsw_SOURCES)
+SOURCES = $(xsw_SOURCES) $(xsw2html_SOURCES)
+DIST_SOURCES = $(xsw_SOURCES) $(xsw2html_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -166,7 +172,8 @@ xsw_SOURCES = xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c
 		  parser.y lexer.l
 
 xsw_LDADD = $(SDL_LIBS) -L/usr/local/lib
-xsw_CFLAGS = $(SDL_CFLAGS) -I/usr/local/share/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\" -DDEBUG
+xsw_CFLAGS = $(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\" -DDEBUG
+xsw2html_SOURCES = output/xsw2html.c
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -232,6 +239,9 @@ parser.h: parser.c
 xsw$(EXEEXT): $(xsw_OBJECTS) $(xsw_DEPENDENCIES) 
 	@rm -f xsw$(EXEEXT)
 	$(xsw_LINK) $(xsw_OBJECTS) $(xsw_LDADD) $(LIBS)
+xsw2html$(EXEEXT): $(xsw2html_OBJECTS) $(xsw2html_DEPENDENCIES) 
+	@rm -f xsw2html$(EXEEXT)
+	$(LINK) $(xsw2html_OBJECTS) $(xsw2html_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -252,6 +262,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-presenter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-slide.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-xsw.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -448,6 +459,20 @@ xsw-lexer.obj: lexer.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lexer.c' object='xsw-lexer.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
+
+xsw2html.o: output/xsw2html.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT xsw2html.o -MD -MP -MF $(DEPDIR)/xsw2html.Tpo -c -o xsw2html.o `test -f 'output/xsw2html.c' || echo '$(srcdir)/'`output/xsw2html.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html.Tpo $(DEPDIR)/xsw2html.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='output/xsw2html.c' object='xsw2html.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o xsw2html.o `test -f 'output/xsw2html.c' || echo '$(srcdir)/'`output/xsw2html.c
+
+xsw2html.obj: output/xsw2html.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT xsw2html.obj -MD -MP -MF $(DEPDIR)/xsw2html.Tpo -c -o xsw2html.obj `if test -f 'output/xsw2html.c'; then $(CYGPATH_W) 'output/xsw2html.c'; else $(CYGPATH_W) '$(srcdir)/output/xsw2html.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html.Tpo $(DEPDIR)/xsw2html.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='output/xsw2html.c' object='xsw2html.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o xsw2html.obj `if test -f 'output/xsw2html.c'; then $(CYGPATH_W) 'output/xsw2html.c'; else $(CYGPATH_W) '$(srcdir)/output/xsw2html.c'; fi`
 
 .l.c:
 	$(am__skiplex) $(SHELL) $(YLWRAP) $< $(LEX_OUTPUT_ROOT).c $@ -- $(LEXCOMPILE)

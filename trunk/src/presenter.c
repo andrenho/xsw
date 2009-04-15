@@ -351,6 +351,7 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer)
 				{
 					if(!developer) // developer was set
 					{
+						// TODO
 					}
 					return PRESENTER_DEVELOPER;
 				}

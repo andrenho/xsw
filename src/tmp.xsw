@@ -1,4 +1,8 @@
 template: aaa
- - bg:pink
+ - bg:pink gradient:grey
+ - bg: "teste.png"
+ - "Orange" color:orange
 slide: aaa
- - bg:cyan
+# - bg:white
+ - "Green" y:20 color:green
+ + "DarkBlue" color:Blue border:white

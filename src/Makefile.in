@@ -58,9 +58,17 @@ am__DEPENDENCIES_1 =
 xsw_DEPENDENCIES = $(am__DEPENDENCIES_1)
 xsw_LINK = $(CCLD) $(xsw_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o \
 	$@
-am_xsw2html_OBJECTS = xsw2html.$(OBJEXT)
+am_xsw2html_OBJECTS = xsw2html-x2h.$(OBJEXT) \
+	xsw2html-x2h_options.$(OBJEXT) xsw2html-file.$(OBJEXT) \
+	xsw2html-presentation.$(OBJEXT) xsw2html-slide.$(OBJEXT) \
+	xsw2html-cmd_text.$(OBJEXT) xsw2html-cmd_img.$(OBJEXT) \
+	xsw2html-list.$(OBJEXT) xsw2html-presenter.$(OBJEXT) \
+	xsw2html-execute.$(OBJEXT) xsw2html-color.$(OBJEXT) \
+	xsw2html-parser.$(OBJEXT) xsw2html-lexer.$(OBJEXT)
 xsw2html_OBJECTS = $(am_xsw2html_OBJECTS)
-xsw2html_LDADD = $(LDADD)
+xsw2html_DEPENDENCIES = $(am__DEPENDENCIES_1)
+xsw2html_LINK = $(CCLD) $(xsw2html_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -172,8 +180,13 @@ xsw_SOURCES = xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c
 		  parser.y lexer.l
 
 xsw_LDADD = $(SDL_LIBS) -L/usr/local/lib
-xsw_CFLAGS = $(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\" -DDEBUG -I.. -Ioutput
-xsw2html_SOURCES = output/xsw2html.c
+xsw_CFLAGS = $(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\"
+xsw2html_SOURCES = x2h.c x2h_options.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
+		       x2h_options.h file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h \
+		       parser.y lexer.l
+
+xsw2html_LDADD = $(SDL_LIBS) -L/usr/local/lib
+xsw2html_CFLAGS = $(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\"
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -241,7 +254,7 @@ xsw$(EXEEXT): $(xsw_OBJECTS) $(xsw_DEPENDENCIES)
 	$(xsw_LINK) $(xsw_OBJECTS) $(xsw_LDADD) $(LIBS)
 xsw2html$(EXEEXT): $(xsw2html_OBJECTS) $(xsw2html_DEPENDENCIES) 
 	@rm -f xsw2html$(EXEEXT)
-	$(LINK) $(xsw2html_OBJECTS) $(xsw2html_LDADD) $(LIBS)
+	$(xsw2html_LINK) $(xsw2html_OBJECTS) $(xsw2html_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -262,7 +275,19 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-presenter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-slide.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-xsw.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-cmd_img.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-cmd_text.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-color.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-execute.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-file.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-lexer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-list.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-parser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-presentation.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-presenter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-slide.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-x2h.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-x2h_options.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -460,19 +485,187 @@ xsw-lexer.obj: lexer.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
 
-xsw2html.o: output/xsw2html.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT xsw2html.o -MD -MP -MF $(DEPDIR)/xsw2html.Tpo -c -o xsw2html.o `test -f 'output/xsw2html.c' || echo '$(srcdir)/'`output/xsw2html.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html.Tpo $(DEPDIR)/xsw2html.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='output/xsw2html.c' object='xsw2html.o' libtool=no @AMDEPBACKSLASH@
+xsw2html-x2h.o: x2h.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-x2h.o -MD -MP -MF $(DEPDIR)/xsw2html-x2h.Tpo -c -o xsw2html-x2h.o `test -f 'x2h.c' || echo '$(srcdir)/'`x2h.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-x2h.Tpo $(DEPDIR)/xsw2html-x2h.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='x2h.c' object='xsw2html-x2h.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o xsw2html.o `test -f 'output/xsw2html.c' || echo '$(srcdir)/'`output/xsw2html.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-x2h.o `test -f 'x2h.c' || echo '$(srcdir)/'`x2h.c
 
-xsw2html.obj: output/xsw2html.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT xsw2html.obj -MD -MP -MF $(DEPDIR)/xsw2html.Tpo -c -o xsw2html.obj `if test -f 'output/xsw2html.c'; then $(CYGPATH_W) 'output/xsw2html.c'; else $(CYGPATH_W) '$(srcdir)/output/xsw2html.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html.Tpo $(DEPDIR)/xsw2html.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='output/xsw2html.c' object='xsw2html.obj' libtool=no @AMDEPBACKSLASH@
+xsw2html-x2h.obj: x2h.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-x2h.obj -MD -MP -MF $(DEPDIR)/xsw2html-x2h.Tpo -c -o xsw2html-x2h.obj `if test -f 'x2h.c'; then $(CYGPATH_W) 'x2h.c'; else $(CYGPATH_W) '$(srcdir)/x2h.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-x2h.Tpo $(DEPDIR)/xsw2html-x2h.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='x2h.c' object='xsw2html-x2h.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o xsw2html.obj `if test -f 'output/xsw2html.c'; then $(CYGPATH_W) 'output/xsw2html.c'; else $(CYGPATH_W) '$(srcdir)/output/xsw2html.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-x2h.obj `if test -f 'x2h.c'; then $(CYGPATH_W) 'x2h.c'; else $(CYGPATH_W) '$(srcdir)/x2h.c'; fi`
+
+xsw2html-x2h_options.o: x2h_options.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-x2h_options.o -MD -MP -MF $(DEPDIR)/xsw2html-x2h_options.Tpo -c -o xsw2html-x2h_options.o `test -f 'x2h_options.c' || echo '$(srcdir)/'`x2h_options.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-x2h_options.Tpo $(DEPDIR)/xsw2html-x2h_options.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='x2h_options.c' object='xsw2html-x2h_options.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-x2h_options.o `test -f 'x2h_options.c' || echo '$(srcdir)/'`x2h_options.c
+
+xsw2html-x2h_options.obj: x2h_options.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-x2h_options.obj -MD -MP -MF $(DEPDIR)/xsw2html-x2h_options.Tpo -c -o xsw2html-x2h_options.obj `if test -f 'x2h_options.c'; then $(CYGPATH_W) 'x2h_options.c'; else $(CYGPATH_W) '$(srcdir)/x2h_options.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-x2h_options.Tpo $(DEPDIR)/xsw2html-x2h_options.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='x2h_options.c' object='xsw2html-x2h_options.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-x2h_options.obj `if test -f 'x2h_options.c'; then $(CYGPATH_W) 'x2h_options.c'; else $(CYGPATH_W) '$(srcdir)/x2h_options.c'; fi`
+
+xsw2html-file.o: file.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-file.o -MD -MP -MF $(DEPDIR)/xsw2html-file.Tpo -c -o xsw2html-file.o `test -f 'file.c' || echo '$(srcdir)/'`file.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-file.Tpo $(DEPDIR)/xsw2html-file.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='file.c' object='xsw2html-file.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-file.o `test -f 'file.c' || echo '$(srcdir)/'`file.c
+
+xsw2html-file.obj: file.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-file.obj -MD -MP -MF $(DEPDIR)/xsw2html-file.Tpo -c -o xsw2html-file.obj `if test -f 'file.c'; then $(CYGPATH_W) 'file.c'; else $(CYGPATH_W) '$(srcdir)/file.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-file.Tpo $(DEPDIR)/xsw2html-file.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='file.c' object='xsw2html-file.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-file.obj `if test -f 'file.c'; then $(CYGPATH_W) 'file.c'; else $(CYGPATH_W) '$(srcdir)/file.c'; fi`
+
+xsw2html-presentation.o: presentation.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-presentation.o -MD -MP -MF $(DEPDIR)/xsw2html-presentation.Tpo -c -o xsw2html-presentation.o `test -f 'presentation.c' || echo '$(srcdir)/'`presentation.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-presentation.Tpo $(DEPDIR)/xsw2html-presentation.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presentation.c' object='xsw2html-presentation.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-presentation.o `test -f 'presentation.c' || echo '$(srcdir)/'`presentation.c
+
+xsw2html-presentation.obj: presentation.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-presentation.obj -MD -MP -MF $(DEPDIR)/xsw2html-presentation.Tpo -c -o xsw2html-presentation.obj `if test -f 'presentation.c'; then $(CYGPATH_W) 'presentation.c'; else $(CYGPATH_W) '$(srcdir)/presentation.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-presentation.Tpo $(DEPDIR)/xsw2html-presentation.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presentation.c' object='xsw2html-presentation.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-presentation.obj `if test -f 'presentation.c'; then $(CYGPATH_W) 'presentation.c'; else $(CYGPATH_W) '$(srcdir)/presentation.c'; fi`
+
+xsw2html-slide.o: slide.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-slide.o -MD -MP -MF $(DEPDIR)/xsw2html-slide.Tpo -c -o xsw2html-slide.o `test -f 'slide.c' || echo '$(srcdir)/'`slide.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-slide.Tpo $(DEPDIR)/xsw2html-slide.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='slide.c' object='xsw2html-slide.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-slide.o `test -f 'slide.c' || echo '$(srcdir)/'`slide.c
+
+xsw2html-slide.obj: slide.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-slide.obj -MD -MP -MF $(DEPDIR)/xsw2html-slide.Tpo -c -o xsw2html-slide.obj `if test -f 'slide.c'; then $(CYGPATH_W) 'slide.c'; else $(CYGPATH_W) '$(srcdir)/slide.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-slide.Tpo $(DEPDIR)/xsw2html-slide.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='slide.c' object='xsw2html-slide.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-slide.obj `if test -f 'slide.c'; then $(CYGPATH_W) 'slide.c'; else $(CYGPATH_W) '$(srcdir)/slide.c'; fi`
+
+xsw2html-cmd_text.o: cmd_text.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-cmd_text.o -MD -MP -MF $(DEPDIR)/xsw2html-cmd_text.Tpo -c -o xsw2html-cmd_text.o `test -f 'cmd_text.c' || echo '$(srcdir)/'`cmd_text.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-cmd_text.Tpo $(DEPDIR)/xsw2html-cmd_text.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_text.c' object='xsw2html-cmd_text.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-cmd_text.o `test -f 'cmd_text.c' || echo '$(srcdir)/'`cmd_text.c
+
+xsw2html-cmd_text.obj: cmd_text.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-cmd_text.obj -MD -MP -MF $(DEPDIR)/xsw2html-cmd_text.Tpo -c -o xsw2html-cmd_text.obj `if test -f 'cmd_text.c'; then $(CYGPATH_W) 'cmd_text.c'; else $(CYGPATH_W) '$(srcdir)/cmd_text.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-cmd_text.Tpo $(DEPDIR)/xsw2html-cmd_text.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_text.c' object='xsw2html-cmd_text.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-cmd_text.obj `if test -f 'cmd_text.c'; then $(CYGPATH_W) 'cmd_text.c'; else $(CYGPATH_W) '$(srcdir)/cmd_text.c'; fi`
+
+xsw2html-cmd_img.o: cmd_img.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-cmd_img.o -MD -MP -MF $(DEPDIR)/xsw2html-cmd_img.Tpo -c -o xsw2html-cmd_img.o `test -f 'cmd_img.c' || echo '$(srcdir)/'`cmd_img.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-cmd_img.Tpo $(DEPDIR)/xsw2html-cmd_img.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_img.c' object='xsw2html-cmd_img.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-cmd_img.o `test -f 'cmd_img.c' || echo '$(srcdir)/'`cmd_img.c
+
+xsw2html-cmd_img.obj: cmd_img.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-cmd_img.obj -MD -MP -MF $(DEPDIR)/xsw2html-cmd_img.Tpo -c -o xsw2html-cmd_img.obj `if test -f 'cmd_img.c'; then $(CYGPATH_W) 'cmd_img.c'; else $(CYGPATH_W) '$(srcdir)/cmd_img.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-cmd_img.Tpo $(DEPDIR)/xsw2html-cmd_img.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_img.c' object='xsw2html-cmd_img.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-cmd_img.obj `if test -f 'cmd_img.c'; then $(CYGPATH_W) 'cmd_img.c'; else $(CYGPATH_W) '$(srcdir)/cmd_img.c'; fi`
+
+xsw2html-list.o: list.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-list.o -MD -MP -MF $(DEPDIR)/xsw2html-list.Tpo -c -o xsw2html-list.o `test -f 'list.c' || echo '$(srcdir)/'`list.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-list.Tpo $(DEPDIR)/xsw2html-list.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='list.c' object='xsw2html-list.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-list.o `test -f 'list.c' || echo '$(srcdir)/'`list.c
+
+xsw2html-list.obj: list.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-list.obj -MD -MP -MF $(DEPDIR)/xsw2html-list.Tpo -c -o xsw2html-list.obj `if test -f 'list.c'; then $(CYGPATH_W) 'list.c'; else $(CYGPATH_W) '$(srcdir)/list.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-list.Tpo $(DEPDIR)/xsw2html-list.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='list.c' object='xsw2html-list.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-list.obj `if test -f 'list.c'; then $(CYGPATH_W) 'list.c'; else $(CYGPATH_W) '$(srcdir)/list.c'; fi`
+
+xsw2html-presenter.o: presenter.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-presenter.o -MD -MP -MF $(DEPDIR)/xsw2html-presenter.Tpo -c -o xsw2html-presenter.o `test -f 'presenter.c' || echo '$(srcdir)/'`presenter.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-presenter.Tpo $(DEPDIR)/xsw2html-presenter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presenter.c' object='xsw2html-presenter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-presenter.o `test -f 'presenter.c' || echo '$(srcdir)/'`presenter.c
+
+xsw2html-presenter.obj: presenter.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-presenter.obj -MD -MP -MF $(DEPDIR)/xsw2html-presenter.Tpo -c -o xsw2html-presenter.obj `if test -f 'presenter.c'; then $(CYGPATH_W) 'presenter.c'; else $(CYGPATH_W) '$(srcdir)/presenter.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-presenter.Tpo $(DEPDIR)/xsw2html-presenter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presenter.c' object='xsw2html-presenter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-presenter.obj `if test -f 'presenter.c'; then $(CYGPATH_W) 'presenter.c'; else $(CYGPATH_W) '$(srcdir)/presenter.c'; fi`
+
+xsw2html-execute.o: execute.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-execute.o -MD -MP -MF $(DEPDIR)/xsw2html-execute.Tpo -c -o xsw2html-execute.o `test -f 'execute.c' || echo '$(srcdir)/'`execute.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-execute.Tpo $(DEPDIR)/xsw2html-execute.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='execute.c' object='xsw2html-execute.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-execute.o `test -f 'execute.c' || echo '$(srcdir)/'`execute.c
+
+xsw2html-execute.obj: execute.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-execute.obj -MD -MP -MF $(DEPDIR)/xsw2html-execute.Tpo -c -o xsw2html-execute.obj `if test -f 'execute.c'; then $(CYGPATH_W) 'execute.c'; else $(CYGPATH_W) '$(srcdir)/execute.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-execute.Tpo $(DEPDIR)/xsw2html-execute.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='execute.c' object='xsw2html-execute.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-execute.obj `if test -f 'execute.c'; then $(CYGPATH_W) 'execute.c'; else $(CYGPATH_W) '$(srcdir)/execute.c'; fi`
+
+xsw2html-color.o: color.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-color.o -MD -MP -MF $(DEPDIR)/xsw2html-color.Tpo -c -o xsw2html-color.o `test -f 'color.c' || echo '$(srcdir)/'`color.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-color.Tpo $(DEPDIR)/xsw2html-color.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='color.c' object='xsw2html-color.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-color.o `test -f 'color.c' || echo '$(srcdir)/'`color.c
+
+xsw2html-color.obj: color.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-color.obj -MD -MP -MF $(DEPDIR)/xsw2html-color.Tpo -c -o xsw2html-color.obj `if test -f 'color.c'; then $(CYGPATH_W) 'color.c'; else $(CYGPATH_W) '$(srcdir)/color.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-color.Tpo $(DEPDIR)/xsw2html-color.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='color.c' object='xsw2html-color.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-color.obj `if test -f 'color.c'; then $(CYGPATH_W) 'color.c'; else $(CYGPATH_W) '$(srcdir)/color.c'; fi`
+
+xsw2html-parser.o: parser.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-parser.o -MD -MP -MF $(DEPDIR)/xsw2html-parser.Tpo -c -o xsw2html-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-parser.Tpo $(DEPDIR)/xsw2html-parser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parser.c' object='xsw2html-parser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c
+
+xsw2html-parser.obj: parser.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-parser.obj -MD -MP -MF $(DEPDIR)/xsw2html-parser.Tpo -c -o xsw2html-parser.obj `if test -f 'parser.c'; then $(CYGPATH_W) 'parser.c'; else $(CYGPATH_W) '$(srcdir)/parser.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-parser.Tpo $(DEPDIR)/xsw2html-parser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parser.c' object='xsw2html-parser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-parser.obj `if test -f 'parser.c'; then $(CYGPATH_W) 'parser.c'; else $(CYGPATH_W) '$(srcdir)/parser.c'; fi`
+
+xsw2html-lexer.o: lexer.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-lexer.o -MD -MP -MF $(DEPDIR)/xsw2html-lexer.Tpo -c -o xsw2html-lexer.o `test -f 'lexer.c' || echo '$(srcdir)/'`lexer.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-lexer.Tpo $(DEPDIR)/xsw2html-lexer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lexer.c' object='xsw2html-lexer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-lexer.o `test -f 'lexer.c' || echo '$(srcdir)/'`lexer.c
+
+xsw2html-lexer.obj: lexer.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-lexer.obj -MD -MP -MF $(DEPDIR)/xsw2html-lexer.Tpo -c -o xsw2html-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-lexer.Tpo $(DEPDIR)/xsw2html-lexer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lexer.c' object='xsw2html-lexer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
 
 .l.c:
 	$(am__skiplex) $(SHELL) $(YLWRAP) $< $(LEX_OUTPUT_ROOT).c $@ -- $(LEXCOMPILE)

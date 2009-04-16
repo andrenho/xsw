@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "output/xsw2html.h"
+#include "x2h_options.h"
 
 int main()
 {

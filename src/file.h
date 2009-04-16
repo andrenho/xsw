@@ -6,5 +6,6 @@
 
 int file_exists(const char* filename);
 char* file_path(const char* filename);
+char* file_read(const char* filename);
 
 #endif

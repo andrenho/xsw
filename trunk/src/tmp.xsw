@@ -10,6 +10,5 @@ slide: default
 
 
 slide:
- - background: $FF00FF
- - gradient: $00FF00
+ - background: $FF00FF gradient: $00FF00
 

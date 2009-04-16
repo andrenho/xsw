@@ -335,10 +335,12 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer)
 			case SDLK_PAGEUP:
 			case SDLK_UP:
 			case SDLK_LEFT:
+			case SDLK_BACKSPACE:
 				return PRESENTER_PREVIOUS;
 			case SDLK_PAGEDOWN:
 			case SDLK_DOWN:
 			case SDLK_RIGHT:
+			case SDLK_SPACE:
 				return PRESENTER_NEXT;
 			case SDLK_HOME:
 				return PRESENTER_FIRST;

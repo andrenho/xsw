@@ -1,3 +1,6 @@
+/* Source file covered by the GNU Public License v3 
+ * See LICENSE file or <http://www.gnu.org/licenses/gpl-3.0.txt/> */
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # include <io.h>
 #else
@@ -13,6 +16,7 @@ static char* write_image(Slide* s, char* filename)
 
 static void write_slide(Slide* s, char* tpl, char* sl_filename, char* img_filename)
 {
+	return img_filename;
 }
 
 int x2h_template_generate(Presentation* p, char* tpl, PageType page)

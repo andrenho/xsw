@@ -8,6 +8,7 @@
 
 typedef struct {
 	char* html_template;
+	char* html_tpl_data;
 } Options;
 
 Options* options_get(Presentation* presentation, int argc, char* argv[]);

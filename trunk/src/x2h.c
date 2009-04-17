@@ -8,6 +8,7 @@
 #include "presenter.h"
 #include "list.h"
 #include "x2h_options.h"
+#include "x2h_template.h"
 
 extern int parser_parse(Presentation *pres, char *filename);
 
@@ -40,9 +41,16 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	// read template file
-	
-	// generate images and templates
+	// read template
+	if(!options->html_template)
+	{
+		fprintf(stderr, "A HTML template was not chosen.\n");
+		return 1;
+	}
+	options->html_tpl_data = file_read(options->html_template);
+
+	// generate templates
+	x2h_template_generate(p, options->html_tpl_data, ONE_FILE_PER_SLIDE);
 	
 	return 0;
 }

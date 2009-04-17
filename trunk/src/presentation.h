@@ -17,6 +17,7 @@ typedef struct {
 	List* slides;
 	List* templates;
 	char* image_path;
+	char* name;
 } Presentation;
 
 Presentation* presentation_new();

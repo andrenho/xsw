@@ -45,8 +45,11 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 		}
 		SDL_WM_SetCaption("xsw", "xsw");
 		clear_screen(pr->scr);
-		SDL_Flip(pr->scr);
+		if(pr->scr == SDL_GetVideoSurface())
+			SDL_Flip(pr->scr);
 	}
+	else
+		pr->scr = SDL_CreateRGBSurface(SDL_SWSURFACE, 800, 600, 32, 0, 0, 0, 0);
 
 	if(TTF_Init() == -1)
 	{
@@ -100,7 +103,8 @@ static inline void developer_mouse_position(Presenter* pr, int x, int y)
 	r.x += 3; r.y += 3;
 	SDL_BlitSurface(sf, NULL, pr->scr, &r);
 
-	SDL_Flip(pr->scr); // TODO
+	if(pr->scr == SDL_GetVideoSurface())
+		SDL_Flip(pr->scr); // TODO
 	SDL_FreeSurface(sf);
 }
 
@@ -308,7 +312,8 @@ void presenter_show(Presenter* pr, int n, int developer)
 	if(developer)
 		developer_grid(pr);
 
-	SDL_Flip(pr->scr);
+	if(pr->scr == SDL_GetVideoSurface())
+		SDL_Flip(pr->scr);
 
 	// FIXME - free stuff?
 }
@@ -380,4 +385,10 @@ void presenter_fullscreen(Presenter* pr)
 void presenter_quit()
 {
 	SDL_Quit();
+}
+
+void presenter_save_image(Presenter* pr, char* filename)
+{
+	printf("Saving %s.\n", filename);
+	SDL_SaveBMP(pr->scr, filename);
 }

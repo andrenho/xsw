@@ -8,23 +8,42 @@
 #endif
 
 #include "x2h_template.h"
+#include "presenter.h"
 
-static char* write_image(Slide* s, char* filename)
+Presenter* pr;
+
+typedef enum { First, Normal, Last } LinkType;
+
+static char* write_image(Presenter* pr, Slide* s, char* filename)
 {
-	return "teste.png";
+	List *sds = pr->p->slides;
+	int n=0;
+	while((Slide*)sds->data != s)
+	{
+		sds = sds->next;
+		n++;
+		if(!sds)
+			abort();
+	}
+
+	sprintf(filename, "%s.bmp", filename); // TODO
+
+	presenter_show(pr, n, 0);
+	presenter_save_image(pr, filename);
+
+	return filename;
 }
 
-static char* write_slide(Slide* s, char* tpl, char* sl_filename, char* img_filename)
+static void write_slide(Slide* s, char* tpl, char* sl_filename, char* img_filename, LinkType link)
 {
-	return img_filename;
 }
 
 int x2h_template_generate(Presentation* p, char* tpl, PageType page)
 {
 	page = page; // avoid warnings
 
-	Slide *first = (Slide*)p->slides->data;
 	Slide *lst = (Slide*)last(p->slides);
+	pr = presenter_initialize(p, 0);
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 	mkdir(p->name);
@@ -38,20 +57,27 @@ int x2h_template_generate(Presentation* p, char* tpl, PageType page)
 	{
 		char* img_filename = malloc(512);
 		char* sl_filename = malloc(512);
-		
+		LinkType link = Normal;
+
 		snprintf(img_filename, 511, "%s/%d", p->name, n);
 		if(n == 1)
+		{
 			snprintf(sl_filename, 511, "%s", p->name);
+			link = First;
+		}
 		else
 			snprintf(sl_filename, 511, "%s/%d.html", p->name, n);
 
-		img_filename = write_image((Slide*)sds->data, img_filename);
-		write_slide((Slide*)sds->data, tpl, sl_filename, img_filename);
+		if((Slide*)sds->data == lst)
+			link = Last;
+
+		img_filename = write_image(pr, (Slide*)sds->data, img_filename);
+		write_slide((Slide*)sds->data, tpl, sl_filename, img_filename, link);
 
 		free(img_filename);
 		free(sl_filename);
 
-		sds->next;
+		sds = sds->next;
 		n++;
 	}
 	

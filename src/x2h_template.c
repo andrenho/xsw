@@ -25,7 +25,7 @@ int x2h_template_generate(Presentation* p, char* tpl, PageType page)
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 	mkdir(p->name);
 #else
-	mkdir(p->name, ECREAT);
+	mkdir(p->name, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 #endif
 
 	int n = 1;

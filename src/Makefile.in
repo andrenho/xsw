@@ -59,12 +59,13 @@ xsw_DEPENDENCIES = $(am__DEPENDENCIES_1)
 xsw_LINK = $(CCLD) $(xsw_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o \
 	$@
 am_xsw2html_OBJECTS = xsw2html-x2h.$(OBJEXT) \
-	xsw2html-x2h_options.$(OBJEXT) xsw2html-file.$(OBJEXT) \
-	xsw2html-presentation.$(OBJEXT) xsw2html-slide.$(OBJEXT) \
-	xsw2html-cmd_text.$(OBJEXT) xsw2html-cmd_img.$(OBJEXT) \
-	xsw2html-list.$(OBJEXT) xsw2html-presenter.$(OBJEXT) \
-	xsw2html-execute.$(OBJEXT) xsw2html-color.$(OBJEXT) \
-	xsw2html-parser.$(OBJEXT) xsw2html-lexer.$(OBJEXT)
+	xsw2html-x2h_options.$(OBJEXT) xsw2html-x2h_template.$(OBJEXT) \
+	xsw2html-file.$(OBJEXT) xsw2html-presentation.$(OBJEXT) \
+	xsw2html-slide.$(OBJEXT) xsw2html-cmd_text.$(OBJEXT) \
+	xsw2html-cmd_img.$(OBJEXT) xsw2html-list.$(OBJEXT) \
+	xsw2html-presenter.$(OBJEXT) xsw2html-execute.$(OBJEXT) \
+	xsw2html-color.$(OBJEXT) xsw2html-parser.$(OBJEXT) \
+	xsw2html-lexer.$(OBJEXT)
 xsw2html_OBJECTS = $(am_xsw2html_OBJECTS)
 xsw2html_DEPENDENCIES = $(am__DEPENDENCIES_1)
 xsw2html_LINK = $(CCLD) $(xsw2html_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
@@ -181,8 +182,8 @@ xsw_SOURCES = xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c
 
 xsw_LDADD = $(SDL_LIBS) -L/usr/local/lib
 xsw_CFLAGS = $(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\"
-xsw2html_SOURCES = x2h.c x2h_options.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
-		       x2h_options.h file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h \
+xsw2html_SOURCES = x2h.c x2h_options.c x2h_template.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
+		       x2h_options.h x2h_template.h file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h \
 		       parser.y lexer.l
 
 xsw2html_LDADD = $(SDL_LIBS) -L/usr/local/lib
@@ -288,6 +289,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-slide.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-x2h.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-x2h_options.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2html-x2h_template.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -512,6 +514,20 @@ xsw2html-x2h_options.obj: x2h_options.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='x2h_options.c' object='xsw2html-x2h_options.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-x2h_options.obj `if test -f 'x2h_options.c'; then $(CYGPATH_W) 'x2h_options.c'; else $(CYGPATH_W) '$(srcdir)/x2h_options.c'; fi`
+
+xsw2html-x2h_template.o: x2h_template.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-x2h_template.o -MD -MP -MF $(DEPDIR)/xsw2html-x2h_template.Tpo -c -o xsw2html-x2h_template.o `test -f 'x2h_template.c' || echo '$(srcdir)/'`x2h_template.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-x2h_template.Tpo $(DEPDIR)/xsw2html-x2h_template.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='x2h_template.c' object='xsw2html-x2h_template.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-x2h_template.o `test -f 'x2h_template.c' || echo '$(srcdir)/'`x2h_template.c
+
+xsw2html-x2h_template.obj: x2h_template.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-x2h_template.obj -MD -MP -MF $(DEPDIR)/xsw2html-x2h_template.Tpo -c -o xsw2html-x2h_template.obj `if test -f 'x2h_template.c'; then $(CYGPATH_W) 'x2h_template.c'; else $(CYGPATH_W) '$(srcdir)/x2h_template.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2html-x2h_template.Tpo $(DEPDIR)/xsw2html-x2h_template.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='x2h_template.c' object='xsw2html-x2h_template.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -c -o xsw2html-x2h_template.obj `if test -f 'x2h_template.c'; then $(CYGPATH_W) 'x2h_template.c'; else $(CYGPATH_W) '$(srcdir)/x2h_template.c'; fi`
 
 xsw2html-file.o: file.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2html_CFLAGS) $(CFLAGS) -MT xsw2html-file.o -MD -MP -MF $(DEPDIR)/xsw2html-file.Tpo -c -o xsw2html-file.o `test -f 'file.c' || echo '$(srcdir)/'`file.c

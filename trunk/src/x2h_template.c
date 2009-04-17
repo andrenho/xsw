@@ -14,7 +14,7 @@ static char* write_image(Slide* s, char* filename)
 	return "teste.png";
 }
 
-static void write_slide(Slide* s, char* tpl, char* sl_filename, char* img_filename)
+static char* write_slide(Slide* s, char* tpl, char* sl_filename, char* img_filename)
 {
 	return img_filename;
 }

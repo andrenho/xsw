@@ -1,14 +1,2 @@
-template: default
- - background: $FF00FF
-
-slide: default
-
-
-
-slide: default
-
-
-
-slide:
- - background: $FF00FF gradient: $00FF00
-
+slide: 
+ - 'hello'

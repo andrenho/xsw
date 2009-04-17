@@ -18,6 +18,7 @@ Presentation* presentation_new()
 	p->slides = NULL;
 	p->templates = NULL;
 	p->image_path = NULL;
+	p->name = "TODO"; // TODO
 	return p;
 }
 

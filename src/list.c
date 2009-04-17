@@ -69,3 +69,13 @@ void* nth(List* list, int n)
 
 	return list->data;
 }
+
+void* last(List* list)
+{
+	assert(list);
+
+	while(list->next)
+		list = list->next;
+
+	return list;
+}

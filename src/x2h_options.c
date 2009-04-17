@@ -30,6 +30,7 @@ Options* options_get(Presentation* p, int argc, char* argv[])
 {
 	int next_opt;
 	Options* opt = malloc(sizeof(Options));
+	opt->html_template = NULL;
 
 	const char* const short_options = "t:hv";
 	const struct option long_options[] = {

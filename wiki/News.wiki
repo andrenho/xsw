@@ -1,6 +1,11 @@
 ﻿#summary News about the xsw project
 #labels Featured,Phase-Support
 
+== Version 0.2.3 ==
+
+ * added a switch `-f` for fullscreen
+ * the window title now show the current and total slide number
+
 == Version 0.2.2 ==
 
  * named colors: now colors can be referred by their X11 names (see [Colors])

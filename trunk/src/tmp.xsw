@@ -1,4 +1,5 @@
 slide: 
+ - bg: DarkBlue
  - 'hello' color:orange
  + 'world!'
 

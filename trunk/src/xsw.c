@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	if(options->last)
 		current = count(p->slides) - 1;
 	int running = 1;
-	Presenter* pr = presenter_initialize(p, 1);
+	Presenter* pr = presenter_initialize(p, options->fullscreen ? 2 : 1);
 	if(!pr)
 		return 1; // message was already given in the function
 	presenter_show(pr, current, options->developer);

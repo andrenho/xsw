@@ -1,7 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+            "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-	<body>
-		{{ previous_start }}<a href="{{ previous_link }}">Previous</a>{{ previous_end }}
-		<img src="{{ slide }}">
-		{{ next_start }}<a href="{next_link}">Next</a>{{ next_end }}
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>% presentation_name %</title>
+		<style type="text/css">
+			img { border: 0px; }
+			.slide {
+			}
+			.previous {
+				position: absolute;
+				top: 540px;
+				left: 690px;
+			}
+			.next {
+				position: absolute;
+				top: 540px;
+				left: 740px;
+			}
+		</style>
+	</head>
+	<body bgcolor="black">
+		<div class="slide">
+			<img src="% slide %" alt="Slide" width="800px" height="600px">
+			%prev_start%<div class="previous"><a href="%prev_link%"><img src="%path_name%/back.png" alt="Previous"></a></div>%prev_end%
+			%next_start%<div class="next"><a href="%next_link%"><img src="%path_name%/forward.png" alt="Next"></a></div>%next_end%
+		</div>
 	</body>
 </html>

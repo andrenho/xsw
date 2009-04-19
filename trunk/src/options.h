@@ -9,6 +9,7 @@
 typedef struct {
 	int developer;
 	int last;
+	int fullscreen;
 } Options;
 
 Options* options_get(Presentation* presentation, int argc, char* argv[]);

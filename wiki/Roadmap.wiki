@@ -21,6 +21,10 @@
 
  * PNG/HTML/...(other formats) exportation
 
+== Version 0.4 ==
+
+ * Generate a file for distribution, containing images (and maybe fonts?)
+
 == Version 0.5 ==
 
  * image automatic scale when informing width

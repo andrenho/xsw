@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	// parse code in the file
 	if(!parser_parse(p, p->filename))
 	{
-		fprintf(stderr, "Invalid SSW file.");
+		fprintf(stderr, "Invalid XSW file.\n");
 		return 1;
 	}
 

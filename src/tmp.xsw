@@ -1,2 +1,10 @@
 slide: 
- - 'hello'
+ - 'hello' color:orange
+ + 'world!'
+
+slide:
+ - 'ola!'
+
+slide:
+ - bg: yellow gradient:orange
+ - 'bye'

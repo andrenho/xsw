@@ -18,6 +18,10 @@ inline static void clear_screen(SDL_Surface* scr)
 	SDL_FillRect(scr, NULL, SDL_MapRGB(scr->format, 0, 0, 0));
 }
 
+/* Initialize the presenter. Initialize video can be one of:
+ *   0 - don't initilize
+ *   1 - initialize in a window
+ *   2 - initialize in full screen */
 Presenter* presenter_initialize(Presentation* p, int initialize_video)
 {
 	int st;
@@ -37,7 +41,7 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 
 	if(initialize_video)
 	{
-		pr->scr = SDL_SetVideoMode(800, 600, 0, SDL_SWSURFACE|SDL_ANYFORMAT);
+		pr->scr = SDL_SetVideoMode(800, 600, 0, SDL_SWSURFACE|SDL_ANYFORMAT|(initialize_video == 2 ? SDL_FULLSCREEN : 0));
 		if(pr->scr == 0)
 		{
 			fprintf(stderr, "Could not set video mode: %s.\n", SDL_GetError());
@@ -313,7 +317,12 @@ void presenter_show(Presenter* pr, int n, int developer)
 		developer_grid(pr);
 
 	if(pr->scr == SDL_GetVideoSurface())
+	{
+		char title[100];
+		sprintf(title, "xsw %d/%d", n+1, count(pr->p->slides));
+		SDL_WM_SetCaption(title, title);
 		SDL_Flip(pr->scr);
+	}
 
 	// FIXME - free stuff?
 }

@@ -4,6 +4,11 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+typedef struct {
+	char *name;
+	char r, g, b;
+} Color;
+
 unsigned char* color_get(char* desc);
 
 #endif

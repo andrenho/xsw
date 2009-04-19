@@ -6,3957 +6,687 @@
 #include <stdlib.h>
 #include "color.h"
 
+static const Color colors[] = {
+	{ "snow", 255, 250, 250 },
+	{ "GhostWhite", 248, 248, 255 },
+	{ "WhiteSmoke", 245, 245, 245 },
+	{ "gainsboro", 220, 220, 220 },
+	{ "FloralWhite", 255, 250, 240 },
+	{ "OldLace", 253, 245, 230 },
+	{ "linen", 250, 240, 230 },
+	{ "AntiqueWhite", 250, 235, 215 },
+	{ "PapayaWhip", 255, 239, 213 },
+	{ "BlanchedAlmond", 255, 235, 205 },
+	{ "bisque", 255, 228, 196 },
+	{ "PeachPuff", 255, 218, 185 },
+	{ "NavajoWhite", 255, 222, 173 },
+	{ "moccasin", 255, 228, 181 },
+	{ "cornsilk", 255, 248, 220 },
+	{ "ivory", 255, 255, 240 },
+	{ "LemonChiffon", 255, 250, 205 },
+	{ "seashell", 255, 245, 238 },
+	{ "honeydew", 240, 255, 240 },
+	{ "MintCream", 245, 255, 250 },
+	{ "azure", 240, 255, 255 },
+	{ "AliceBlue", 240, 248, 255 },
+	{ "lavender", 230, 230, 250 },
+	{ "LavenderBlush", 255, 240, 245 },
+	{ "MistyRose", 255, 228, 225 },
+	{ "white", 255, 255, 255 },
+	{ "black", 0, 0, 0 },
+	{ "DarkSlateGray", 47, 79, 79 },
+	{ "DarkSlateGrey", 47, 79, 79 },
+	{ "DimGray", 105, 105, 105 },
+	{ "DimGrey", 105, 105, 105 },
+	{ "SlateGray", 112, 128, 144 },
+	{ "SlateGrey", 112, 128, 144 },
+	{ "LightSlateGray", 119, 136, 153 },
+	{ "LightSlateGrey", 119, 136, 153 },
+	{ "gray", 190, 190, 190 },
+	{ "grey", 190, 190, 190 },
+	{ "LightGrey", 211, 211, 211 },
+	{ "LightGray", 211, 211, 211 },
+	{ "MidnightBlue", 25, 25, 112 },
+	{ "navy", 0, 0, 128 },
+	{ "NavyBlue", 0, 0, 128 },
+	{ "CornflowerBlue", 100, 149, 237 },
+	{ "DarkSlateBlue", 72, 61, 139 },
+	{ "SlateBlue", 106, 90, 205 },
+	{ "MediumSlateBlue", 123, 104, 238 },
+	{ "LightSlateBlue", 132, 112, 255 },
+	{ "MediumBlue", 0, 0, 205 },
+	{ "RoyalBlue", 65, 105, 225 },
+	{ "blue", 0, 0, 255 },
+	{ "DodgerBlue", 30, 144, 255 },
+	{ "DeepSkyBlue", 0, 191, 255 },
+	{ "SkyBlue", 135, 206, 235 },
+	{ "LightSkyBlue", 135, 206, 250 },
+	{ "SteelBlue", 70, 130, 180 },
+	{ "LightSteelBlue", 176, 196, 222 },
+	{ "LightBlue", 173, 216, 230 },
+	{ "PowderBlue", 176, 224, 230 },
+	{ "PaleTurquoise", 175, 238, 238 },
+	{ "DarkTurquoise", 0, 206, 209 },
+	{ "MediumTurquoise", 72, 209, 204 },
+	{ "turquoise", 64, 224, 208 },
+	{ "cyan", 0, 255, 255 },
+	{ "LightCyan", 224, 255, 255 },
+	{ "CadetBlue", 95, 158, 160 },
+	{ "MediumAquamarine", 102, 205, 170 },
+	{ "aquamarine", 127, 255, 212 },
+	{ "DarkGreen", 0, 100, 0 },
+	{ "DarkOliveGreen", 85, 107, 47 },
+	{ "DarkSeaGreen", 143, 188, 143 },
+	{ "SeaGreen", 46, 139, 87 },
+	{ "MediumSeaGreen", 60, 179, 113 },
+	{ "LightSeaGreen", 32, 178, 170 },
+	{ "PaleGreen", 152, 251, 152 },
+	{ "SpringGreen", 0, 255, 127 },
+	{ "LawnGreen", 124, 252, 0 },
+	{ "green", 0, 255, 0 },
+	{ "chartreuse", 127, 255, 0 },
+	{ "MediumSpringGreen", 0, 250, 154 },
+	{ "GreenYellow", 173, 255, 47 },
+	{ "LimeGreen", 50, 205, 50 },
+	{ "YellowGreen", 154, 205, 50 },
+	{ "ForestGreen", 34, 139, 34 },
+	{ "OliveDrab", 107, 142, 35 },
+	{ "DarkKhaki", 189, 183, 107 },
+	{ "khaki", 240, 230, 140 },
+	{ "PaleGoldenrod", 238, 232, 170 },
+	{ "LightGoldenrodYellow", 250, 250, 210 },
+	{ "LightYellow", 255, 255, 224 },
+	{ "yellow", 255, 255, 0 },
+	{ "gold", 255, 215, 0 },
+	{ "LightGoldenrod", 238, 221, 130 },
+	{ "goldenrod", 218, 165, 32 },
+	{ "DarkGoldenrod", 184, 134, 11 },
+	{ "RosyBrown", 188, 143, 143 },
+	{ "IndianRed", 205, 92, 92 },
+	{ "SaddleBrown", 139, 69, 19 },
+	{ "sienna", 160, 82, 45 },
+	{ "peru", 205, 133, 63 },
+	{ "burlywood", 222, 184, 135 },
+	{ "beige", 245, 245, 220 },
+	{ "wheat", 245, 222, 179 },
+	{ "SandyBrown", 244, 164, 96 },
+	{ "tan", 210, 180, 140 },
+	{ "chocolate", 210, 105, 30 },
+	{ "firebrick", 178, 34, 34 },
+	{ "brown", 165, 42, 42 },
+	{ "DarkSalmon", 233, 150, 122 },
+	{ "salmon", 250, 128, 114 },
+	{ "LightSalmon", 255, 160, 122 },
+	{ "orange", 255, 165, 0 },
+	{ "DarkOrange", 255, 140, 0 },
+	{ "coral", 255, 127, 80 },
+	{ "LightCoral", 240, 128, 128 },
+	{ "tomato", 255, 99, 71 },
+	{ "OrangeRed", 255, 69, 0 },
+	{ "red", 255, 0, 0 },
+	{ "HotPink", 255, 105, 180 },
+	{ "DeepPink", 255, 20, 147 },
+	{ "pink", 255, 192, 203 },
+	{ "LightPink", 255, 182, 193 },
+	{ "PaleVioletRed", 219, 112, 147 },
+	{ "maroon", 176, 48, 96 },
+	{ "MediumVioletRed", 199, 21, 133 },
+	{ "VioletRed", 208, 32, 144 },
+	{ "magenta", 255, 0, 255 },
+	{ "violet", 238, 130, 238 },
+	{ "plum", 221, 160, 221 },
+	{ "orchid", 218, 112, 214 },
+	{ "MediumOrchid", 186, 85, 211 },
+	{ "DarkOrchid", 153, 50, 204 },
+	{ "DarkViolet", 148, 0, 211 },
+	{ "BlueViolet", 138, 43, 226 },
+	{ "purple", 160, 32, 240 },
+	{ "MediumPurple", 147, 112, 219 },
+	{ "thistle", 216, 191, 216 },
+	{ "snow1", 255, 250, 250 },
+	{ "snow2", 238, 233, 233 },
+	{ "snow3", 205, 201, 201 },
+	{ "snow4", 139, 137, 137 },
+	{ "seashell1", 255, 245, 238 },
+	{ "seashell2", 238, 229, 222 },
+	{ "seashell3", 205, 197, 191 },
+	{ "seashell4", 139, 134, 130 },
+	{ "AntiqueWhite1", 255, 239, 219 },
+	{ "AntiqueWhite2", 238, 223, 204 },
+	{ "AntiqueWhite3", 205, 192, 176 },
+	{ "AntiqueWhite4", 139, 131, 120 },
+	{ "bisque1", 255, 228, 196 },
+	{ "bisque2", 238, 213, 183 },
+	{ "bisque3", 205, 183, 158 },
+	{ "bisque4", 139, 125, 107 },
+	{ "PeachPuff1", 255, 218, 185 },
+	{ "PeachPuff2", 238, 203, 173 },
+	{ "PeachPuff3", 205, 175, 149 },
+	{ "PeachPuff4", 139, 119, 101 },
+	{ "NavajoWhite1", 255, 222, 173 },
+	{ "NavajoWhite2", 238, 207, 161 },
+	{ "NavajoWhite3", 205, 179, 139 },
+	{ "NavajoWhite4", 139, 121, 94 },
+	{ "LemonChiffon1", 255, 250, 205 },
+	{ "LemonChiffon2", 238, 233, 191 },
+	{ "LemonChiffon3", 205, 201, 165 },
+	{ "LemonChiffon4", 139, 137, 112 },
+	{ "cornsilk1", 255, 248, 220 },
+	{ "cornsilk2", 238, 232, 205 },
+	{ "cornsilk3", 205, 200, 177 },
+	{ "cornsilk4", 139, 136, 120 },
+	{ "ivory1", 255, 255, 240 },
+	{ "ivory2", 238, 238, 224 },
+	{ "ivory3", 205, 205, 193 },
+	{ "ivory4", 139, 139, 131 },
+	{ "honeydew1", 240, 255, 240 },
+	{ "honeydew2", 224, 238, 224 },
+	{ "honeydew3", 193, 205, 193 },
+	{ "honeydew4", 131, 139, 131 },
+	{ "LavenderBlush1", 255, 240, 245 },
+	{ "LavenderBlush2", 238, 224, 229 },
+	{ "LavenderBlush3", 205, 193, 197 },
+	{ "LavenderBlush4", 139, 131, 134 },
+	{ "MistyRose1", 255, 228, 225 },
+	{ "MistyRose2", 238, 213, 210 },
+	{ "MistyRose3", 205, 183, 181 },
+	{ "MistyRose4", 139, 125, 123 },
+	{ "azure1", 240, 255, 255 },
+	{ "azure2", 224, 238, 238 },
+	{ "azure3", 193, 205, 205 },
+	{ "azure4", 131, 139, 139 },
+	{ "SlateBlue1", 131, 111, 255 },
+	{ "SlateBlue2", 122, 103, 238 },
+	{ "SlateBlue3", 105, 89, 205 },
+	{ "SlateBlue4", 71, 60, 139 },
+	{ "RoyalBlue1", 72, 118, 255 },
+	{ "RoyalBlue2", 67, 110, 238 },
+	{ "RoyalBlue3", 58, 95, 205 },
+	{ "RoyalBlue4", 39, 64, 139 },
+	{ "blue1", 0, 0, 255 },
+	{ "blue2", 0, 0, 238 },
+	{ "blue3", 0, 0, 205 },
+	{ "blue4", 0, 0, 139 },
+	{ "DodgerBlue1", 30, 144, 255 },
+	{ "DodgerBlue2", 28, 134, 238 },
+	{ "DodgerBlue3", 24, 116, 205 },
+	{ "DodgerBlue4", 16, 78, 139 },
+	{ "SteelBlue1", 99, 184, 255 },
+	{ "SteelBlue2", 92, 172, 238 },
+	{ "SteelBlue3", 79, 148, 205 },
+	{ "SteelBlue4", 54, 100, 139 },
+	{ "DeepSkyBlue1", 0, 191, 255 },
+	{ "DeepSkyBlue2", 0, 178, 238 },
+	{ "DeepSkyBlue3", 0, 154, 205 },
+	{ "DeepSkyBlue4", 0, 104, 139 },
+	{ "SkyBlue1", 135, 206, 255 },
+	{ "SkyBlue2", 126, 192, 238 },
+	{ "SkyBlue3", 108, 166, 205 },
+	{ "SkyBlue4", 74, 112, 139 },
+	{ "LightSkyBlue1", 176, 226, 255 },
+	{ "LightSkyBlue2", 164, 211, 238 },
+	{ "LightSkyBlue3", 141, 182, 205 },
+	{ "LightSkyBlue4", 96, 123, 139 },
+	{ "SlateGray1", 198, 226, 255 },
+	{ "SlateGray2", 185, 211, 238 },
+	{ "SlateGray3", 159, 182, 205 },
+	{ "SlateGray4", 108, 123, 139 },
+	{ "LightSteelBlue1", 202, 225, 255 },
+	{ "LightSteelBlue2", 188, 210, 238 },
+	{ "LightSteelBlue3", 162, 181, 205 },
+	{ "LightSteelBlue4", 110, 123, 139 },
+	{ "LightBlue1", 191, 239, 255 },
+	{ "LightBlue2", 178, 223, 238 },
+	{ "LightBlue3", 154, 192, 205 },
+	{ "LightBlue4", 104, 131, 139 },
+	{ "LightCyan1", 224, 255, 255 },
+	{ "LightCyan2", 209, 238, 238 },
+	{ "LightCyan3", 180, 205, 205 },
+	{ "LightCyan4", 122, 139, 139 },
+	{ "PaleTurquoise1", 187, 255, 255 },
+	{ "PaleTurquoise2", 174, 238, 238 },
+	{ "PaleTurquoise3", 150, 205, 205 },
+	{ "PaleTurquoise4", 102, 139, 139 },
+	{ "CadetBlue1", 152, 245, 255 },
+	{ "CadetBlue2", 142, 229, 238 },
+	{ "CadetBlue3", 122, 197, 205 },
+	{ "CadetBlue4", 83, 134, 139 },
+	{ "turquoise1", 0, 245, 255 },
+	{ "turquoise2", 0, 229, 238 },
+	{ "turquoise3", 0, 197, 205 },
+	{ "turquoise4", 0, 134, 139 },
+	{ "cyan1", 0, 255, 255 },
+	{ "cyan2", 0, 238, 238 },
+	{ "cyan3", 0, 205, 205 },
+	{ "cyan4", 0, 139, 139 },
+	{ "DarkSlateGray1", 151, 255, 255 },
+	{ "DarkSlateGray2", 141, 238, 238 },
+	{ "DarkSlateGray3", 121, 205, 205 },
+	{ "DarkSlateGray4", 82, 139, 139 },
+	{ "aquamarine1", 127, 255, 212 },
+	{ "aquamarine2", 118, 238, 198 },
+	{ "aquamarine3", 102, 205, 170 },
+	{ "aquamarine4", 69, 139, 116 },
+	{ "DarkSeaGreen1", 193, 255, 193 },
+	{ "DarkSeaGreen2", 180, 238, 180 },
+	{ "DarkSeaGreen3", 155, 205, 155 },
+	{ "DarkSeaGreen4", 105, 139, 105 },
+	{ "SeaGreen1", 84, 255, 159 },
+	{ "SeaGreen2", 78, 238, 148 },
+	{ "SeaGreen3", 67, 205, 128 },
+	{ "SeaGreen4", 46, 139, 87 },
+	{ "PaleGreen1", 154, 255, 154 },
+	{ "PaleGreen2", 144, 238, 144 },
+	{ "PaleGreen3", 124, 205, 124 },
+	{ "PaleGreen4", 84, 139, 84 },
+	{ "SpringGreen1", 0, 255, 127 },
+	{ "SpringGreen2", 0, 238, 118 },
+	{ "SpringGreen3", 0, 205, 102 },
+	{ "SpringGreen4", 0, 139, 69 },
+	{ "green1", 0, 255, 0 },
+	{ "green2", 0, 238, 0 },
+	{ "green3", 0, 205, 0 },
+	{ "green4", 0, 139, 0 },
+	{ "chartreuse1", 127, 255, 0 },
+	{ "chartreuse2", 118, 238, 0 },
+	{ "chartreuse3", 102, 205, 0 },
+	{ "chartreuse4", 69, 139, 0 },
+	{ "OliveDrab1", 192, 255, 62 },
+	{ "OliveDrab2", 179, 238, 58 },
+	{ "OliveDrab3", 154, 205, 50 },
+	{ "OliveDrab4", 105, 139, 34 },
+	{ "DarkOliveGreen1", 202, 255, 112 },
+	{ "DarkOliveGreen2", 188, 238, 104 },
+	{ "DarkOliveGreen3", 162, 205, 90 },
+	{ "DarkOliveGreen4", 110, 139, 61 },
+	{ "khaki1", 255, 246, 143 },
+	{ "khaki2", 238, 230, 133 },
+	{ "khaki3", 205, 198, 115 },
+	{ "khaki4", 139, 134, 78 },
+	{ "LightGoldenrod1", 255, 236, 139 },
+	{ "LightGoldenrod2", 238, 220, 130 },
+	{ "LightGoldenrod3", 205, 190, 112 },
+	{ "LightGoldenrod4", 139, 129, 76 },
+	{ "LightYellow1", 255, 255, 224 },
+	{ "LightYellow2", 238, 238, 209 },
+	{ "LightYellow3", 205, 205, 180 },
+	{ "LightYellow4", 139, 139, 122 },
+	{ "yellow1", 255, 255, 0 },
+	{ "yellow2", 238, 238, 0 },
+	{ "yellow3", 205, 205, 0 },
+	{ "yellow4", 139, 139, 0 },
+	{ "gold1", 255, 215, 0 },
+	{ "gold2", 238, 201, 0 },
+	{ "gold3", 205, 173, 0 },
+	{ "gold4", 139, 117, 0 },
+	{ "goldenrod1", 255, 193, 37 },
+	{ "goldenrod2", 238, 180, 34 },
+	{ "goldenrod3", 205, 155, 29 },
+	{ "goldenrod4", 139, 105, 20 },
+	{ "DarkGoldenrod1", 255, 185, 15 },
+	{ "DarkGoldenrod2", 238, 173, 14 },
+	{ "DarkGoldenrod3", 205, 149, 12 },
+	{ "DarkGoldenrod4", 139, 101, 8 },
+	{ "RosyBrown1", 255, 193, 193 },
+	{ "RosyBrown2", 238, 180, 180 },
+	{ "RosyBrown3", 205, 155, 155 },
+	{ "RosyBrown4", 139, 105, 105 },
+	{ "IndianRed1", 255, 106, 106 },
+	{ "IndianRed2", 238, 99, 99 },
+	{ "IndianRed3", 205, 85, 85 },
+	{ "IndianRed4", 139, 58, 58 },
+	{ "sienna1", 255, 130, 71 },
+	{ "sienna2", 238, 121, 66 },
+	{ "sienna3", 205, 104, 57 },
+	{ "sienna4", 139, 71, 38 },
+	{ "burlywood1", 255, 211, 155 },
+	{ "burlywood2", 238, 197, 145 },
+	{ "burlywood3", 205, 170, 125 },
+	{ "burlywood4", 139, 115, 85 },
+	{ "wheat1", 255, 231, 186 },
+	{ "wheat2", 238, 216, 174 },
+	{ "wheat3", 205, 186, 150 },
+	{ "wheat4", 139, 126, 102 },
+	{ "tan1", 255, 165, 79 },
+	{ "tan2", 238, 154, 73 },
+	{ "tan3", 205, 133, 63 },
+	{ "tan4", 139, 90, 43 },
+	{ "chocolate1", 255, 127, 36 },
+	{ "chocolate2", 238, 118, 33 },
+	{ "chocolate3", 205, 102, 29 },
+	{ "chocolate4", 139, 69, 19 },
+	{ "firebrick1", 255, 48, 48 },
+	{ "firebrick2", 238, 44, 44 },
+	{ "firebrick3", 205, 38, 38 },
+	{ "firebrick4", 139, 26, 26 },
+	{ "brown1", 255, 64, 64 },
+	{ "brown2", 238, 59, 59 },
+	{ "brown3", 205, 51, 51 },
+	{ "brown4", 139, 35, 35 },
+	{ "salmon1", 255, 140, 105 },
+	{ "salmon2", 238, 130, 98 },
+	{ "salmon3", 205, 112, 84 },
+	{ "salmon4", 139, 76, 57 },
+	{ "LightSalmon1", 255, 160, 122 },
+	{ "LightSalmon2", 238, 149, 114 },
+	{ "LightSalmon3", 205, 129, 98 },
+	{ "LightSalmon4", 139, 87, 66 },
+	{ "orange1", 255, 165, 0 },
+	{ "orange2", 238, 154, 0 },
+	{ "orange3", 205, 133, 0 },
+	{ "orange4", 139, 90, 0 },
+	{ "DarkOrange1", 255, 127, 0 },
+	{ "DarkOrange2", 238, 118, 0 },
+	{ "DarkOrange3", 205, 102, 0 },
+	{ "DarkOrange4", 139, 69, 0 },
+	{ "coral1", 255, 114, 86 },
+	{ "coral2", 238, 106, 80 },
+	{ "coral3", 205, 91, 69 },
+	{ "coral4", 139, 62, 47 },
+	{ "tomato1", 255, 99, 71 },
+	{ "tomato2", 238, 92, 66 },
+	{ "tomato3", 205, 79, 57 },
+	{ "tomato4", 139, 54, 38 },
+	{ "OrangeRed1", 255, 69, 0 },
+	{ "OrangeRed2", 238, 64, 0 },
+	{ "OrangeRed3", 205, 55, 0 },
+	{ "OrangeRed4", 139, 37, 0 },
+	{ "red1", 255, 0, 0 },
+	{ "red2", 238, 0, 0 },
+	{ "red3", 205, 0, 0 },
+	{ "red4", 139, 0, 0 },
+	{ "DeepPink1", 255, 20, 147 },
+	{ "DeepPink2", 238, 18, 137 },
+	{ "DeepPink3", 205, 16, 118 },
+	{ "DeepPink4", 139, 10, 80 },
+	{ "HotPink1", 255, 110, 180 },
+	{ "HotPink2", 238, 106, 167 },
+	{ "HotPink3", 205, 96, 144 },
+	{ "HotPink4", 139, 58, 98 },
+	{ "pink1", 255, 181, 197 },
+	{ "pink2", 238, 169, 184 },
+	{ "pink3", 205, 145, 158 },
+	{ "pink4", 139, 99, 108 },
+	{ "LightPink1", 255, 174, 185 },
+	{ "LightPink2", 238, 162, 173 },
+	{ "LightPink3", 205, 140, 149 },
+	{ "LightPink4", 139, 95, 101 },
+	{ "PaleVioletRed1", 255, 130, 171 },
+	{ "PaleVioletRed2", 238, 121, 159 },
+	{ "PaleVioletRed3", 205, 104, 137 },
+	{ "PaleVioletRed4", 139, 71, 93 },
+	{ "maroon1", 255, 52, 179 },
+	{ "maroon2", 238, 48, 167 },
+	{ "maroon3", 205, 41, 144 },
+	{ "maroon4", 139, 28, 98 },
+	{ "VioletRed1", 255, 62, 150 },
+	{ "VioletRed2", 238, 58, 140 },
+	{ "VioletRed3", 205, 50, 120 },
+	{ "VioletRed4", 139, 34, 82 },
+	{ "magenta1", 255, 0, 255 },
+	{ "magenta2", 238, 0, 238 },
+	{ "magenta3", 205, 0, 205 },
+	{ "magenta4", 139, 0, 139 },
+	{ "orchid1", 255, 131, 250 },
+	{ "orchid2", 238, 122, 233 },
+	{ "orchid3", 205, 105, 201 },
+	{ "orchid4", 139, 71, 137 },
+	{ "plum1", 255, 187, 255 },
+	{ "plum2", 238, 174, 238 },
+	{ "plum3", 205, 150, 205 },
+	{ "plum4", 139, 102, 139 },
+	{ "MediumOrchid1", 224, 102, 255 },
+	{ "MediumOrchid2", 209, 95, 238 },
+	{ "MediumOrchid3", 180, 82, 205 },
+	{ "MediumOrchid4", 122, 55, 139 },
+	{ "DarkOrchid1", 191, 62, 255 },
+	{ "DarkOrchid2", 178, 58, 238 },
+	{ "DarkOrchid3", 154, 50, 205 },
+	{ "DarkOrchid4", 104, 34, 139 },
+	{ "purple1", 155, 48, 255 },
+	{ "purple2", 145, 44, 238 },
+	{ "purple3", 125, 38, 205 },
+	{ "purple4", 85, 26, 139 },
+	{ "MediumPurple1", 171, 130, 255 },
+	{ "MediumPurple2", 159, 121, 238 },
+	{ "MediumPurple3", 137, 104, 205 },
+	{ "MediumPurple4", 93, 71, 139 },
+	{ "thistle1", 255, 225, 255 },
+	{ "thistle2", 238, 210, 238 },
+	{ "thistle3", 205, 181, 205 },
+	{ "thistle4", 139, 123, 139 },
+	{ "gray0", 0, 0, 0 },
+	{ "grey0", 0, 0, 0 },
+	{ "gray1", 3, 3, 3 },
+	{ "grey1", 3, 3, 3 },
+	{ "gray2", 5, 5, 5 },
+	{ "grey2", 5, 5, 5 },
+	{ "gray3", 8, 8, 8 },
+	{ "grey3", 8, 8, 8 },
+	{ "gray4", 10, 10, 10 },
+	{ "grey4", 10, 10, 10 },
+	{ "gray5", 13, 13, 13 },
+	{ "grey5", 13, 13, 13 },
+	{ "gray6", 15, 15, 15 },
+	{ "grey6", 15, 15, 15 },
+	{ "gray7", 18, 18, 18 },
+	{ "grey7", 18, 18, 18 },
+	{ "gray8", 20, 20, 20 },
+	{ "grey8", 20, 20, 20 },
+	{ "gray9", 23, 23, 23 },
+	{ "grey9", 23, 23, 23 },
+	{ "gray10", 26, 26, 26 },
+	{ "grey10", 26, 26, 26 },
+	{ "gray11", 28, 28, 28 },
+	{ "grey11", 28, 28, 28 },
+	{ "gray12", 31, 31, 31 },
+	{ "grey12", 31, 31, 31 },
+	{ "gray13", 33, 33, 33 },
+	{ "grey13", 33, 33, 33 },
+	{ "gray14", 36, 36, 36 },
+	{ "grey14", 36, 36, 36 },
+	{ "gray15", 38, 38, 38 },
+	{ "grey15", 38, 38, 38 },
+	{ "gray16", 41, 41, 41 },
+	{ "grey16", 41, 41, 41 },
+	{ "gray17", 43, 43, 43 },
+	{ "grey17", 43, 43, 43 },
+	{ "gray18", 46, 46, 46 },
+	{ "grey18", 46, 46, 46 },
+	{ "gray19", 48, 48, 48 },
+	{ "grey19", 48, 48, 48 },
+	{ "gray20", 51, 51, 51 },
+	{ "grey20", 51, 51, 51 },
+	{ "gray21", 54, 54, 54 },
+	{ "grey21", 54, 54, 54 },
+	{ "gray22", 56, 56, 56 },
+	{ "grey22", 56, 56, 56 },
+	{ "gray23", 59, 59, 59 },
+	{ "grey23", 59, 59, 59 },
+	{ "gray24", 61, 61, 61 },
+	{ "grey24", 61, 61, 61 },
+	{ "gray25", 64, 64, 64 },
+	{ "grey25", 64, 64, 64 },
+	{ "gray26", 66, 66, 66 },
+	{ "grey26", 66, 66, 66 },
+	{ "gray27", 69, 69, 69 },
+	{ "grey27", 69, 69, 69 },
+	{ "gray28", 71, 71, 71 },
+	{ "grey28", 71, 71, 71 },
+	{ "gray29", 74, 74, 74 },
+	{ "grey29", 74, 74, 74 },
+	{ "gray30", 77, 77, 77 },
+	{ "grey30", 77, 77, 77 },
+	{ "gray31", 79, 79, 79 },
+	{ "grey31", 79, 79, 79 },
+	{ "gray32", 82, 82, 82 },
+	{ "grey32", 82, 82, 82 },
+	{ "gray33", 84, 84, 84 },
+	{ "grey33", 84, 84, 84 },
+	{ "gray34", 87, 87, 87 },
+	{ "grey34", 87, 87, 87 },
+	{ "gray35", 89, 89, 89 },
+	{ "grey35", 89, 89, 89 },
+	{ "gray36", 92, 92, 92 },
+	{ "grey36", 92, 92, 92 },
+	{ "gray37", 94, 94, 94 },
+	{ "grey37", 94, 94, 94 },
+	{ "gray38", 97, 97, 97 },
+	{ "grey38", 97, 97, 97 },
+	{ "gray39", 99, 99, 99 },
+	{ "grey39", 99, 99, 99 },
+	{ "gray40", 102, 102, 102 },
+	{ "grey40", 102, 102, 102 },
+	{ "gray41", 105, 105, 105 },
+	{ "grey41", 105, 105, 105 },
+	{ "gray42", 107, 107, 107 },
+	{ "grey42", 107, 107, 107 },
+	{ "gray43", 110, 110, 110 },
+	{ "grey43", 110, 110, 110 },
+	{ "gray44", 112, 112, 112 },
+	{ "grey44", 112, 112, 112 },
+	{ "gray45", 115, 115, 115 },
+	{ "grey45", 115, 115, 115 },
+	{ "gray46", 117, 117, 117 },
+	{ "grey46", 117, 117, 117 },
+	{ "gray47", 120, 120, 120 },
+	{ "grey47", 120, 120, 120 },
+	{ "gray48", 122, 122, 122 },
+	{ "grey48", 122, 122, 122 },
+	{ "gray49", 125, 125, 125 },
+	{ "grey49", 125, 125, 125 },
+	{ "gray50", 127, 127, 127 },
+	{ "grey50", 127, 127, 127 },
+	{ "gray51", 130, 130, 130 },
+	{ "grey51", 130, 130, 130 },
+	{ "gray52", 133, 133, 133 },
+	{ "grey52", 133, 133, 133 },
+	{ "gray53", 135, 135, 135 },
+	{ "grey53", 135, 135, 135 },
+	{ "gray54", 138, 138, 138 },
+	{ "grey54", 138, 138, 138 },
+	{ "gray55", 140, 140, 140 },
+	{ "grey55", 140, 140, 140 },
+	{ "gray56", 143, 143, 143 },
+	{ "grey56", 143, 143, 143 },
+	{ "gray57", 145, 145, 145 },
+	{ "grey57", 145, 145, 145 },
+	{ "gray58", 148, 148, 148 },
+	{ "grey58", 148, 148, 148 },
+	{ "gray59", 150, 150, 150 },
+	{ "grey59", 150, 150, 150 },
+	{ "gray60", 153, 153, 153 },
+	{ "grey60", 153, 153, 153 },
+	{ "gray61", 156, 156, 156 },
+	{ "grey61", 156, 156, 156 },
+	{ "gray62", 158, 158, 158 },
+	{ "grey62", 158, 158, 158 },
+	{ "gray63", 161, 161, 161 },
+	{ "grey63", 161, 161, 161 },
+	{ "gray64", 163, 163, 163 },
+	{ "grey64", 163, 163, 163 },
+	{ "gray65", 166, 166, 166 },
+	{ "grey65", 166, 166, 166 },
+	{ "gray66", 168, 168, 168 },
+	{ "grey66", 168, 168, 168 },
+	{ "gray67", 171, 171, 171 },
+	{ "grey67", 171, 171, 171 },
+	{ "gray68", 173, 173, 173 },
+	{ "grey68", 173, 173, 173 },
+	{ "gray69", 176, 176, 176 },
+	{ "grey69", 176, 176, 176 },
+	{ "gray70", 179, 179, 179 },
+	{ "grey70", 179, 179, 179 },
+	{ "gray71", 181, 181, 181 },
+	{ "grey71", 181, 181, 181 },
+	{ "gray72", 184, 184, 184 },
+	{ "grey72", 184, 184, 184 },
+	{ "gray73", 186, 186, 186 },
+	{ "grey73", 186, 186, 186 },
+	{ "gray74", 189, 189, 189 },
+	{ "grey74", 189, 189, 189 },
+	{ "gray75", 191, 191, 191 },
+	{ "grey75", 191, 191, 191 },
+	{ "gray76", 194, 194, 194 },
+	{ "grey76", 194, 194, 194 },
+	{ "gray77", 196, 196, 196 },
+	{ "grey77", 196, 196, 196 },
+	{ "gray78", 199, 199, 199 },
+	{ "grey78", 199, 199, 199 },
+	{ "gray79", 201, 201, 201 },
+	{ "grey79", 201, 201, 201 },
+	{ "gray80", 204, 204, 204 },
+	{ "grey80", 204, 204, 204 },
+	{ "gray81", 207, 207, 207 },
+	{ "grey81", 207, 207, 207 },
+	{ "gray82", 209, 209, 209 },
+	{ "grey82", 209, 209, 209 },
+	{ "gray83", 212, 212, 212 },
+	{ "grey83", 212, 212, 212 },
+	{ "gray84", 214, 214, 214 },
+	{ "grey84", 214, 214, 214 },
+	{ "gray85", 217, 217, 217 },
+	{ "grey85", 217, 217, 217 },
+	{ "gray86", 219, 219, 219 },
+	{ "grey86", 219, 219, 219 },
+	{ "gray87", 222, 222, 222 },
+	{ "grey87", 222, 222, 222 },
+	{ "gray88", 224, 224, 224 },
+	{ "grey88", 224, 224, 224 },
+	{ "gray89", 227, 227, 227 },
+	{ "grey89", 227, 227, 227 },
+	{ "gray90", 229, 229, 229 },
+	{ "grey90", 229, 229, 229 },
+	{ "gray91", 232, 232, 232 },
+	{ "grey91", 232, 232, 232 },
+	{ "gray92", 235, 235, 235 },
+	{ "grey92", 235, 235, 235 },
+	{ "gray93", 237, 237, 237 },
+	{ "grey93", 237, 237, 237 },
+	{ "gray94", 240, 240, 240 },
+	{ "grey94", 240, 240, 240 },
+	{ "gray95", 242, 242, 242 },
+	{ "grey95", 242, 242, 242 },
+	{ "gray96", 245, 245, 245 },
+	{ "grey96", 245, 245, 245 },
+	{ "gray97", 247, 247, 247 },
+	{ "grey97", 247, 247, 247 },
+	{ "gray98", 250, 250, 250 },
+	{ "grey98", 250, 250, 250 },
+	{ "gray99", 252, 252, 252 },
+	{ "grey99", 252, 252, 252 },
+	{ "gray100", 255, 255, 255 },
+	{ "grey100", 255, 255, 255 },
+	{ "DarkGrey", 169, 169, 169 },
+	{ "DarkGray", 169, 169, 169 },
+	{ "DarkBlue", 0, 0, 139 },
+	{ "DarkCyan", 0, 139, 139 },
+	{ "DarkMagenta", 139, 0, 139 },
+	{ "DarkRed", 139, 0, 0 },
+	{ "LightGreen", 144, 238, 144}
+};
+
+static unsigned int colorsSize = sizeof(colors) / sizeof(Color);
+
 unsigned char* color_get(char* desc)
 {
+	unsigned int i;
+	unsigned char *c = malloc(3);
+
 	// TODO - this can be faster
-	
-	unsigned char* c = malloc(3);
-	if(strcmp(desc, "snow") == 0)
-	{
-		c[0] = 255;
-		c[1] = 250;
-		c[2] = 250;
-	}
-	else if(strcmp(desc, "GhostWhite") == 0)
-	{
-		c[0] = 248;
-		c[1] = 248;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "WhiteSmoke") == 0)
-	{
-		c[0] = 245;
-		c[1] = 245;
-		c[2] = 245;
-	}
-	else if(strcmp(desc, "gainsboro") == 0)
-	{
-		c[0] = 220;
-		c[1] = 220;
-		c[2] = 220;
-	}
-	else if(strcmp(desc, "FloralWhite") == 0)
-	{
-		c[0] = 255;
-		c[1] = 250;
-		c[2] = 240;
-	}
-	else if(strcmp(desc, "OldLace") == 0)
-	{
-		c[0] = 253;
-		c[1] = 245;
-		c[2] = 230;
-	}
-	else if(strcmp(desc, "linen") == 0)
-	{
-		c[0] = 250;
-		c[1] = 240;
-		c[2] = 230;
-	}
-	else if(strcmp(desc, "AntiqueWhite") == 0)
-	{
-		c[0] = 250;
-		c[1] = 235;
-		c[2] = 215;
-	}
-	else if(strcmp(desc, "PapayaWhip") == 0)
-	{
-		c[0] = 255;
-		c[1] = 239;
-		c[2] = 213;
-	}
-	else if(strcmp(desc, "BlanchedAlmond") == 0)
-	{
-		c[0] = 255;
-		c[1] = 235;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "bisque") == 0)
-	{
-		c[0] = 255;
-		c[1] = 228;
-		c[2] = 196;
-	}
-	else if(strcmp(desc, "PeachPuff") == 0)
-	{
-		c[0] = 255;
-		c[1] = 218;
-		c[2] = 185;
-	}
-	else if(strcmp(desc, "NavajoWhite") == 0)
-	{
-		c[0] = 255;
-		c[1] = 222;
-		c[2] = 173;
-	}
-	else if(strcmp(desc, "moccasin") == 0)
-	{
-		c[0] = 255;
-		c[1] = 228;
-		c[2] = 181;
-	}
-	else if(strcmp(desc, "cornsilk") == 0)
-	{
-		c[0] = 255;
-		c[1] = 248;
-		c[2] = 220;
-	}
-	else if(strcmp(desc, "ivory") == 0)
-	{
-		c[0] = 255;
-		c[1] = 255;
-		c[2] = 240;
-	}
-	else if(strcmp(desc, "LemonChiffon") == 0)
-	{
-		c[0] = 255;
-		c[1] = 250;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "seashell") == 0)
-	{
-		c[0] = 255;
-		c[1] = 245;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "honeydew") == 0)
-	{
-		c[0] = 240;
-		c[1] = 255;
-		c[2] = 240;
-	}
-	else if(strcmp(desc, "MintCream") == 0)
-	{
-		c[0] = 245;
-		c[1] = 255;
-		c[2] = 250;
-	}
-	else if(strcmp(desc, "azure") == 0)
-	{
-		c[0] = 240;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "AliceBlue") == 0)
-	{
-		c[0] = 240;
-		c[1] = 248;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "lavender") == 0)
-	{
-		c[0] = 230;
-		c[1] = 230;
-		c[2] = 250;
-	}
-	else if(strcmp(desc, "LavenderBlush") == 0)
-	{
-		c[0] = 255;
-		c[1] = 240;
-		c[2] = 245;
-	}
-	else if(strcmp(desc, "MistyRose") == 0)
-	{
-		c[0] = 255;
-		c[1] = 228;
-		c[2] = 225;
-	}
-	else if(strcmp(desc, "white") == 0)
-	{
-		c[0] = 255;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "black") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "DarkSlateGray") == 0)
-	{
-		c[0] = 47;
-		c[1] = 79;
-		c[2] = 79;
-	}
-	else if(strcmp(desc, "DarkSlateGrey") == 0)
-	{
-		c[0] = 47;
-		c[1] = 79;
-		c[2] = 79;
-	}
-	else if(strcmp(desc, "DimGray") == 0)
-	{
-		c[0] = 105;
-		c[1] = 105;
-		c[2] = 105;
-	}
-	else if(strcmp(desc, "DimGrey") == 0)
-	{
-		c[0] = 105;
-		c[1] = 105;
-		c[2] = 105;
-	}
-	else if(strcmp(desc, "SlateGray") == 0)
-	{
-		c[0] = 112;
-		c[1] = 128;
-		c[2] = 144;
-	}
-	else if(strcmp(desc, "SlateGrey") == 0)
-	{
-		c[0] = 112;
-		c[1] = 128;
-		c[2] = 144;
-	}
-	else if(strcmp(desc, "LightSlateGray") == 0)
-	{
-		c[0] = 119;
-		c[1] = 136;
-		c[2] = 153;
-	}
-	else if(strcmp(desc, "LightSlateGrey") == 0)
-	{
-		c[0] = 119;
-		c[1] = 136;
-		c[2] = 153;
-	}
-	else if(strcmp(desc, "gray") == 0)
-	{
-		c[0] = 190;
-		c[1] = 190;
-		c[2] = 190;
-	}
-	else if(strcmp(desc, "grey") == 0)
-	{
-		c[0] = 190;
-		c[1] = 190;
-		c[2] = 190;
-	}
-	else if(strcmp(desc, "LightGrey") == 0)
-	{
-		c[0] = 211;
-		c[1] = 211;
-		c[2] = 211;
-	}
-	else if(strcmp(desc, "LightGray") == 0)
-	{
-		c[0] = 211;
-		c[1] = 211;
-		c[2] = 211;
-	}
-	else if(strcmp(desc, "MidnightBlue") == 0)
-	{
-		c[0] = 25;
-		c[1] = 25;
-		c[2] = 112;
-	}
-	else if(strcmp(desc, "navy") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 128;
-	}
-	else if(strcmp(desc, "NavyBlue") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 128;
-	}
-	else if(strcmp(desc, "CornflowerBlue") == 0)
-	{
-		c[0] = 100;
-		c[1] = 149;
-		c[2] = 237;
-	}
-	else if(strcmp(desc, "DarkSlateBlue") == 0)
-	{
-		c[0] = 72;
-		c[1] = 61;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "SlateBlue") == 0)
-	{
-		c[0] = 106;
-		c[1] = 90;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "MediumSlateBlue") == 0)
-	{
-		c[0] = 123;
-		c[1] = 104;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "LightSlateBlue") == 0)
-	{
-		c[0] = 132;
-		c[1] = 112;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "MediumBlue") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "RoyalBlue") == 0)
-	{
-		c[0] = 65;
-		c[1] = 105;
-		c[2] = 225;
-	}
-	else if(strcmp(desc, "blue") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "DodgerBlue") == 0)
-	{
-		c[0] = 30;
-		c[1] = 144;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "DeepSkyBlue") == 0)
-	{
-		c[0] = 0;
-		c[1] = 191;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "SkyBlue") == 0)
-	{
-		c[0] = 135;
-		c[1] = 206;
-		c[2] = 235;
-	}
-	else if(strcmp(desc, "LightSkyBlue") == 0)
-	{
-		c[0] = 135;
-		c[1] = 206;
-		c[2] = 250;
-	}
-	else if(strcmp(desc, "SteelBlue") == 0)
-	{
-		c[0] = 70;
-		c[1] = 130;
-		c[2] = 180;
-	}
-	else if(strcmp(desc, "LightSteelBlue") == 0)
-	{
-		c[0] = 176;
-		c[1] = 196;
-		c[2] = 222;
-	}
-	else if(strcmp(desc, "LightBlue") == 0)
-	{
-		c[0] = 173;
-		c[1] = 216;
-		c[2] = 230;
-	}
-	else if(strcmp(desc, "PowderBlue") == 0)
-	{
-		c[0] = 176;
-		c[1] = 224;
-		c[2] = 230;
-	}
-	else if(strcmp(desc, "PaleTurquoise") == 0)
-	{
-		c[0] = 175;
-		c[1] = 238;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "DarkTurquoise") == 0)
-	{
-		c[0] = 0;
-		c[1] = 206;
-		c[2] = 209;
-	}
-	else if(strcmp(desc, "MediumTurquoise") == 0)
-	{
-		c[0] = 72;
-		c[1] = 209;
-		c[2] = 204;
-	}
-	else if(strcmp(desc, "turquoise") == 0)
-	{
-		c[0] = 64;
-		c[1] = 224;
-		c[2] = 208;
-	}
-	else if(strcmp(desc, "cyan") == 0)
-	{
-		c[0] = 0;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "LightCyan") == 0)
-	{
-		c[0] = 224;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "CadetBlue") == 0)
-	{
-		c[0] = 95;
-		c[1] = 158;
-		c[2] = 160;
-	}
-	else if(strcmp(desc, "MediumAquamarine") == 0)
-	{
-		c[0] = 102;
-		c[1] = 205;
-		c[2] = 170;
-	}
-	else if(strcmp(desc, "aquamarine") == 0)
-	{
-		c[0] = 127;
-		c[1] = 255;
-		c[2] = 212;
-	}
-	else if(strcmp(desc, "DarkGreen") == 0)
-	{
-		c[0] = 0;
-		c[1] = 100;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "DarkOliveGreen") == 0)
-	{
-		c[0] = 85;
-		c[1] = 107;
-		c[2] = 47;
-	}
-	else if(strcmp(desc, "DarkSeaGreen") == 0)
-	{
-		c[0] = 143;
-		c[1] = 188;
-		c[2] = 143;
-	}
-	else if(strcmp(desc, "SeaGreen") == 0)
-	{
-		c[0] = 46;
-		c[1] = 139;
-		c[2] = 87;
-	}
-	else if(strcmp(desc, "MediumSeaGreen") == 0)
-	{
-		c[0] = 60;
-		c[1] = 179;
-		c[2] = 113;
-	}
-	else if(strcmp(desc, "LightSeaGreen") == 0)
-	{
-		c[0] = 32;
-		c[1] = 178;
-		c[2] = 170;
-	}
-	else if(strcmp(desc, "PaleGreen") == 0)
-	{
-		c[0] = 152;
-		c[1] = 251;
-		c[2] = 152;
-	}
-	else if(strcmp(desc, "SpringGreen") == 0)
-	{
-		c[0] = 0;
-		c[1] = 255;
-		c[2] = 127;
-	}
-	else if(strcmp(desc, "LawnGreen") == 0)
-	{
-		c[0] = 124;
-		c[1] = 252;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "green") == 0)
-	{
-		c[0] = 0;
-		c[1] = 255;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "chartreuse") == 0)
-	{
-		c[0] = 127;
-		c[1] = 255;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "MediumSpringGreen") == 0)
-	{
-		c[0] = 0;
-		c[1] = 250;
-		c[2] = 154;
-	}
-	else if(strcmp(desc, "GreenYellow") == 0)
-	{
-		c[0] = 173;
-		c[1] = 255;
-		c[2] = 47;
-	}
-	else if(strcmp(desc, "LimeGreen") == 0)
-	{
-		c[0] = 50;
-		c[1] = 205;
-		c[2] = 50;
-	}
-	else if(strcmp(desc, "YellowGreen") == 0)
-	{
-		c[0] = 154;
-		c[1] = 205;
-		c[2] = 50;
-	}
-	else if(strcmp(desc, "ForestGreen") == 0)
-	{
-		c[0] = 34;
-		c[1] = 139;
-		c[2] = 34;
-	}
-	else if(strcmp(desc, "OliveDrab") == 0)
-	{
-		c[0] = 107;
-		c[1] = 142;
-		c[2] = 35;
-	}
-	else if(strcmp(desc, "DarkKhaki") == 0)
-	{
-		c[0] = 189;
-		c[1] = 183;
-		c[2] = 107;
-	}
-	else if(strcmp(desc, "khaki") == 0)
-	{
-		c[0] = 240;
-		c[1] = 230;
-		c[2] = 140;
-	}
-	else if(strcmp(desc, "PaleGoldenrod") == 0)
-	{
-		c[0] = 238;
-		c[1] = 232;
-		c[2] = 170;
-	}
-	else if(strcmp(desc, "LightGoldenrodYellow") == 0)
-	{
-		c[0] = 250;
-		c[1] = 250;
-		c[2] = 210;
-	}
-	else if(strcmp(desc, "LightYellow") == 0)
-	{
-		c[0] = 255;
-		c[1] = 255;
-		c[2] = 224;
-	}
-	else if(strcmp(desc, "yellow") == 0)
-	{
-		c[0] = 255;
-		c[1] = 255;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "gold") == 0)
-	{
-		c[0] = 255;
-		c[1] = 215;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "LightGoldenrod") == 0)
-	{
-		c[0] = 238;
-		c[1] = 221;
-		c[2] = 130;
-	}
-	else if(strcmp(desc, "goldenrod") == 0)
-	{
-		c[0] = 218;
-		c[1] = 165;
-		c[2] = 32;
-	}
-	else if(strcmp(desc, "DarkGoldenrod") == 0)
-	{
-		c[0] = 184;
-		c[1] = 134;
-		c[2] = 11;
-	}
-	else if(strcmp(desc, "RosyBrown") == 0)
-	{
-		c[0] = 188;
-		c[1] = 143;
-		c[2] = 143;
-	}
-	else if(strcmp(desc, "IndianRed") == 0)
-	{
-		c[0] = 205;
-		c[1] = 92;
-		c[2] = 92;
-	}
-	else if(strcmp(desc, "SaddleBrown") == 0)
-	{
-		c[0] = 139;
-		c[1] = 69;
-		c[2] = 19;
-	}
-	else if(strcmp(desc, "sienna") == 0)
-	{
-		c[0] = 160;
-		c[1] = 82;
-		c[2] = 45;
-	}
-	else if(strcmp(desc, "peru") == 0)
-	{
-		c[0] = 205;
-		c[1] = 133;
-		c[2] = 63;
-	}
-	else if(strcmp(desc, "burlywood") == 0)
-	{
-		c[0] = 222;
-		c[1] = 184;
-		c[2] = 135;
-	}
-	else if(strcmp(desc, "beige") == 0)
-	{
-		c[0] = 245;
-		c[1] = 245;
-		c[2] = 220;
-	}
-	else if(strcmp(desc, "wheat") == 0)
-	{
-		c[0] = 245;
-		c[1] = 222;
-		c[2] = 179;
-	}
-	else if(strcmp(desc, "SandyBrown") == 0)
-	{
-		c[0] = 244;
-		c[1] = 164;
-		c[2] = 96;
-	}
-	else if(strcmp(desc, "tan") == 0)
-	{
-		c[0] = 210;
-		c[1] = 180;
-		c[2] = 140;
-	}
-	else if(strcmp(desc, "chocolate") == 0)
-	{
-		c[0] = 210;
-		c[1] = 105;
-		c[2] = 30;
-	}
-	else if(strcmp(desc, "firebrick") == 0)
-	{
-		c[0] = 178;
-		c[1] = 34;
-		c[2] = 34;
-	}
-	else if(strcmp(desc, "brown") == 0)
-	{
-		c[0] = 165;
-		c[1] = 42;
-		c[2] = 42;
-	}
-	else if(strcmp(desc, "DarkSalmon") == 0)
-	{
-		c[0] = 233;
-		c[1] = 150;
-		c[2] = 122;
-	}
-	else if(strcmp(desc, "salmon") == 0)
-	{
-		c[0] = 250;
-		c[1] = 128;
-		c[2] = 114;
-	}
-	else if(strcmp(desc, "LightSalmon") == 0)
-	{
-		c[0] = 255;
-		c[1] = 160;
-		c[2] = 122;
-	}
-	else if(strcmp(desc, "orange") == 0)
-	{
-		c[0] = 255;
-		c[1] = 165;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "DarkOrange") == 0)
-	{
-		c[0] = 255;
-		c[1] = 140;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "coral") == 0)
-	{
-		c[0] = 255;
-		c[1] = 127;
-		c[2] = 80;
-	}
-	else if(strcmp(desc, "LightCoral") == 0)
-	{
-		c[0] = 240;
-		c[1] = 128;
-		c[2] = 128;
-	}
-	else if(strcmp(desc, "tomato") == 0)
-	{
-		c[0] = 255;
-		c[1] = 99;
-		c[2] = 71;
-	}
-	else if(strcmp(desc, "OrangeRed") == 0)
-	{
-		c[0] = 255;
-		c[1] = 69;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "red") == 0)
-	{
-		c[0] = 255;
-		c[1] = 0;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "HotPink") == 0)
-	{
-		c[0] = 255;
-		c[1] = 105;
-		c[2] = 180;
-	}
-	else if(strcmp(desc, "DeepPink") == 0)
-	{
-		c[0] = 255;
-		c[1] = 20;
-		c[2] = 147;
-	}
-	else if(strcmp(desc, "pink") == 0)
-	{
-		c[0] = 255;
-		c[1] = 192;
-		c[2] = 203;
-	}
-	else if(strcmp(desc, "LightPink") == 0)
-	{
-		c[0] = 255;
-		c[1] = 182;
-		c[2] = 193;
-	}
-	else if(strcmp(desc, "PaleVioletRed") == 0)
-	{
-		c[0] = 219;
-		c[1] = 112;
-		c[2] = 147;
-	}
-	else if(strcmp(desc, "maroon") == 0)
-	{
-		c[0] = 176;
-		c[1] = 48;
-		c[2] = 96;
-	}
-	else if(strcmp(desc, "MediumVioletRed") == 0)
-	{
-		c[0] = 199;
-		c[1] = 21;
-		c[2] = 133;
-	}
-	else if(strcmp(desc, "VioletRed") == 0)
-	{
-		c[0] = 208;
-		c[1] = 32;
-		c[2] = 144;
-	}
-	else if(strcmp(desc, "magenta") == 0)
-	{
-		c[0] = 255;
-		c[1] = 0;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "violet") == 0)
-	{
-		c[0] = 238;
-		c[1] = 130;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "plum") == 0)
-	{
-		c[0] = 221;
-		c[1] = 160;
-		c[2] = 221;
-	}
-	else if(strcmp(desc, "orchid") == 0)
-	{
-		c[0] = 218;
-		c[1] = 112;
-		c[2] = 214;
-	}
-	else if(strcmp(desc, "MediumOrchid") == 0)
-	{
-		c[0] = 186;
-		c[1] = 85;
-		c[2] = 211;
-	}
-	else if(strcmp(desc, "DarkOrchid") == 0)
-	{
-		c[0] = 153;
-		c[1] = 50;
-		c[2] = 204;
-	}
-	else if(strcmp(desc, "DarkViolet") == 0)
-	{
-		c[0] = 148;
-		c[1] = 0;
-		c[2] = 211;
-	}
-	else if(strcmp(desc, "BlueViolet") == 0)
-	{
-		c[0] = 138;
-		c[1] = 43;
-		c[2] = 226;
-	}
-	else if(strcmp(desc, "purple") == 0)
-	{
-		c[0] = 160;
-		c[1] = 32;
-		c[2] = 240;
-	}
-	else if(strcmp(desc, "MediumPurple") == 0)
-	{
-		c[0] = 147;
-		c[1] = 112;
-		c[2] = 219;
-	}
-	else if(strcmp(desc, "thistle") == 0)
-	{
-		c[0] = 216;
-		c[1] = 191;
-		c[2] = 216;
-	}
-	else if(strcmp(desc, "snow1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 250;
-		c[2] = 250;
-	}
-	else if(strcmp(desc, "snow2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 233;
-		c[2] = 233;
-	}
-	else if(strcmp(desc, "snow3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 201;
-		c[2] = 201;
-	}
-	else if(strcmp(desc, "snow4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 137;
-		c[2] = 137;
-	}
-	else if(strcmp(desc, "seashell1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 245;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "seashell2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 229;
-		c[2] = 222;
-	}
-	else if(strcmp(desc, "seashell3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 197;
-		c[2] = 191;
-	}
-	else if(strcmp(desc, "seashell4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 134;
-		c[2] = 130;
-	}
-	else if(strcmp(desc, "AntiqueWhite1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 239;
-		c[2] = 219;
-	}
-	else if(strcmp(desc, "AntiqueWhite2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 223;
-		c[2] = 204;
-	}
-	else if(strcmp(desc, "AntiqueWhite3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 192;
-		c[2] = 176;
-	}
-	else if(strcmp(desc, "AntiqueWhite4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 131;
-		c[2] = 120;
-	}
-	else if(strcmp(desc, "bisque1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 228;
-		c[2] = 196;
-	}
-	else if(strcmp(desc, "bisque2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 213;
-		c[2] = 183;
-	}
-	else if(strcmp(desc, "bisque3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 183;
-		c[2] = 158;
-	}
-	else if(strcmp(desc, "bisque4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 125;
-		c[2] = 107;
-	}
-	else if(strcmp(desc, "PeachPuff1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 218;
-		c[2] = 185;
-	}
-	else if(strcmp(desc, "PeachPuff2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 203;
-		c[2] = 173;
-	}
-	else if(strcmp(desc, "PeachPuff3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 175;
-		c[2] = 149;
-	}
-	else if(strcmp(desc, "PeachPuff4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 119;
-		c[2] = 101;
-	}
-	else if(strcmp(desc, "NavajoWhite1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 222;
-		c[2] = 173;
-	}
-	else if(strcmp(desc, "NavajoWhite2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 207;
-		c[2] = 161;
-	}
-	else if(strcmp(desc, "NavajoWhite3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 179;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "NavajoWhite4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 121;
-		c[2] = 94;
-	}
-	else if(strcmp(desc, "LemonChiffon1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 250;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "LemonChiffon2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 233;
-		c[2] = 191;
-	}
-	else if(strcmp(desc, "LemonChiffon3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 201;
-		c[2] = 165;
-	}
-	else if(strcmp(desc, "LemonChiffon4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 137;
-		c[2] = 112;
-	}
-	else if(strcmp(desc, "cornsilk1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 248;
-		c[2] = 220;
-	}
-	else if(strcmp(desc, "cornsilk2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 232;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "cornsilk3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 200;
-		c[2] = 177;
-	}
-	else if(strcmp(desc, "cornsilk4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 136;
-		c[2] = 120;
-	}
-	else if(strcmp(desc, "ivory1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 255;
-		c[2] = 240;
-	}
-	else if(strcmp(desc, "ivory2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 238;
-		c[2] = 224;
-	}
-	else if(strcmp(desc, "ivory3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 205;
-		c[2] = 193;
-	}
-	else if(strcmp(desc, "ivory4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 139;
-		c[2] = 131;
-	}
-	else if(strcmp(desc, "honeydew1") == 0)
-	{
-		c[0] = 240;
-		c[1] = 255;
-		c[2] = 240;
-	}
-	else if(strcmp(desc, "honeydew2") == 0)
-	{
-		c[0] = 224;
-		c[1] = 238;
-		c[2] = 224;
-	}
-	else if(strcmp(desc, "honeydew3") == 0)
-	{
-		c[0] = 193;
-		c[1] = 205;
-		c[2] = 193;
-	}
-	else if(strcmp(desc, "honeydew4") == 0)
-	{
-		c[0] = 131;
-		c[1] = 139;
-		c[2] = 131;
-	}
-	else if(strcmp(desc, "LavenderBlush1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 240;
-		c[2] = 245;
-	}
-	else if(strcmp(desc, "LavenderBlush2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 224;
-		c[2] = 229;
-	}
-	else if(strcmp(desc, "LavenderBlush3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 193;
-		c[2] = 197;
-	}
-	else if(strcmp(desc, "LavenderBlush4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 131;
-		c[2] = 134;
-	}
-	else if(strcmp(desc, "MistyRose1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 228;
-		c[2] = 225;
-	}
-	else if(strcmp(desc, "MistyRose2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 213;
-		c[2] = 210;
-	}
-	else if(strcmp(desc, "MistyRose3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 183;
-		c[2] = 181;
-	}
-	else if(strcmp(desc, "MistyRose4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 125;
-		c[2] = 123;
-	}
-	else if(strcmp(desc, "azure1") == 0)
-	{
-		c[0] = 240;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "azure2") == 0)
-	{
-		c[0] = 224;
-		c[1] = 238;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "azure3") == 0)
-	{
-		c[0] = 193;
-		c[1] = 205;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "azure4") == 0)
-	{
-		c[0] = 131;
-		c[1] = 139;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "SlateBlue1") == 0)
-	{
-		c[0] = 131;
-		c[1] = 111;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "SlateBlue2") == 0)
-	{
-		c[0] = 122;
-		c[1] = 103;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "SlateBlue3") == 0)
-	{
-		c[0] = 105;
-		c[1] = 89;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "SlateBlue4") == 0)
-	{
-		c[0] = 71;
-		c[1] = 60;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "RoyalBlue1") == 0)
-	{
-		c[0] = 72;
-		c[1] = 118;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "RoyalBlue2") == 0)
-	{
-		c[0] = 67;
-		c[1] = 110;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "RoyalBlue3") == 0)
-	{
-		c[0] = 58;
-		c[1] = 95;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "RoyalBlue4") == 0)
-	{
-		c[0] = 39;
-		c[1] = 64;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "blue1") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "blue2") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "blue3") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "blue4") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "DodgerBlue1") == 0)
-	{
-		c[0] = 30;
-		c[1] = 144;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "DodgerBlue2") == 0)
-	{
-		c[0] = 28;
-		c[1] = 134;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "DodgerBlue3") == 0)
-	{
-		c[0] = 24;
-		c[1] = 116;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "DodgerBlue4") == 0)
-	{
-		c[0] = 16;
-		c[1] = 78;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "SteelBlue1") == 0)
-	{
-		c[0] = 99;
-		c[1] = 184;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "SteelBlue2") == 0)
-	{
-		c[0] = 92;
-		c[1] = 172;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "SteelBlue3") == 0)
-	{
-		c[0] = 79;
-		c[1] = 148;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "SteelBlue4") == 0)
-	{
-		c[0] = 54;
-		c[1] = 100;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "DeepSkyBlue1") == 0)
-	{
-		c[0] = 0;
-		c[1] = 191;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "DeepSkyBlue2") == 0)
-	{
-		c[0] = 0;
-		c[1] = 178;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "DeepSkyBlue3") == 0)
-	{
-		c[0] = 0;
-		c[1] = 154;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "DeepSkyBlue4") == 0)
-	{
-		c[0] = 0;
-		c[1] = 104;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "SkyBlue1") == 0)
-	{
-		c[0] = 135;
-		c[1] = 206;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "SkyBlue2") == 0)
-	{
-		c[0] = 126;
-		c[1] = 192;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "SkyBlue3") == 0)
-	{
-		c[0] = 108;
-		c[1] = 166;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "SkyBlue4") == 0)
-	{
-		c[0] = 74;
-		c[1] = 112;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "LightSkyBlue1") == 0)
-	{
-		c[0] = 176;
-		c[1] = 226;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "LightSkyBlue2") == 0)
-	{
-		c[0] = 164;
-		c[1] = 211;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "LightSkyBlue3") == 0)
-	{
-		c[0] = 141;
-		c[1] = 182;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "LightSkyBlue4") == 0)
-	{
-		c[0] = 96;
-		c[1] = 123;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "SlateGray1") == 0)
-	{
-		c[0] = 198;
-		c[1] = 226;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "SlateGray2") == 0)
-	{
-		c[0] = 185;
-		c[1] = 211;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "SlateGray3") == 0)
-	{
-		c[0] = 159;
-		c[1] = 182;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "SlateGray4") == 0)
-	{
-		c[0] = 108;
-		c[1] = 123;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "LightSteelBlue1") == 0)
-	{
-		c[0] = 202;
-		c[1] = 225;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "LightSteelBlue2") == 0)
-	{
-		c[0] = 188;
-		c[1] = 210;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "LightSteelBlue3") == 0)
-	{
-		c[0] = 162;
-		c[1] = 181;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "LightSteelBlue4") == 0)
-	{
-		c[0] = 110;
-		c[1] = 123;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "LightBlue1") == 0)
-	{
-		c[0] = 191;
-		c[1] = 239;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "LightBlue2") == 0)
-	{
-		c[0] = 178;
-		c[1] = 223;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "LightBlue3") == 0)
-	{
-		c[0] = 154;
-		c[1] = 192;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "LightBlue4") == 0)
-	{
-		c[0] = 104;
-		c[1] = 131;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "LightCyan1") == 0)
-	{
-		c[0] = 224;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "LightCyan2") == 0)
-	{
-		c[0] = 209;
-		c[1] = 238;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "LightCyan3") == 0)
-	{
-		c[0] = 180;
-		c[1] = 205;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "LightCyan4") == 0)
-	{
-		c[0] = 122;
-		c[1] = 139;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "PaleTurquoise1") == 0)
-	{
-		c[0] = 187;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "PaleTurquoise2") == 0)
-	{
-		c[0] = 174;
-		c[1] = 238;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "PaleTurquoise3") == 0)
-	{
-		c[0] = 150;
-		c[1] = 205;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "PaleTurquoise4") == 0)
-	{
-		c[0] = 102;
-		c[1] = 139;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "CadetBlue1") == 0)
-	{
-		c[0] = 152;
-		c[1] = 245;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "CadetBlue2") == 0)
-	{
-		c[0] = 142;
-		c[1] = 229;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "CadetBlue3") == 0)
-	{
-		c[0] = 122;
-		c[1] = 197;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "CadetBlue4") == 0)
-	{
-		c[0] = 83;
-		c[1] = 134;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "turquoise1") == 0)
-	{
-		c[0] = 0;
-		c[1] = 245;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "turquoise2") == 0)
-	{
-		c[0] = 0;
-		c[1] = 229;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "turquoise3") == 0)
-	{
-		c[0] = 0;
-		c[1] = 197;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "turquoise4") == 0)
-	{
-		c[0] = 0;
-		c[1] = 134;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "cyan1") == 0)
-	{
-		c[0] = 0;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "cyan2") == 0)
-	{
-		c[0] = 0;
-		c[1] = 238;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "cyan3") == 0)
-	{
-		c[0] = 0;
-		c[1] = 205;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "cyan4") == 0)
-	{
-		c[0] = 0;
-		c[1] = 139;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "DarkSlateGray1") == 0)
-	{
-		c[0] = 151;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "DarkSlateGray2") == 0)
-	{
-		c[0] = 141;
-		c[1] = 238;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "DarkSlateGray3") == 0)
-	{
-		c[0] = 121;
-		c[1] = 205;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "DarkSlateGray4") == 0)
-	{
-		c[0] = 82;
-		c[1] = 139;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "aquamarine1") == 0)
-	{
-		c[0] = 127;
-		c[1] = 255;
-		c[2] = 212;
-	}
-	else if(strcmp(desc, "aquamarine2") == 0)
-	{
-		c[0] = 118;
-		c[1] = 238;
-		c[2] = 198;
-	}
-	else if(strcmp(desc, "aquamarine3") == 0)
-	{
-		c[0] = 102;
-		c[1] = 205;
-		c[2] = 170;
-	}
-	else if(strcmp(desc, "aquamarine4") == 0)
-	{
-		c[0] = 69;
-		c[1] = 139;
-		c[2] = 116;
-	}
-	else if(strcmp(desc, "DarkSeaGreen1") == 0)
-	{
-		c[0] = 193;
-		c[1] = 255;
-		c[2] = 193;
-	}
-	else if(strcmp(desc, "DarkSeaGreen2") == 0)
-	{
-		c[0] = 180;
-		c[1] = 238;
-		c[2] = 180;
-	}
-	else if(strcmp(desc, "DarkSeaGreen3") == 0)
-	{
-		c[0] = 155;
-		c[1] = 205;
-		c[2] = 155;
-	}
-	else if(strcmp(desc, "DarkSeaGreen4") == 0)
-	{
-		c[0] = 105;
-		c[1] = 139;
-		c[2] = 105;
-	}
-	else if(strcmp(desc, "SeaGreen1") == 0)
-	{
-		c[0] = 84;
-		c[1] = 255;
-		c[2] = 159;
-	}
-	else if(strcmp(desc, "SeaGreen2") == 0)
-	{
-		c[0] = 78;
-		c[1] = 238;
-		c[2] = 148;
-	}
-	else if(strcmp(desc, "SeaGreen3") == 0)
-	{
-		c[0] = 67;
-		c[1] = 205;
-		c[2] = 128;
-	}
-	else if(strcmp(desc, "SeaGreen4") == 0)
-	{
-		c[0] = 46;
-		c[1] = 139;
-		c[2] = 87;
-	}
-	else if(strcmp(desc, "PaleGreen1") == 0)
-	{
-		c[0] = 154;
-		c[1] = 255;
-		c[2] = 154;
-	}
-	else if(strcmp(desc, "PaleGreen2") == 0)
-	{
-		c[0] = 144;
-		c[1] = 238;
-		c[2] = 144;
-	}
-	else if(strcmp(desc, "PaleGreen3") == 0)
-	{
-		c[0] = 124;
-		c[1] = 205;
-		c[2] = 124;
-	}
-	else if(strcmp(desc, "PaleGreen4") == 0)
-	{
-		c[0] = 84;
-		c[1] = 139;
-		c[2] = 84;
-	}
-	else if(strcmp(desc, "SpringGreen1") == 0)
-	{
-		c[0] = 0;
-		c[1] = 255;
-		c[2] = 127;
-	}
-	else if(strcmp(desc, "SpringGreen2") == 0)
-	{
-		c[0] = 0;
-		c[1] = 238;
-		c[2] = 118;
-	}
-	else if(strcmp(desc, "SpringGreen3") == 0)
-	{
-		c[0] = 0;
-		c[1] = 205;
-		c[2] = 102;
-	}
-	else if(strcmp(desc, "SpringGreen4") == 0)
-	{
-		c[0] = 0;
-		c[1] = 139;
-		c[2] = 69;
-	}
-	else if(strcmp(desc, "green1") == 0)
-	{
-		c[0] = 0;
-		c[1] = 255;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "green2") == 0)
-	{
-		c[0] = 0;
-		c[1] = 238;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "green3") == 0)
-	{
-		c[0] = 0;
-		c[1] = 205;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "green4") == 0)
-	{
-		c[0] = 0;
-		c[1] = 139;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "chartreuse1") == 0)
-	{
-		c[0] = 127;
-		c[1] = 255;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "chartreuse2") == 0)
-	{
-		c[0] = 118;
-		c[1] = 238;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "chartreuse3") == 0)
-	{
-		c[0] = 102;
-		c[1] = 205;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "chartreuse4") == 0)
-	{
-		c[0] = 69;
-		c[1] = 139;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "OliveDrab1") == 0)
-	{
-		c[0] = 192;
-		c[1] = 255;
-		c[2] = 62;
-	}
-	else if(strcmp(desc, "OliveDrab2") == 0)
-	{
-		c[0] = 179;
-		c[1] = 238;
-		c[2] = 58;
-	}
-	else if(strcmp(desc, "OliveDrab3") == 0)
-	{
-		c[0] = 154;
-		c[1] = 205;
-		c[2] = 50;
-	}
-	else if(strcmp(desc, "OliveDrab4") == 0)
-	{
-		c[0] = 105;
-		c[1] = 139;
-		c[2] = 34;
-	}
-	else if(strcmp(desc, "DarkOliveGreen1") == 0)
-	{
-		c[0] = 202;
-		c[1] = 255;
-		c[2] = 112;
-	}
-	else if(strcmp(desc, "DarkOliveGreen2") == 0)
-	{
-		c[0] = 188;
-		c[1] = 238;
-		c[2] = 104;
-	}
-	else if(strcmp(desc, "DarkOliveGreen3") == 0)
-	{
-		c[0] = 162;
-		c[1] = 205;
-		c[2] = 90;
-	}
-	else if(strcmp(desc, "DarkOliveGreen4") == 0)
-	{
-		c[0] = 110;
-		c[1] = 139;
-		c[2] = 61;
-	}
-	else if(strcmp(desc, "khaki1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 246;
-		c[2] = 143;
-	}
-	else if(strcmp(desc, "khaki2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 230;
-		c[2] = 133;
-	}
-	else if(strcmp(desc, "khaki3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 198;
-		c[2] = 115;
-	}
-	else if(strcmp(desc, "khaki4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 134;
-		c[2] = 78;
-	}
-	else if(strcmp(desc, "LightGoldenrod1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 236;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "LightGoldenrod2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 220;
-		c[2] = 130;
-	}
-	else if(strcmp(desc, "LightGoldenrod3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 190;
-		c[2] = 112;
-	}
-	else if(strcmp(desc, "LightGoldenrod4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 129;
-		c[2] = 76;
-	}
-	else if(strcmp(desc, "LightYellow1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 255;
-		c[2] = 224;
-	}
-	else if(strcmp(desc, "LightYellow2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 238;
-		c[2] = 209;
-	}
-	else if(strcmp(desc, "LightYellow3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 205;
-		c[2] = 180;
-	}
-	else if(strcmp(desc, "LightYellow4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 139;
-		c[2] = 122;
-	}
-	else if(strcmp(desc, "yellow1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 255;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "yellow2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 238;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "yellow3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 205;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "yellow4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 139;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "gold1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 215;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "gold2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 201;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "gold3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 173;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "gold4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 117;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "goldenrod1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 193;
-		c[2] = 37;
-	}
-	else if(strcmp(desc, "goldenrod2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 180;
-		c[2] = 34;
-	}
-	else if(strcmp(desc, "goldenrod3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 155;
-		c[2] = 29;
-	}
-	else if(strcmp(desc, "goldenrod4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 105;
-		c[2] = 20;
-	}
-	else if(strcmp(desc, "DarkGoldenrod1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 185;
-		c[2] = 15;
-	}
-	else if(strcmp(desc, "DarkGoldenrod2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 173;
-		c[2] = 14;
-	}
-	else if(strcmp(desc, "DarkGoldenrod3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 149;
-		c[2] = 12;
-	}
-	else if(strcmp(desc, "DarkGoldenrod4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 101;
-		c[2] = 8;
-	}
-	else if(strcmp(desc, "RosyBrown1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 193;
-		c[2] = 193;
-	}
-	else if(strcmp(desc, "RosyBrown2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 180;
-		c[2] = 180;
-	}
-	else if(strcmp(desc, "RosyBrown3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 155;
-		c[2] = 155;
-	}
-	else if(strcmp(desc, "RosyBrown4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 105;
-		c[2] = 105;
-	}
-	else if(strcmp(desc, "IndianRed1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 106;
-		c[2] = 106;
-	}
-	else if(strcmp(desc, "IndianRed2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 99;
-		c[2] = 99;
-	}
-	else if(strcmp(desc, "IndianRed3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 85;
-		c[2] = 85;
-	}
-	else if(strcmp(desc, "IndianRed4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 58;
-		c[2] = 58;
-	}
-	else if(strcmp(desc, "sienna1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 130;
-		c[2] = 71;
-	}
-	else if(strcmp(desc, "sienna2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 121;
-		c[2] = 66;
-	}
-	else if(strcmp(desc, "sienna3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 104;
-		c[2] = 57;
-	}
-	else if(strcmp(desc, "sienna4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 71;
-		c[2] = 38;
-	}
-	else if(strcmp(desc, "burlywood1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 211;
-		c[2] = 155;
-	}
-	else if(strcmp(desc, "burlywood2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 197;
-		c[2] = 145;
-	}
-	else if(strcmp(desc, "burlywood3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 170;
-		c[2] = 125;
-	}
-	else if(strcmp(desc, "burlywood4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 115;
-		c[2] = 85;
-	}
-	else if(strcmp(desc, "wheat1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 231;
-		c[2] = 186;
-	}
-	else if(strcmp(desc, "wheat2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 216;
-		c[2] = 174;
-	}
-	else if(strcmp(desc, "wheat3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 186;
-		c[2] = 150;
-	}
-	else if(strcmp(desc, "wheat4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 126;
-		c[2] = 102;
-	}
-	else if(strcmp(desc, "tan1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 165;
-		c[2] = 79;
-	}
-	else if(strcmp(desc, "tan2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 154;
-		c[2] = 73;
-	}
-	else if(strcmp(desc, "tan3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 133;
-		c[2] = 63;
-	}
-	else if(strcmp(desc, "tan4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 90;
-		c[2] = 43;
-	}
-	else if(strcmp(desc, "chocolate1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 127;
-		c[2] = 36;
-	}
-	else if(strcmp(desc, "chocolate2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 118;
-		c[2] = 33;
-	}
-	else if(strcmp(desc, "chocolate3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 102;
-		c[2] = 29;
-	}
-	else if(strcmp(desc, "chocolate4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 69;
-		c[2] = 19;
-	}
-	else if(strcmp(desc, "firebrick1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 48;
-		c[2] = 48;
-	}
-	else if(strcmp(desc, "firebrick2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 44;
-		c[2] = 44;
-	}
-	else if(strcmp(desc, "firebrick3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 38;
-		c[2] = 38;
-	}
-	else if(strcmp(desc, "firebrick4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 26;
-		c[2] = 26;
-	}
-	else if(strcmp(desc, "brown1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 64;
-		c[2] = 64;
-	}
-	else if(strcmp(desc, "brown2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 59;
-		c[2] = 59;
-	}
-	else if(strcmp(desc, "brown3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 51;
-		c[2] = 51;
-	}
-	else if(strcmp(desc, "brown4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 35;
-		c[2] = 35;
-	}
-	else if(strcmp(desc, "salmon1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 140;
-		c[2] = 105;
-	}
-	else if(strcmp(desc, "salmon2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 130;
-		c[2] = 98;
-	}
-	else if(strcmp(desc, "salmon3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 112;
-		c[2] = 84;
-	}
-	else if(strcmp(desc, "salmon4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 76;
-		c[2] = 57;
-	}
-	else if(strcmp(desc, "LightSalmon1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 160;
-		c[2] = 122;
-	}
-	else if(strcmp(desc, "LightSalmon2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 149;
-		c[2] = 114;
-	}
-	else if(strcmp(desc, "LightSalmon3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 129;
-		c[2] = 98;
-	}
-	else if(strcmp(desc, "LightSalmon4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 87;
-		c[2] = 66;
-	}
-	else if(strcmp(desc, "orange1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 165;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "orange2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 154;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "orange3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 133;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "orange4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 90;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "DarkOrange1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 127;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "DarkOrange2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 118;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "DarkOrange3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 102;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "DarkOrange4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 69;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "coral1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 114;
-		c[2] = 86;
-	}
-	else if(strcmp(desc, "coral2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 106;
-		c[2] = 80;
-	}
-	else if(strcmp(desc, "coral3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 91;
-		c[2] = 69;
-	}
-	else if(strcmp(desc, "coral4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 62;
-		c[2] = 47;
-	}
-	else if(strcmp(desc, "tomato1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 99;
-		c[2] = 71;
-	}
-	else if(strcmp(desc, "tomato2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 92;
-		c[2] = 66;
-	}
-	else if(strcmp(desc, "tomato3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 79;
-		c[2] = 57;
-	}
-	else if(strcmp(desc, "tomato4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 54;
-		c[2] = 38;
-	}
-	else if(strcmp(desc, "OrangeRed1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 69;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "OrangeRed2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 64;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "OrangeRed3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 55;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "OrangeRed4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 37;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "red1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 0;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "red2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 0;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "red3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 0;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "red4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 0;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "DeepPink1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 20;
-		c[2] = 147;
-	}
-	else if(strcmp(desc, "DeepPink2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 18;
-		c[2] = 137;
-	}
-	else if(strcmp(desc, "DeepPink3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 16;
-		c[2] = 118;
-	}
-	else if(strcmp(desc, "DeepPink4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 10;
-		c[2] = 80;
-	}
-	else if(strcmp(desc, "HotPink1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 110;
-		c[2] = 180;
-	}
-	else if(strcmp(desc, "HotPink2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 106;
-		c[2] = 167;
-	}
-	else if(strcmp(desc, "HotPink3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 96;
-		c[2] = 144;
-	}
-	else if(strcmp(desc, "HotPink4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 58;
-		c[2] = 98;
-	}
-	else if(strcmp(desc, "pink1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 181;
-		c[2] = 197;
-	}
-	else if(strcmp(desc, "pink2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 169;
-		c[2] = 184;
-	}
-	else if(strcmp(desc, "pink3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 145;
-		c[2] = 158;
-	}
-	else if(strcmp(desc, "pink4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 99;
-		c[2] = 108;
-	}
-	else if(strcmp(desc, "LightPink1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 174;
-		c[2] = 185;
-	}
-	else if(strcmp(desc, "LightPink2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 162;
-		c[2] = 173;
-	}
-	else if(strcmp(desc, "LightPink3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 140;
-		c[2] = 149;
-	}
-	else if(strcmp(desc, "LightPink4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 95;
-		c[2] = 101;
-	}
-	else if(strcmp(desc, "PaleVioletRed1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 130;
-		c[2] = 171;
-	}
-	else if(strcmp(desc, "PaleVioletRed2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 121;
-		c[2] = 159;
-	}
-	else if(strcmp(desc, "PaleVioletRed3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 104;
-		c[2] = 137;
-	}
-	else if(strcmp(desc, "PaleVioletRed4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 71;
-		c[2] = 93;
-	}
-	else if(strcmp(desc, "maroon1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 52;
-		c[2] = 179;
-	}
-	else if(strcmp(desc, "maroon2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 48;
-		c[2] = 167;
-	}
-	else if(strcmp(desc, "maroon3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 41;
-		c[2] = 144;
-	}
-	else if(strcmp(desc, "maroon4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 28;
-		c[2] = 98;
-	}
-	else if(strcmp(desc, "VioletRed1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 62;
-		c[2] = 150;
-	}
-	else if(strcmp(desc, "VioletRed2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 58;
-		c[2] = 140;
-	}
-	else if(strcmp(desc, "VioletRed3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 50;
-		c[2] = 120;
-	}
-	else if(strcmp(desc, "VioletRed4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 34;
-		c[2] = 82;
-	}
-	else if(strcmp(desc, "magenta1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 0;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "magenta2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 0;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "magenta3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 0;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "magenta4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 0;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "orchid1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 131;
-		c[2] = 250;
-	}
-	else if(strcmp(desc, "orchid2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 122;
-		c[2] = 233;
-	}
-	else if(strcmp(desc, "orchid3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 105;
-		c[2] = 201;
-	}
-	else if(strcmp(desc, "orchid4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 71;
-		c[2] = 137;
-	}
-	else if(strcmp(desc, "plum1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 187;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "plum2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 174;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "plum3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 150;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "plum4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 102;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "MediumOrchid1") == 0)
-	{
-		c[0] = 224;
-		c[1] = 102;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "MediumOrchid2") == 0)
-	{
-		c[0] = 209;
-		c[1] = 95;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "MediumOrchid3") == 0)
-	{
-		c[0] = 180;
-		c[1] = 82;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "MediumOrchid4") == 0)
-	{
-		c[0] = 122;
-		c[1] = 55;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "DarkOrchid1") == 0)
-	{
-		c[0] = 191;
-		c[1] = 62;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "DarkOrchid2") == 0)
-	{
-		c[0] = 178;
-		c[1] = 58;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "DarkOrchid3") == 0)
-	{
-		c[0] = 154;
-		c[1] = 50;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "DarkOrchid4") == 0)
-	{
-		c[0] = 104;
-		c[1] = 34;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "purple1") == 0)
-	{
-		c[0] = 155;
-		c[1] = 48;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "purple2") == 0)
-	{
-		c[0] = 145;
-		c[1] = 44;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "purple3") == 0)
-	{
-		c[0] = 125;
-		c[1] = 38;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "purple4") == 0)
-	{
-		c[0] = 85;
-		c[1] = 26;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "MediumPurple1") == 0)
-	{
-		c[0] = 171;
-		c[1] = 130;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "MediumPurple2") == 0)
-	{
-		c[0] = 159;
-		c[1] = 121;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "MediumPurple3") == 0)
-	{
-		c[0] = 137;
-		c[1] = 104;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "MediumPurple4") == 0)
-	{
-		c[0] = 93;
-		c[1] = 71;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "thistle1") == 0)
-	{
-		c[0] = 255;
-		c[1] = 225;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "thistle2") == 0)
-	{
-		c[0] = 238;
-		c[1] = 210;
-		c[2] = 238;
-	}
-	else if(strcmp(desc, "thistle3") == 0)
-	{
-		c[0] = 205;
-		c[1] = 181;
-		c[2] = 205;
-	}
-	else if(strcmp(desc, "thistle4") == 0)
-	{
-		c[0] = 139;
-		c[1] = 123;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "gray0") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "grey0") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "gray1") == 0)
-	{
-		c[0] = 3;
-		c[1] = 3;
-		c[2] = 3;
-	}
-	else if(strcmp(desc, "grey1") == 0)
-	{
-		c[0] = 3;
-		c[1] = 3;
-		c[2] = 3;
-	}
-	else if(strcmp(desc, "gray2") == 0)
-	{
-		c[0] = 5;
-		c[1] = 5;
-		c[2] = 5;
-	}
-	else if(strcmp(desc, "grey2") == 0)
-	{
-		c[0] = 5;
-		c[1] = 5;
-		c[2] = 5;
-	}
-	else if(strcmp(desc, "gray3") == 0)
-	{
-		c[0] = 8;
-		c[1] = 8;
-		c[2] = 8;
-	}
-	else if(strcmp(desc, "grey3") == 0)
-	{
-		c[0] = 8;
-		c[1] = 8;
-		c[2] = 8;
-	}
-	else if(strcmp(desc, "gray4") == 0)
-	{
-		c[0] = 10;
-		c[1] = 10;
-		c[2] = 10;
-	}
-	else if(strcmp(desc, "grey4") == 0)
-	{
-		c[0] = 10;
-		c[1] = 10;
-		c[2] = 10;
-	}
-	else if(strcmp(desc, "gray5") == 0)
-	{
-		c[0] = 13;
-		c[1] = 13;
-		c[2] = 13;
-	}
-	else if(strcmp(desc, "grey5") == 0)
-	{
-		c[0] = 13;
-		c[1] = 13;
-		c[2] = 13;
-	}
-	else if(strcmp(desc, "gray6") == 0)
-	{
-		c[0] = 15;
-		c[1] = 15;
-		c[2] = 15;
-	}
-	else if(strcmp(desc, "grey6") == 0)
-	{
-		c[0] = 15;
-		c[1] = 15;
-		c[2] = 15;
-	}
-	else if(strcmp(desc, "gray7") == 0)
-	{
-		c[0] = 18;
-		c[1] = 18;
-		c[2] = 18;
-	}
-	else if(strcmp(desc, "grey7") == 0)
-	{
-		c[0] = 18;
-		c[1] = 18;
-		c[2] = 18;
-	}
-	else if(strcmp(desc, "gray8") == 0)
-	{
-		c[0] = 20;
-		c[1] = 20;
-		c[2] = 20;
-	}
-	else if(strcmp(desc, "grey8") == 0)
-	{
-		c[0] = 20;
-		c[1] = 20;
-		c[2] = 20;
-	}
-	else if(strcmp(desc, "gray9") == 0)
-	{
-		c[0] = 23;
-		c[1] = 23;
-		c[2] = 23;
-	}
-	else if(strcmp(desc, "grey9") == 0)
-	{
-		c[0] = 23;
-		c[1] = 23;
-		c[2] = 23;
-	}
-	else if(strcmp(desc, "gray10") == 0)
-	{
-		c[0] = 26;
-		c[1] = 26;
-		c[2] = 26;
-	}
-	else if(strcmp(desc, "grey10") == 0)
-	{
-		c[0] = 26;
-		c[1] = 26;
-		c[2] = 26;
-	}
-	else if(strcmp(desc, "gray11") == 0)
-	{
-		c[0] = 28;
-		c[1] = 28;
-		c[2] = 28;
-	}
-	else if(strcmp(desc, "grey11") == 0)
-	{
-		c[0] = 28;
-		c[1] = 28;
-		c[2] = 28;
-	}
-	else if(strcmp(desc, "gray12") == 0)
-	{
-		c[0] = 31;
-		c[1] = 31;
-		c[2] = 31;
-	}
-	else if(strcmp(desc, "grey12") == 0)
-	{
-		c[0] = 31;
-		c[1] = 31;
-		c[2] = 31;
-	}
-	else if(strcmp(desc, "gray13") == 0)
-	{
-		c[0] = 33;
-		c[1] = 33;
-		c[2] = 33;
-	}
-	else if(strcmp(desc, "grey13") == 0)
-	{
-		c[0] = 33;
-		c[1] = 33;
-		c[2] = 33;
-	}
-	else if(strcmp(desc, "gray14") == 0)
-	{
-		c[0] = 36;
-		c[1] = 36;
-		c[2] = 36;
-	}
-	else if(strcmp(desc, "grey14") == 0)
-	{
-		c[0] = 36;
-		c[1] = 36;
-		c[2] = 36;
-	}
-	else if(strcmp(desc, "gray15") == 0)
-	{
-		c[0] = 38;
-		c[1] = 38;
-		c[2] = 38;
-	}
-	else if(strcmp(desc, "grey15") == 0)
-	{
-		c[0] = 38;
-		c[1] = 38;
-		c[2] = 38;
-	}
-	else if(strcmp(desc, "gray16") == 0)
-	{
-		c[0] = 41;
-		c[1] = 41;
-		c[2] = 41;
-	}
-	else if(strcmp(desc, "grey16") == 0)
-	{
-		c[0] = 41;
-		c[1] = 41;
-		c[2] = 41;
-	}
-	else if(strcmp(desc, "gray17") == 0)
-	{
-		c[0] = 43;
-		c[1] = 43;
-		c[2] = 43;
-	}
-	else if(strcmp(desc, "grey17") == 0)
-	{
-		c[0] = 43;
-		c[1] = 43;
-		c[2] = 43;
-	}
-	else if(strcmp(desc, "gray18") == 0)
-	{
-		c[0] = 46;
-		c[1] = 46;
-		c[2] = 46;
-	}
-	else if(strcmp(desc, "grey18") == 0)
-	{
-		c[0] = 46;
-		c[1] = 46;
-		c[2] = 46;
-	}
-	else if(strcmp(desc, "gray19") == 0)
-	{
-		c[0] = 48;
-		c[1] = 48;
-		c[2] = 48;
-	}
-	else if(strcmp(desc, "grey19") == 0)
-	{
-		c[0] = 48;
-		c[1] = 48;
-		c[2] = 48;
-	}
-	else if(strcmp(desc, "gray20") == 0)
-	{
-		c[0] = 51;
-		c[1] = 51;
-		c[2] = 51;
-	}
-	else if(strcmp(desc, "grey20") == 0)
-	{
-		c[0] = 51;
-		c[1] = 51;
-		c[2] = 51;
-	}
-	else if(strcmp(desc, "gray21") == 0)
-	{
-		c[0] = 54;
-		c[1] = 54;
-		c[2] = 54;
-	}
-	else if(strcmp(desc, "grey21") == 0)
-	{
-		c[0] = 54;
-		c[1] = 54;
-		c[2] = 54;
-	}
-	else if(strcmp(desc, "gray22") == 0)
-	{
-		c[0] = 56;
-		c[1] = 56;
-		c[2] = 56;
-	}
-	else if(strcmp(desc, "grey22") == 0)
-	{
-		c[0] = 56;
-		c[1] = 56;
-		c[2] = 56;
-	}
-	else if(strcmp(desc, "gray23") == 0)
-	{
-		c[0] = 59;
-		c[1] = 59;
-		c[2] = 59;
-	}
-	else if(strcmp(desc, "grey23") == 0)
-	{
-		c[0] = 59;
-		c[1] = 59;
-		c[2] = 59;
-	}
-	else if(strcmp(desc, "gray24") == 0)
-	{
-		c[0] = 61;
-		c[1] = 61;
-		c[2] = 61;
-	}
-	else if(strcmp(desc, "grey24") == 0)
-	{
-		c[0] = 61;
-		c[1] = 61;
-		c[2] = 61;
-	}
-	else if(strcmp(desc, "gray25") == 0)
-	{
-		c[0] = 64;
-		c[1] = 64;
-		c[2] = 64;
-	}
-	else if(strcmp(desc, "grey25") == 0)
-	{
-		c[0] = 64;
-		c[1] = 64;
-		c[2] = 64;
-	}
-	else if(strcmp(desc, "gray26") == 0)
-	{
-		c[0] = 66;
-		c[1] = 66;
-		c[2] = 66;
-	}
-	else if(strcmp(desc, "grey26") == 0)
-	{
-		c[0] = 66;
-		c[1] = 66;
-		c[2] = 66;
-	}
-	else if(strcmp(desc, "gray27") == 0)
-	{
-		c[0] = 69;
-		c[1] = 69;
-		c[2] = 69;
-	}
-	else if(strcmp(desc, "grey27") == 0)
-	{
-		c[0] = 69;
-		c[1] = 69;
-		c[2] = 69;
-	}
-	else if(strcmp(desc, "gray28") == 0)
-	{
-		c[0] = 71;
-		c[1] = 71;
-		c[2] = 71;
-	}
-	else if(strcmp(desc, "grey28") == 0)
-	{
-		c[0] = 71;
-		c[1] = 71;
-		c[2] = 71;
-	}
-	else if(strcmp(desc, "gray29") == 0)
-	{
-		c[0] = 74;
-		c[1] = 74;
-		c[2] = 74;
-	}
-	else if(strcmp(desc, "grey29") == 0)
-	{
-		c[0] = 74;
-		c[1] = 74;
-		c[2] = 74;
-	}
-	else if(strcmp(desc, "gray30") == 0)
-	{
-		c[0] = 77;
-		c[1] = 77;
-		c[2] = 77;
-	}
-	else if(strcmp(desc, "grey30") == 0)
-	{
-		c[0] = 77;
-		c[1] = 77;
-		c[2] = 77;
-	}
-	else if(strcmp(desc, "gray31") == 0)
-	{
-		c[0] = 79;
-		c[1] = 79;
-		c[2] = 79;
-	}
-	else if(strcmp(desc, "grey31") == 0)
-	{
-		c[0] = 79;
-		c[1] = 79;
-		c[2] = 79;
-	}
-	else if(strcmp(desc, "gray32") == 0)
-	{
-		c[0] = 82;
-		c[1] = 82;
-		c[2] = 82;
-	}
-	else if(strcmp(desc, "grey32") == 0)
-	{
-		c[0] = 82;
-		c[1] = 82;
-		c[2] = 82;
-	}
-	else if(strcmp(desc, "gray33") == 0)
-	{
-		c[0] = 84;
-		c[1] = 84;
-		c[2] = 84;
-	}
-	else if(strcmp(desc, "grey33") == 0)
-	{
-		c[0] = 84;
-		c[1] = 84;
-		c[2] = 84;
-	}
-	else if(strcmp(desc, "gray34") == 0)
-	{
-		c[0] = 87;
-		c[1] = 87;
-		c[2] = 87;
-	}
-	else if(strcmp(desc, "grey34") == 0)
-	{
-		c[0] = 87;
-		c[1] = 87;
-		c[2] = 87;
-	}
-	else if(strcmp(desc, "gray35") == 0)
-	{
-		c[0] = 89;
-		c[1] = 89;
-		c[2] = 89;
-	}
-	else if(strcmp(desc, "grey35") == 0)
-	{
-		c[0] = 89;
-		c[1] = 89;
-		c[2] = 89;
-	}
-	else if(strcmp(desc, "gray36") == 0)
-	{
-		c[0] = 92;
-		c[1] = 92;
-		c[2] = 92;
-	}
-	else if(strcmp(desc, "grey36") == 0)
-	{
-		c[0] = 92;
-		c[1] = 92;
-		c[2] = 92;
-	}
-	else if(strcmp(desc, "gray37") == 0)
-	{
-		c[0] = 94;
-		c[1] = 94;
-		c[2] = 94;
-	}
-	else if(strcmp(desc, "grey37") == 0)
-	{
-		c[0] = 94;
-		c[1] = 94;
-		c[2] = 94;
-	}
-	else if(strcmp(desc, "gray38") == 0)
-	{
-		c[0] = 97;
-		c[1] = 97;
-		c[2] = 97;
-	}
-	else if(strcmp(desc, "grey38") == 0)
-	{
-		c[0] = 97;
-		c[1] = 97;
-		c[2] = 97;
-	}
-	else if(strcmp(desc, "gray39") == 0)
-	{
-		c[0] = 99;
-		c[1] = 99;
-		c[2] = 99;
-	}
-	else if(strcmp(desc, "grey39") == 0)
-	{
-		c[0] = 99;
-		c[1] = 99;
-		c[2] = 99;
-	}
-	else if(strcmp(desc, "gray40") == 0)
-	{
-		c[0] = 102;
-		c[1] = 102;
-		c[2] = 102;
-	}
-	else if(strcmp(desc, "grey40") == 0)
-	{
-		c[0] = 102;
-		c[1] = 102;
-		c[2] = 102;
-	}
-	else if(strcmp(desc, "gray41") == 0)
-	{
-		c[0] = 105;
-		c[1] = 105;
-		c[2] = 105;
-	}
-	else if(strcmp(desc, "grey41") == 0)
-	{
-		c[0] = 105;
-		c[1] = 105;
-		c[2] = 105;
-	}
-	else if(strcmp(desc, "gray42") == 0)
-	{
-		c[0] = 107;
-		c[1] = 107;
-		c[2] = 107;
-	}
-	else if(strcmp(desc, "grey42") == 0)
-	{
-		c[0] = 107;
-		c[1] = 107;
-		c[2] = 107;
-	}
-	else if(strcmp(desc, "gray43") == 0)
-	{
-		c[0] = 110;
-		c[1] = 110;
-		c[2] = 110;
-	}
-	else if(strcmp(desc, "grey43") == 0)
-	{
-		c[0] = 110;
-		c[1] = 110;
-		c[2] = 110;
-	}
-	else if(strcmp(desc, "gray44") == 0)
-	{
-		c[0] = 112;
-		c[1] = 112;
-		c[2] = 112;
-	}
-	else if(strcmp(desc, "grey44") == 0)
-	{
-		c[0] = 112;
-		c[1] = 112;
-		c[2] = 112;
-	}
-	else if(strcmp(desc, "gray45") == 0)
-	{
-		c[0] = 115;
-		c[1] = 115;
-		c[2] = 115;
-	}
-	else if(strcmp(desc, "grey45") == 0)
-	{
-		c[0] = 115;
-		c[1] = 115;
-		c[2] = 115;
-	}
-	else if(strcmp(desc, "gray46") == 0)
-	{
-		c[0] = 117;
-		c[1] = 117;
-		c[2] = 117;
-	}
-	else if(strcmp(desc, "grey46") == 0)
-	{
-		c[0] = 117;
-		c[1] = 117;
-		c[2] = 117;
-	}
-	else if(strcmp(desc, "gray47") == 0)
-	{
-		c[0] = 120;
-		c[1] = 120;
-		c[2] = 120;
-	}
-	else if(strcmp(desc, "grey47") == 0)
-	{
-		c[0] = 120;
-		c[1] = 120;
-		c[2] = 120;
-	}
-	else if(strcmp(desc, "gray48") == 0)
-	{
-		c[0] = 122;
-		c[1] = 122;
-		c[2] = 122;
-	}
-	else if(strcmp(desc, "grey48") == 0)
-	{
-		c[0] = 122;
-		c[1] = 122;
-		c[2] = 122;
-	}
-	else if(strcmp(desc, "gray49") == 0)
-	{
-		c[0] = 125;
-		c[1] = 125;
-		c[2] = 125;
-	}
-	else if(strcmp(desc, "grey49") == 0)
-	{
-		c[0] = 125;
-		c[1] = 125;
-		c[2] = 125;
-	}
-	else if(strcmp(desc, "gray50") == 0)
-	{
-		c[0] = 127;
-		c[1] = 127;
-		c[2] = 127;
-	}
-	else if(strcmp(desc, "grey50") == 0)
-	{
-		c[0] = 127;
-		c[1] = 127;
-		c[2] = 127;
-	}
-	else if(strcmp(desc, "gray51") == 0)
-	{
-		c[0] = 130;
-		c[1] = 130;
-		c[2] = 130;
-	}
-	else if(strcmp(desc, "grey51") == 0)
-	{
-		c[0] = 130;
-		c[1] = 130;
-		c[2] = 130;
-	}
-	else if(strcmp(desc, "gray52") == 0)
-	{
-		c[0] = 133;
-		c[1] = 133;
-		c[2] = 133;
-	}
-	else if(strcmp(desc, "grey52") == 0)
-	{
-		c[0] = 133;
-		c[1] = 133;
-		c[2] = 133;
-	}
-	else if(strcmp(desc, "gray53") == 0)
-	{
-		c[0] = 135;
-		c[1] = 135;
-		c[2] = 135;
-	}
-	else if(strcmp(desc, "grey53") == 0)
-	{
-		c[0] = 135;
-		c[1] = 135;
-		c[2] = 135;
-	}
-	else if(strcmp(desc, "gray54") == 0)
-	{
-		c[0] = 138;
-		c[1] = 138;
-		c[2] = 138;
-	}
-	else if(strcmp(desc, "grey54") == 0)
-	{
-		c[0] = 138;
-		c[1] = 138;
-		c[2] = 138;
-	}
-	else if(strcmp(desc, "gray55") == 0)
-	{
-		c[0] = 140;
-		c[1] = 140;
-		c[2] = 140;
-	}
-	else if(strcmp(desc, "grey55") == 0)
-	{
-		c[0] = 140;
-		c[1] = 140;
-		c[2] = 140;
-	}
-	else if(strcmp(desc, "gray56") == 0)
-	{
-		c[0] = 143;
-		c[1] = 143;
-		c[2] = 143;
-	}
-	else if(strcmp(desc, "grey56") == 0)
-	{
-		c[0] = 143;
-		c[1] = 143;
-		c[2] = 143;
-	}
-	else if(strcmp(desc, "gray57") == 0)
-	{
-		c[0] = 145;
-		c[1] = 145;
-		c[2] = 145;
-	}
-	else if(strcmp(desc, "grey57") == 0)
-	{
-		c[0] = 145;
-		c[1] = 145;
-		c[2] = 145;
-	}
-	else if(strcmp(desc, "gray58") == 0)
-	{
-		c[0] = 148;
-		c[1] = 148;
-		c[2] = 148;
-	}
-	else if(strcmp(desc, "grey58") == 0)
-	{
-		c[0] = 148;
-		c[1] = 148;
-		c[2] = 148;
-	}
-	else if(strcmp(desc, "gray59") == 0)
-	{
-		c[0] = 150;
-		c[1] = 150;
-		c[2] = 150;
-	}
-	else if(strcmp(desc, "grey59") == 0)
-	{
-		c[0] = 150;
-		c[1] = 150;
-		c[2] = 150;
-	}
-	else if(strcmp(desc, "gray60") == 0)
-	{
-		c[0] = 153;
-		c[1] = 153;
-		c[2] = 153;
-	}
-	else if(strcmp(desc, "grey60") == 0)
-	{
-		c[0] = 153;
-		c[1] = 153;
-		c[2] = 153;
-	}
-	else if(strcmp(desc, "gray61") == 0)
-	{
-		c[0] = 156;
-		c[1] = 156;
-		c[2] = 156;
-	}
-	else if(strcmp(desc, "grey61") == 0)
-	{
-		c[0] = 156;
-		c[1] = 156;
-		c[2] = 156;
-	}
-	else if(strcmp(desc, "gray62") == 0)
-	{
-		c[0] = 158;
-		c[1] = 158;
-		c[2] = 158;
-	}
-	else if(strcmp(desc, "grey62") == 0)
-	{
-		c[0] = 158;
-		c[1] = 158;
-		c[2] = 158;
-	}
-	else if(strcmp(desc, "gray63") == 0)
-	{
-		c[0] = 161;
-		c[1] = 161;
-		c[2] = 161;
-	}
-	else if(strcmp(desc, "grey63") == 0)
-	{
-		c[0] = 161;
-		c[1] = 161;
-		c[2] = 161;
-	}
-	else if(strcmp(desc, "gray64") == 0)
-	{
-		c[0] = 163;
-		c[1] = 163;
-		c[2] = 163;
-	}
-	else if(strcmp(desc, "grey64") == 0)
-	{
-		c[0] = 163;
-		c[1] = 163;
-		c[2] = 163;
-	}
-	else if(strcmp(desc, "gray65") == 0)
-	{
-		c[0] = 166;
-		c[1] = 166;
-		c[2] = 166;
-	}
-	else if(strcmp(desc, "grey65") == 0)
-	{
-		c[0] = 166;
-		c[1] = 166;
-		c[2] = 166;
-	}
-	else if(strcmp(desc, "gray66") == 0)
-	{
-		c[0] = 168;
-		c[1] = 168;
-		c[2] = 168;
-	}
-	else if(strcmp(desc, "grey66") == 0)
-	{
-		c[0] = 168;
-		c[1] = 168;
-		c[2] = 168;
-	}
-	else if(strcmp(desc, "gray67") == 0)
-	{
-		c[0] = 171;
-		c[1] = 171;
-		c[2] = 171;
-	}
-	else if(strcmp(desc, "grey67") == 0)
-	{
-		c[0] = 171;
-		c[1] = 171;
-		c[2] = 171;
-	}
-	else if(strcmp(desc, "gray68") == 0)
-	{
-		c[0] = 173;
-		c[1] = 173;
-		c[2] = 173;
-	}
-	else if(strcmp(desc, "grey68") == 0)
-	{
-		c[0] = 173;
-		c[1] = 173;
-		c[2] = 173;
-	}
-	else if(strcmp(desc, "gray69") == 0)
-	{
-		c[0] = 176;
-		c[1] = 176;
-		c[2] = 176;
-	}
-	else if(strcmp(desc, "grey69") == 0)
-	{
-		c[0] = 176;
-		c[1] = 176;
-		c[2] = 176;
-	}
-	else if(strcmp(desc, "gray70") == 0)
-	{
-		c[0] = 179;
-		c[1] = 179;
-		c[2] = 179;
-	}
-	else if(strcmp(desc, "grey70") == 0)
-	{
-		c[0] = 179;
-		c[1] = 179;
-		c[2] = 179;
-	}
-	else if(strcmp(desc, "gray71") == 0)
-	{
-		c[0] = 181;
-		c[1] = 181;
-		c[2] = 181;
-	}
-	else if(strcmp(desc, "grey71") == 0)
-	{
-		c[0] = 181;
-		c[1] = 181;
-		c[2] = 181;
-	}
-	else if(strcmp(desc, "gray72") == 0)
-	{
-		c[0] = 184;
-		c[1] = 184;
-		c[2] = 184;
-	}
-	else if(strcmp(desc, "grey72") == 0)
-	{
-		c[0] = 184;
-		c[1] = 184;
-		c[2] = 184;
-	}
-	else if(strcmp(desc, "gray73") == 0)
-	{
-		c[0] = 186;
-		c[1] = 186;
-		c[2] = 186;
-	}
-	else if(strcmp(desc, "grey73") == 0)
-	{
-		c[0] = 186;
-		c[1] = 186;
-		c[2] = 186;
-	}
-	else if(strcmp(desc, "gray74") == 0)
-	{
-		c[0] = 189;
-		c[1] = 189;
-		c[2] = 189;
-	}
-	else if(strcmp(desc, "grey74") == 0)
-	{
-		c[0] = 189;
-		c[1] = 189;
-		c[2] = 189;
-	}
-	else if(strcmp(desc, "gray75") == 0)
-	{
-		c[0] = 191;
-		c[1] = 191;
-		c[2] = 191;
-	}
-	else if(strcmp(desc, "grey75") == 0)
-	{
-		c[0] = 191;
-		c[1] = 191;
-		c[2] = 191;
-	}
-	else if(strcmp(desc, "gray76") == 0)
-	{
-		c[0] = 194;
-		c[1] = 194;
-		c[2] = 194;
-	}
-	else if(strcmp(desc, "grey76") == 0)
-	{
-		c[0] = 194;
-		c[1] = 194;
-		c[2] = 194;
-	}
-	else if(strcmp(desc, "gray77") == 0)
-	{
-		c[0] = 196;
-		c[1] = 196;
-		c[2] = 196;
-	}
-	else if(strcmp(desc, "grey77") == 0)
-	{
-		c[0] = 196;
-		c[1] = 196;
-		c[2] = 196;
-	}
-	else if(strcmp(desc, "gray78") == 0)
-	{
-		c[0] = 199;
-		c[1] = 199;
-		c[2] = 199;
-	}
-	else if(strcmp(desc, "grey78") == 0)
-	{
-		c[0] = 199;
-		c[1] = 199;
-		c[2] = 199;
-	}
-	else if(strcmp(desc, "gray79") == 0)
-	{
-		c[0] = 201;
-		c[1] = 201;
-		c[2] = 201;
-	}
-	else if(strcmp(desc, "grey79") == 0)
-	{
-		c[0] = 201;
-		c[1] = 201;
-		c[2] = 201;
-	}
-	else if(strcmp(desc, "gray80") == 0)
-	{
-		c[0] = 204;
-		c[1] = 204;
-		c[2] = 204;
-	}
-	else if(strcmp(desc, "grey80") == 0)
-	{
-		c[0] = 204;
-		c[1] = 204;
-		c[2] = 204;
-	}
-	else if(strcmp(desc, "gray81") == 0)
-	{
-		c[0] = 207;
-		c[1] = 207;
-		c[2] = 207;
-	}
-	else if(strcmp(desc, "grey81") == 0)
-	{
-		c[0] = 207;
-		c[1] = 207;
-		c[2] = 207;
-	}
-	else if(strcmp(desc, "gray82") == 0)
-	{
-		c[0] = 209;
-		c[1] = 209;
-		c[2] = 209;
-	}
-	else if(strcmp(desc, "grey82") == 0)
-	{
-		c[0] = 209;
-		c[1] = 209;
-		c[2] = 209;
-	}
-	else if(strcmp(desc, "gray83") == 0)
-	{
-		c[0] = 212;
-		c[1] = 212;
-		c[2] = 212;
-	}
-	else if(strcmp(desc, "grey83") == 0)
-	{
-		c[0] = 212;
-		c[1] = 212;
-		c[2] = 212;
-	}
-	else if(strcmp(desc, "gray84") == 0)
-	{
-		c[0] = 214;
-		c[1] = 214;
-		c[2] = 214;
-	}
-	else if(strcmp(desc, "grey84") == 0)
-	{
-		c[0] = 214;
-		c[1] = 214;
-		c[2] = 214;
-	}
-	else if(strcmp(desc, "gray85") == 0)
-	{
-		c[0] = 217;
-		c[1] = 217;
-		c[2] = 217;
-	}
-	else if(strcmp(desc, "grey85") == 0)
-	{
-		c[0] = 217;
-		c[1] = 217;
-		c[2] = 217;
-	}
-	else if(strcmp(desc, "gray86") == 0)
-	{
-		c[0] = 219;
-		c[1] = 219;
-		c[2] = 219;
-	}
-	else if(strcmp(desc, "grey86") == 0)
-	{
-		c[0] = 219;
-		c[1] = 219;
-		c[2] = 219;
-	}
-	else if(strcmp(desc, "gray87") == 0)
-	{
-		c[0] = 222;
-		c[1] = 222;
-		c[2] = 222;
-	}
-	else if(strcmp(desc, "grey87") == 0)
-	{
-		c[0] = 222;
-		c[1] = 222;
-		c[2] = 222;
-	}
-	else if(strcmp(desc, "gray88") == 0)
-	{
-		c[0] = 224;
-		c[1] = 224;
-		c[2] = 224;
-	}
-	else if(strcmp(desc, "grey88") == 0)
-	{
-		c[0] = 224;
-		c[1] = 224;
-		c[2] = 224;
-	}
-	else if(strcmp(desc, "gray89") == 0)
-	{
-		c[0] = 227;
-		c[1] = 227;
-		c[2] = 227;
-	}
-	else if(strcmp(desc, "grey89") == 0)
-	{
-		c[0] = 227;
-		c[1] = 227;
-		c[2] = 227;
-	}
-	else if(strcmp(desc, "gray90") == 0)
-	{
-		c[0] = 229;
-		c[1] = 229;
-		c[2] = 229;
-	}
-	else if(strcmp(desc, "grey90") == 0)
-	{
-		c[0] = 229;
-		c[1] = 229;
-		c[2] = 229;
-	}
-	else if(strcmp(desc, "gray91") == 0)
-	{
-		c[0] = 232;
-		c[1] = 232;
-		c[2] = 232;
-	}
-	else if(strcmp(desc, "grey91") == 0)
-	{
-		c[0] = 232;
-		c[1] = 232;
-		c[2] = 232;
-	}
-	else if(strcmp(desc, "gray92") == 0)
-	{
-		c[0] = 235;
-		c[1] = 235;
-		c[2] = 235;
-	}
-	else if(strcmp(desc, "grey92") == 0)
-	{
-		c[0] = 235;
-		c[1] = 235;
-		c[2] = 235;
-	}
-	else if(strcmp(desc, "gray93") == 0)
-	{
-		c[0] = 237;
-		c[1] = 237;
-		c[2] = 237;
-	}
-	else if(strcmp(desc, "grey93") == 0)
-	{
-		c[0] = 237;
-		c[1] = 237;
-		c[2] = 237;
-	}
-	else if(strcmp(desc, "gray94") == 0)
-	{
-		c[0] = 240;
-		c[1] = 240;
-		c[2] = 240;
-	}
-	else if(strcmp(desc, "grey94") == 0)
-	{
-		c[0] = 240;
-		c[1] = 240;
-		c[2] = 240;
-	}
-	else if(strcmp(desc, "gray95") == 0)
-	{
-		c[0] = 242;
-		c[1] = 242;
-		c[2] = 242;
-	}
-	else if(strcmp(desc, "grey95") == 0)
-	{
-		c[0] = 242;
-		c[1] = 242;
-		c[2] = 242;
-	}
-	else if(strcmp(desc, "gray96") == 0)
-	{
-		c[0] = 245;
-		c[1] = 245;
-		c[2] = 245;
-	}
-	else if(strcmp(desc, "grey96") == 0)
-	{
-		c[0] = 245;
-		c[1] = 245;
-		c[2] = 245;
-	}
-	else if(strcmp(desc, "gray97") == 0)
-	{
-		c[0] = 247;
-		c[1] = 247;
-		c[2] = 247;
-	}
-	else if(strcmp(desc, "grey97") == 0)
-	{
-		c[0] = 247;
-		c[1] = 247;
-		c[2] = 247;
-	}
-	else if(strcmp(desc, "gray98") == 0)
-	{
-		c[0] = 250;
-		c[1] = 250;
-		c[2] = 250;
-	}
-	else if(strcmp(desc, "grey98") == 0)
-	{
-		c[0] = 250;
-		c[1] = 250;
-		c[2] = 250;
-	}
-	else if(strcmp(desc, "gray99") == 0)
-	{
-		c[0] = 252;
-		c[1] = 252;
-		c[2] = 252;
-	}
-	else if(strcmp(desc, "grey99") == 0)
-	{
-		c[0] = 252;
-		c[1] = 252;
-		c[2] = 252;
-	}
-	else if(strcmp(desc, "gray100") == 0)
-	{
-		c[0] = 255;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "grey100") == 0)
-	{
-		c[0] = 255;
-		c[1] = 255;
-		c[2] = 255;
-	}
-	else if(strcmp(desc, "DarkGrey") == 0)
-	{
-		c[0] = 169;
-		c[1] = 169;
-		c[2] = 169;
-	}
-	else if(strcmp(desc, "DarkGray") == 0)
-	{
-		c[0] = 169;
-		c[1] = 169;
-		c[2] = 169;
-	}
-	else if(strcmp(desc, "DarkBlue") == 0)
-	{
-		c[0] = 0;
-		c[1] = 0;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "DarkCyan") == 0)
-	{
-		c[0] = 0;
-		c[1] = 139;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "DarkMagenta") == 0)
-	{
-		c[0] = 139;
-		c[1] = 0;
-		c[2] = 139;
-	}
-	else if(strcmp(desc, "DarkRed") == 0)
-	{
-		c[0] = 139;
-		c[1] = 0;
-		c[2] = 0;
-	}
-	else if(strcmp(desc, "LightGreen") == 0)
-	{
-		c[0] = 144;
-		c[1] = 238;
-		c[2] = 144;
-	}
-	else
-	{
-		fprintf(stderr, "Invalid color %s.\n", desc);
-		exit(1);
-	}
-	return c;
+	for (i = 0; i < colorsSize; i++)
+	{
+		if (strcmp(desc, colors[i].name) == 0)
+		{
+			c[0] = colors[i].r;
+			c[1] = colors[i].g;
+			c[2] = colors[i].b;
+			return c;
+		}
+	}
+
+	fprintf(stderr, "Invalid color %s.\n", desc);
+	exit(1);
+
+	return NULL;
 }

@@ -23,14 +23,14 @@
 
 == Version 0.4 ==
 
- * Generate a file for distribution, containing images (and maybe fonts?)
-
-== Version 0.5 ==
-
  * image automatic scale when informing width
  * allow viewing presentation even with invalid images
  * include templates from other files
  * presentation tutorial to be run as `xsw --tutorial`
+
+== Version 0.5 ==
+
+ * Generate a file for distribution, containing images (and maybe fonts?)
 
 == Version 0.6 ==
 

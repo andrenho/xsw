@@ -12,6 +12,7 @@ AM_PROG_CC_C_O
 AM_PROG_LEX
 AC_PROG_YACC
 AC_PROG_MAKE_SET
+# TODO - check for 'convert'
 
 # Check for SDL
 AC_CHECK_PROG(SDL_CFLAGS, sdl-config, `sdl-config --cflags`)

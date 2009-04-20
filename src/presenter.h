@@ -21,6 +21,7 @@ typedef struct {
 	int thread_running;
 	TTF_Font* font;
 	Presentation* p;
+	int fullscreen;
 } Presenter;
 
 Presenter* presenter_initialize(Presentation* p, int initialize_video);

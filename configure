@@ -3810,6 +3810,7 @@ $as_echo "no" >&6; }
   SET_MAKE="MAKE=${MAKE-make}"
 fi
 
+# TODO - check for 'convert'
 
 # Check for SDL
 # Extract the first word of "sdl-config", so it can be a program name with args.

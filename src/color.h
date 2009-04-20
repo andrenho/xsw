@@ -6,7 +6,7 @@
 
 typedef struct {
 	char *name;
-	char r, g, b;
+	unsigned char r, g, b;
 } Color;
 
 unsigned char* color_get(char* desc);

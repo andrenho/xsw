@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "presentation.h"
 #include "presenter.h"
 #include "slide.h"
 #include "file.h"
 #include "presenter.h"
+#include "parser.h"
+
+extern int parser_parse(Presentation *pres, char *filename);
 
 static int check_convert()
 {
@@ -73,18 +77,29 @@ int main(int argc, char** argv)
 		strcat(all_bmp, bmp_path);
 		strcat(all_bmp, " ");
 	}
-	printf("Generating PDF...");
 
 	// generate pdf
 	char* command = alloca(strlen(all_bmp) + 512);
 	char* name = alloca(512);
 	sprintf(name, "%s.pdf", base_name(p->filename));
-	sprintf(command, "convert %s %s", all_bmp, name);
+	printf("Generating %s...\n", name);
+	sprintf(command, "convert -compress Zip %s %s", all_bmp, name);
 	if(system(command) != 0)
 	{
+		printf("error!\n");
 		fprintf(stderr, "There was an error when running 'convert'.\n");
 		return 1;
 	}
+
+	// remove files
+	printf("Removing temporary files...\n");
+	for(i=0; i<slides; i++)
+	{
+		char bmp_path[512];
+		sprintf(bmp_path, "%s/%d.bmp", path, i);
+		unlink(bmp_path);
+	}
+	rmdir(path);
 
 	return 0;
 }

@@ -3,6 +3,8 @@
 #include "presentation.h"
 #include "presenter.h"
 #include "slide.h"
+#include "file.h"
+#include "presenter.h"
 
 static int check_convert()
 {
@@ -53,20 +55,29 @@ int main(int argc, char** argv)
 
 	// prepare temporary directory
 	char* path = alloca(20);
-	sprintf(path, "%s", "xsw-XXXXXX");
+	sprintf(path, "/tmp/%s", "xsw-XXXXXX");
 	path = mkdtemp(path);
-	printf("%s\n", path);
-	return 0;
 
 	// load slideshow
 	Presenter* pr = presenter_initialize(p, 0);
 	int slides = count(p->slides);
 	int i;
+	char* all_bmp = alloca(slides * 25); // TODO
+	strcpy(all_bmp, "");
 	for(i=0; i<slides; i++)
 	{
+		char bmp_path[512];
+		sprintf(bmp_path, "%s/%d.bmp", path, i);
 		presenter_show(pr, i, 0);
-
+		presenter_save_image(pr, bmp_path);
+		strcat(all_bmp, bmp_path);
+		strcat(all_bmp, " ");
 	}
+	printf("Generating PDF...");
+
+	// generate pdf
+	char* command = alloca(strlen(all_bmp) + 512);
+//	sprintf("convert %s %s
 
 	return 0;
 }

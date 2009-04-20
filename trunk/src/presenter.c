@@ -30,6 +30,7 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 	pr->thread = NULL;
 	pr->leave_thread = 0;
 	pr->thread_running = 0;
+	pr->fullscreen = (initialize_video == 2 ? 1 : 0);
 	
 	if(initialize_video)
 		st = SDL_Init(SDL_INIT_VIDEO);
@@ -388,7 +389,15 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer)
 
 void presenter_fullscreen(Presenter* pr)
 {
-	SDL_WM_ToggleFullScreen(pr->scr);
+	// fullscreen
+	if(SDL_WM_ToggleFullScreen(pr->scr))
+		pr->fullscreen = !pr->fullscreen;
+
+	// hide/show mouse
+	if(pr->fullscreen)
+		SDL_ShowCursor(SDL_DISABLE);
+	else
+		SDL_ShowCursor(SDL_ENABLE);
 }
 
 void presenter_quit()

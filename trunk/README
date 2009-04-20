@@ -52,6 +52,12 @@ would be called a "master slide" in other programs). Do so the following way:
       - title: "My Company"
 
 
+Other formats
+-------------
+
+A xsw presentation can be converted to a PDF file using the xsw2pdf program.
+
+
 Developing
 ----------
 

@@ -77,7 +77,14 @@ int main(int argc, char** argv)
 
 	// generate pdf
 	char* command = alloca(strlen(all_bmp) + 512);
-//	sprintf("convert %s %s
+	char* name = alloca(512);
+	sprintf(name, "%s.pdf", base_name(p->filename));
+	sprintf(command, "convert %s %s", all_bmp, name);
+	if(system(command) != 0)
+	{
+		fprintf(stderr, "There was an error when running 'convert'.\n");
+		return 1;
+	}
 
 	return 0;
 }

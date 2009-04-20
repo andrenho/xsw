@@ -73,3 +73,9 @@ char* file_read(const char* filename)
         buffer[length] = '\0';
         return buffer;
 }
+
+char* base_name(const char* filename)
+{
+	char* name = basename(filename);
+	return name;
+}

@@ -3,7 +3,7 @@
 
 == Version 0.3.0 ==
 
- * the program 'xsw2pdf' was created. This programs requires ImageMagick and generates a PDF file from a presentation.
+ * the program `xsw2pdf` was created. This programs requires ImageMagick and generates a PDF file from a presentation.
  * the color search function was optimized and should be both faster to execute and to compile.
  * the mouse pointer is now hidden in fullscreen.
  * a strange number was being shown when CTRL was pressed in developer mode.

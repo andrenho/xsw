@@ -10,6 +10,10 @@ Requirements
  * SDL_image <http://www.libdsl.org/projects/SDL_image/>
  * SDL_gfx <http://www.ferzkopp.net/Software/SDL_gfx-2.0/>
 
+ImageMagick <http://www.imagemagick.org/> is also required for creating PDFs, 
+more specificly the program convert. It is not, however, required for 
+compilation. 
+
 
 Instalation instructions
 ------------------------

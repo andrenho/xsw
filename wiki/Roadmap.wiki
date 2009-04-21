@@ -19,6 +19,7 @@
 
 == Version 0.3 ==
 
+ * ~~PDF export~~
  * PNG/HTML/...(other formats) exportation
 
 == Version 0.4 ==
@@ -70,7 +71,6 @@
 
 == Someday ==
 
- * PDF export
  * PPT/ODP export
  * PPT/ODP import
  * play video

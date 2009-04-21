@@ -376,6 +376,7 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer)
 			default:
 				break;
 			}
+			break;
 
 		case SDL_MOUSEMOTION:
 			if(developer)

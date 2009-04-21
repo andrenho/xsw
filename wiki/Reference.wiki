@@ -10,7 +10,7 @@
 {{{
 # This is a comment
 #
-image_path: "~/myimages"
+image_path: "myimages/photos"
 
 template: NAME
   - [commands...]
@@ -146,3 +146,9 @@ The following keys can be used during the presentation:
 ||F||fullscreen||
 ||Ctrl+D||developer mode||
 ||Q||quits presentation||
+
+= Generating a PDF =
+
+A PDF of the presentation can be generated like this:
+
+`$ xsw2pdf mypresentation.xsw`

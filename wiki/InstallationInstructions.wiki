@@ -10,7 +10,7 @@
  * [http://www.libdsl.org/projects/SDL_image/ SDL_image]
  * [http://www.ferzkopp.net/Software/SDL_gfx-2.0/ SDL_gfx]
 
-[http://www.imagemagick.org/ ImageMagick] is also required for creating PDFs, more specificly the program `convert`. It is not, however, not required for compilation.
+[http://www.imagemagick.org/ ImageMagick] is also required for creating PDFs, more specificly the program [http://www.imagemagick.org/script/convert.php convert]. It is not, however, required for compilation.
 
 == Instalation instructions ==
 

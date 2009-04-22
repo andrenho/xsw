@@ -80,8 +80,9 @@ char* base_name(const char* filename)
 	char *name = basename(filename);
 
 	// remove extension
-	char *s = strchr(name, '.');
-	s[0] = '\0';
+	char *s = strrchr(name, '.');
+	if(s)
+		s[0] = '\0';
 
 	return name;
 }

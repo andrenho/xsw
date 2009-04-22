@@ -2,4 +2,4 @@ image_path: "~/projects/xsw/src/tmp"
 
 slide: 
  - bg: white
- - img: "fleche.bmp"
+ - 'A'

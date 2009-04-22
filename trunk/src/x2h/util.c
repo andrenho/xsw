@@ -1,4 +1,5 @@
 #include <string.h>
+#include <ctype.h>
 #include "util.h"
 
 char* trim(char* s)
@@ -6,16 +7,16 @@ char* trim(char* s)
 	int st = 0, c = 0;
 	int en = strlen(s)-1;
 
-	while(s[st]==' ' || s[st] == '\n' || s[st] == '\t')
+	while(isspace(s[st]) != 0)
 	{
 		if(!s[st])
 			break;
 		st++;
 	}
 
-	while(s[en]==' ' || s[en] == '\n' || s[en] == '\t')
+	while(isspace(s[en]) != 0)
 	{
-		if(en == st)
+		if(en <= st)
 			break;
 		en--;
 	}

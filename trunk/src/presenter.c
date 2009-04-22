@@ -354,6 +354,14 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer)
 		case SDL_KEYDOWN:
 			switch(e.key.keysym.sym)
 			{
+			case SDLK_F4:				
+				if(e.key.keysym.mod & KMOD_ALT)
+					return PRESENTER_QUIT;
+				break;
+			case SDLK_c:				
+				if(e.key.keysym.mod & KMOD_CTRL)
+					return PRESENTER_QUIT;
+				break;
 			case SDLK_q:
 				return PRESENTER_QUIT;
 			case SDLK_PAGEUP:
@@ -370,6 +378,10 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer)
 				return PRESENTER_FIRST;
 			case SDLK_END:
 				return PRESENTER_LAST;
+			case SDLK_ESCAPE:
+				if (pr->fullscreen)
+					return PRESENTER_FULLSCREEN;
+				break;
 			case SDLK_f:
 				return PRESENTER_FULLSCREEN;
 			case SDLK_d:

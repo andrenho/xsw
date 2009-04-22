@@ -1,7 +1,7 @@
 Version 0.3.1
 -------------
 
-* CTRL+F4 and CTRL+C now quit xsw, and ESC leaves full screen.
+* ALT+F4 and CTRL+C now quit xsw, and ESC leaves full screen.
 * corrected a bug where image_path didn't accept static paths.
 * corrected a bug where xsw2pdf would segfault when the xsw presentation file
 didn't have a extension

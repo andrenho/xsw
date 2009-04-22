@@ -2,6 +2,7 @@
  * See LICENSE file or <http://www.gnu.org/licenses/gpl-3.0.txt/> */
 
 #include <assert.h>
+#include <stdlib.h>
 #include "execute.h"
 #include "cmd_img.h"
 #include "SDL_image.h"
@@ -78,8 +79,10 @@ void execute_parse(Presenter* pr, void* cmd, CommandType type)
 		if(pr->p->image_path)
 		{
 			// get image path
-			if(buf[0] == '/' || buf[0] == '~')
+			if(pr->p->image_path[0] == '/')
 				sprintf(buf, "%s/%s", pr->p->image_path, img->path);
+			else if(pr->p->image_path[0] == '~')
+				sprintf(buf, "%s/%s/%s", getenv("HOME"), &pr->p->image_path[1], img->path);
 			else
 				sprintf(buf, "%s/%s/%s", pr->p->path, pr->p->image_path, img->path);
 			tmp = IMG_Load(buf);

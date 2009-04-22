@@ -1,11 +1,5 @@
+image_path: "~/projects/xsw/src/tmp"
+
 slide: 
- - bg: DarkBlue
- - 'hello' color:orange
- + 'world!'
-
-slide:
- - 'ola!'
-
-slide:
- - bg: yellow gradient:orange
- - 'bye'
+ - bg: white
+ - img: "fleche.bmp"

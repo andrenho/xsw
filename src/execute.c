@@ -71,14 +71,28 @@ void execute_parse(Presenter* pr, void* cmd, CommandType type)
 		printf("Preloading %s...", img->path);
 #endif
 		char buf[512];
-		sprintf(buf, "%s/%s", pr->p->path, img->path);
-		tmp = IMG_Load(buf);
-		if(!tmp && pr->p->image_path) // search alternative path
+
+		tmp = NULL;
+
+		// if image_path is set
+		if(pr->p->image_path)
 		{
-			sprintf(buf, "%s/%s/%s", pr->p->path, pr->p->image_path, img->path);
+			// get image path
+			if(buf[0] == '/' || buf[0] == '~')
+				sprintf(buf, "%s/%s", pr->p->image_path, img->path);
+			else
+				sprintf(buf, "%s/%s/%s", pr->p->path, pr->p->image_path, img->path);
+			tmp = IMG_Load(buf);
+		}
+		
+		// image not found, of no image_path - search current directory
+		if(!tmp)
+		{
+			sprintf(buf, "%s/%s", pr->p->path, img->path);
 			tmp = IMG_Load(buf);
 		}
 
+		// image still not found
 		if(!tmp)
 		{
 			fprintf(stderr, "Error loading image %s: %s.\n", img->path, IMG_GetError());

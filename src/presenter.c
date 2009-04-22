@@ -322,6 +322,15 @@ void presenter_show(Presenter* pr, int n, int developer)
 		char title[100];
 		sprintf(title, "xsw %d/%d", n+1, count(pr->p->slides));
 		SDL_WM_SetCaption(title, title);
+
+		/* sometimes the mouse might 'come back', for example when
+		 * changing resolutions, so this avoids the problem */
+		if(pr->fullscreen)
+		{
+			SDL_ShowCursor(SDL_ENABLE);
+			SDL_ShowCursor(SDL_DISABLE);
+		}
+
 		SDL_Flip(pr->scr);
 	}
 

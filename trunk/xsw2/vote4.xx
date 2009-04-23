@@ -1,0 +1,21 @@
+#!/usr/bin/env xsw
+
+$yes = 0
+$no = 0
+
+%include "vote4inc.xx"
+
+slide: 'main' no_follow
+  "Who do you vote for?"
+  "a. Yes" follow_to:'vote_yes'
+  "b. No" follow_to:'vote_no'
+
+slide: 'vote_yes' follow_to:'main'
+  $yes = $yes + 1
+  "Thank you for voting <b>yes</b>."
+  yes_no:
+
+slide: 'vote_no' follow_to:'main'
+  $no = $no + 1
+  "Thank you for voting <b>no</b>."
+  yes_no:

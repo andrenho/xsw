@@ -1,0 +1,5 @@
+def yes_no:
+  "Yes: $yes"
+  square: blue x:20 y:20 h:10 w: $yes / ($yes + $no) * 100 / 2
+  "No: $no"
+  square: blue x:20 y:40 h:10 w: $no / ($yes + $no) * 100 / 2

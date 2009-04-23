@@ -1,0 +1,5 @@
+#!/bin/sh
+
+slide:
+  "hello" align:'center' y:30 x:50 # bla
+  "world"

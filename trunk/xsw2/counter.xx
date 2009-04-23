@@ -1,0 +1,10 @@
+#!/usr/bin/env xsw
+
+$time = 60
+
+slide:
+  while $time > 0
+    "0:$time" x:55 y:30 align:'right'
+    sleep: 1
+    $time = $time - 1
+  end

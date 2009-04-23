@@ -1,5 +1,7 @@
-image_path: "~/projects/xsw/src/tmp"
+image_path: "../tmp"
 
 slide: 
- - bg: white
- - 'A'
+ - img: "temp1.png"
+
+slide:
+ - img: "temp2.png"

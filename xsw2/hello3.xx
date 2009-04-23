@@ -1,0 +1,5 @@
+#!/usr/bin/env xsw
+
+slide:
+  "hello" align:'center' y:30 x:50 
+@ "world"

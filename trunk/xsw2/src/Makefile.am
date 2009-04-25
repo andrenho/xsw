@@ -1,1 +1,1 @@
-SUBDIRS = pp cp as vm lib
+SUBDIRS = pp cp as vm

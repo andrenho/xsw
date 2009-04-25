@@ -322,7 +322,7 @@ on `(hostname || uname -n) 2>/dev/null | sed 1q`
 "
 
 # Files that config.status was made for.
-config_files=" Makefile po/Makefile.in src/xsw:src/xsw.in src/Makefile src/as/Makefile src/cp/Makefile src/lib/Makefile src/pp/Makefile src/vm/Makefile"
+config_files=" Makefile src/xsw:src/xsw.in src/Makefile src/as/Makefile src/cp/Makefile src/lib/Makefile src/pp/Makefile src/vm/Makefile"
 config_headers=" config.h"
 config_commands=" depfiles libtool"
 
@@ -654,7 +654,6 @@ do
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-    "po/Makefile.in") CONFIG_FILES="$CONFIG_FILES po/Makefile.in" ;;
     "src/xsw") CONFIG_FILES="$CONFIG_FILES src/xsw:src/xsw.in" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "src/as/Makefile") CONFIG_FILES="$CONFIG_FILES src/as/Makefile" ;;

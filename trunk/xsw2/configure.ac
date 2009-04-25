@@ -10,7 +10,6 @@ AC_DEFINE(VERSION, ["AC_PACKAGE_VERSION"], ["Configuring version..."])
 AM_INIT_AUTOMAKE
 
 # Checks for programs.
-AC_PROG_LIBTOOL
 AC_PROG_CC
 AM_PROG_CC_C_O
 AM_PROG_LEX
@@ -29,12 +28,11 @@ AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([Makefile po/Makefile.in
+AC_CONFIG_FILES([Makefile
 		 src/xsw:src/xsw.in
                  src/Makefile
                  src/as/Makefile
                  src/cp/Makefile
-                 src/lib/Makefile
                  src/pp/Makefile
                  src/vm/Makefile])
 AC_OUTPUT

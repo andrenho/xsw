@@ -10,28 +10,31 @@ int line_no = 1;
 %option nounput
 %option noinput
 
+%x incl
+
 %%
 
-[ |\t]*\".*\"	{
-	yylval.c = strdup(strchr(yytext, '"') + 1);
-	yylval.c[strlen(yylval.c)-1] = '\0';
-	return STRING;
+^%include	BEGIN(incl);
+^[^%].*?\n	yylval.c = strdup(yytext); return LINE;
+
+<incl>[ \t]*	/* eat the whitespace */
+<incl>[^ \t\n]+	{
+	yyin = fopen(yytext, "r");
+	if(!yyin)
+	{
+		fprintf(stderr, "File %s not found.\n", yytext);
+		exit(1);
+	}
+	
+	yypush_buffer_state(yy_create_buffer(yyin, YY_BUF_SIZE));
+
+	BEGIN(INITIAL);
 }
 
-[ |\t]*\'.*\'	{
-	yylval.c = strdup(strchr(yytext, '\'') + 1);
-	yylval.c[strlen(yylval.c)-1] = '\0';
-	return STRING;
+<<EOF>> {
+	yypop_buffer_state();
+	if(!YY_CURRENT_BUFFER)
+		yyterminate();
 }
-
-^[^%].*?\n	{
-	line_no++; 
-	yylval.c = (char*)strdup(yytext); 
-	return LINE;
-}
-
-include		return INCLUDE;
-^%		return PERCENT;
-\n		return ENTER;
 
 %%

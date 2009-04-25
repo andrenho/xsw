@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 AC_INIT([xsw], [0.4.0], [andre.nho@gmail.com])
-AC_CONFIG_SRCDIR([src/lib/text.h])
+AC_CONFIG_SRCDIR([src/pp/parser.y])
 AC_CONFIG_HEADERS([config.h])
 AC_DEFINE(VERSION, ["AC_PACKAGE_VERSION"], ["Configuring version..."])
 

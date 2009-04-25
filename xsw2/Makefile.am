@@ -1,5 +1,5 @@
 AUTOMAKE_OPTIONS = gnu
-SUBDIRS = po src
+SUBDIRS = src
 CFLAGS = @CFLAGS@ -Wall -Wextra
 ACLOCAL_AMFLAGS=-I m4
 # dist_man_MANS = man/man1/xsw.1

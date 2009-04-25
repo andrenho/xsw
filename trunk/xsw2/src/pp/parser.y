@@ -38,6 +38,8 @@ lines:
 line: preprocess
     | LINE { printf("%s", yylval.c); }
 
-preprocess: PERCENT INCLUDE STRING ENTER { printf("--> %s\n", yylval.c); }
+preprocess: include
+	  
+include: PERCENT INCLUDE STRING ENTER { printf("--> %s\n", yylval.c); }
 
 %%

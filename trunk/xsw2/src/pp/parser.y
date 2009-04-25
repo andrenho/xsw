@@ -3,7 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+extern FILE *yyin;
+
 extern int line_no;
+char* source;
 
 void yyerror(const char *s)
 {
@@ -35,11 +38,6 @@ int main()
 lines:
      | lines line
 
-line: preprocess
-    | LINE { printf("%s", yylval.c); }
-
-preprocess: include
-	  
-include: PERCENT INCLUDE STRING ENTER { printf("--> %s\n", yylval.c); }
+line: LINE { printf("%s", yylval.c); }
 
 %%

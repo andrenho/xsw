@@ -459,7 +459,7 @@ _ASBOX
 #
 # INIT-COMMANDS
 #
-AMDEP_TRUE="" ac_aux_dir="./.."
+AMDEP_TRUE="" ac_aux_dir="."
 
 
 # Handling of arguments.
@@ -563,7 +563,7 @@ S["CFLAGS"]="-g -O2"
 S["CC"]="gcc"
 S["am__untar"]="${AMTAR} xf -"
 S["am__tar"]="${AMTAR} chof - \"$$tardir\""
-S["AMTAR"]="tar"
+S["AMTAR"]="${SHELL} /home/andre/projects/xsw2/missing --run tar"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
 S["AWK"]="gawk"
@@ -571,12 +571,12 @@ S["mkdir_p"]="/bin/mkdir -p"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]=""
-S["install_sh"]="$(SHELL) /home/andre/projects/install-sh"
-S["MAKEINFO"]="makeinfo"
-S["AUTOHEADER"]="autoheader"
-S["AUTOMAKE"]="automake-1.10"
-S["AUTOCONF"]="autoconf"
-S["ACLOCAL"]="aclocal-1.10"
+S["install_sh"]="$(SHELL) /home/andre/projects/xsw2/install-sh"
+S["MAKEINFO"]="${SHELL} /home/andre/projects/xsw2/missing --run makeinfo"
+S["AUTOHEADER"]="${SHELL} /home/andre/projects/xsw2/missing --run autoheader"
+S["AUTOMAKE"]="${SHELL} /home/andre/projects/xsw2/missing --run automake-1.10"
+S["AUTOCONF"]="${SHELL} /home/andre/projects/xsw2/missing --run autoconf"
+S["ACLOCAL"]="${SHELL} /home/andre/projects/xsw2/missing --run aclocal-1.10"
 S["VERSION"]="0.4.0"
 S["PACKAGE"]="xsw"
 S["CYGPATH_W"]="echo"

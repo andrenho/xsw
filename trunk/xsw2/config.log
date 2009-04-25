@@ -48,7 +48,6 @@ configure:1849: checking for a BSD-compatible install
 configure:1917: result: /bin/install -c
 configure:1928: checking whether build environment is sane
 configure:1971: result: yes
-configure:1992: WARNING: `missing' script is too old or missing
 configure:1996: checking for a thread-safe mkdir -p
 configure:2035: result: /bin/mkdir -p
 configure:2048: checking for gawk
@@ -132,11 +131,11 @@ configure:3604: checking lex output file root
 configure:3620: result: lex.yy
 configure:3625: checking lex library
 configure:3644: gcc -o conftest -g -O2   conftest.c   >&5
-/tmp/ccU629vN.o: In function `input':
+/tmp/cciiACcM.o: In function `input':
 /home/andre/projects/xsw2/lex.yy.c:1168: undefined reference to `yywrap'
-/tmp/ccU629vN.o: In function `yylex':
+/tmp/cciiACcM.o: In function `yylex':
 /home/andre/projects/xsw2/lex.yy.c:867: undefined reference to `yywrap'
-/tmp/ccU629vN.o: In function `main':
+/tmp/cciiACcM.o: In function `main':
 /home/andre/projects/xsw2/conftest.l:17: undefined reference to `yywrap'
 collect2: ld returned 1 exit status
 configure:3651: $? = 1
@@ -1999,14 +1998,14 @@ am_cv_CC_dependencies_compiler_type=gcc3
 ## Output variables. ##
 ## ----------------- ##
 
-ACLOCAL='aclocal-1.10'
+ACLOCAL='${SHELL} /home/andre/projects/xsw2/missing --run aclocal-1.10'
 AMDEPBACKSLASH='\'
 AMDEP_FALSE='#'
 AMDEP_TRUE=''
-AMTAR='tar'
-AUTOCONF='autoconf'
-AUTOHEADER='autoheader'
-AUTOMAKE='automake-1.10'
+AMTAR='${SHELL} /home/andre/projects/xsw2/missing --run tar'
+AUTOCONF='${SHELL} /home/andre/projects/xsw2/missing --run autoconf'
+AUTOHEADER='${SHELL} /home/andre/projects/xsw2/missing --run autoheader'
+AUTOMAKE='${SHELL} /home/andre/projects/xsw2/missing --run automake-1.10'
 AWK='gawk'
 CC='gcc'
 CCDEPMODE='depmode=gcc3'
@@ -2030,7 +2029,7 @@ LEX_OUTPUT_ROOT='lex.yy'
 LIBOBJS=''
 LIBS=''
 LTLIBOBJS=''
-MAKEINFO='makeinfo'
+MAKEINFO='${SHELL} /home/andre/projects/xsw2/missing --run makeinfo'
 MKDIR_P='/bin/mkdir -p'
 OBJEXT='o'
 PACKAGE='xsw'
@@ -2066,7 +2065,7 @@ host_alias=''
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
-install_sh='$(SHELL) /home/andre/projects/install-sh'
+install_sh='$(SHELL) /home/andre/projects/xsw2/install-sh'
 libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'

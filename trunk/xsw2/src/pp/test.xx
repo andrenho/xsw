@@ -1,0 +1,4 @@
+a
+%include "include.xx"
+%define BLA xxx yyy
+b BLA b

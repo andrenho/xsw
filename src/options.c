@@ -39,6 +39,11 @@ Options* options_get(Presentation* presentation, int argc, char* argv[])
 	int next_option;
 
 	Options* options = malloc(sizeof(Options));
+	if (options == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	options->last = 0;
 	options->developer = 0;
 	options->fullscreen = 0;

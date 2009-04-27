@@ -63,6 +63,7 @@ void execute_parse(Presenter* pr, void* cmd, CommandType type)
 			txt->surface_inv = txt->surface;
 		}
 		assert(txt->surface);
+		TTF_CloseFont(font);
 
 		break;
 

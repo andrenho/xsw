@@ -30,6 +30,11 @@ Options* options_get(Presentation* p, int argc, char* argv[])
 {
 	int next_opt;
 	Options* opt = malloc(sizeof(Options));
+	if (opt == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	opt->html_template = NULL;
 
 	const char* const short_options = "t:hv";

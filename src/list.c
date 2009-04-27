@@ -1,6 +1,7 @@
 /* Source file covered by the GNU Public License v3 
  * See LICENSE file or <http://www.gnu.org/licenses/gpl-3.0.txt/> */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include "list.h"
@@ -12,6 +13,11 @@ List* append_t(List* list, void* data, int type)
 	if(!list)
 	{
 		list = malloc(sizeof(List));
+		if (list == NULL) 
+		{
+			fprintf(stderr, "Not enough memory\n");
+			exit(1);		
+		}
 		list->prev = NULL;
 		list->next = NULL;
 		list->data = data;
@@ -25,6 +31,11 @@ List* append_t(List* list, void* data, int type)
 			list = list->next;
 
 		list->next = malloc(sizeof(List));
+		if (list->next == NULL) 
+		{
+			fprintf(stderr, "Not enough memory\n");
+			exit(1);		
+		}
 		list->next->prev = list;
 		list->next->data = data;
 		list->next->type = type;

@@ -26,6 +26,11 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 {
 	int st;
 	Presenter* pr = malloc(sizeof(Presenter));
+	if (pr == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	pr->p = p;
 	pr->thread = NULL;
 	pr->leave_thread = 0;

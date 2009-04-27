@@ -13,6 +13,11 @@ char* serif = "serif";
 Presentation* presentation_new()
 {
 	Presentation *p = malloc(sizeof(Presentation));
+	if (p == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	p->filename = NULL;
 	p->path = NULL;
 	p->slides = NULL;

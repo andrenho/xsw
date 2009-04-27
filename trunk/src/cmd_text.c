@@ -8,6 +8,11 @@
 CommandText* cmd_txt_new(char* text, CommandText* previous)
 {
 	CommandText* cmd_txt = malloc(sizeof(CommandText));
+	if (cmd_txt == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	cmd_txt->id = NULL;
 	cmd_txt->text = text;
 	cmd_txt->x = DEFAULT_TXT_X;
@@ -30,6 +35,11 @@ CommandText* cmd_txt_new(char* text, CommandText* previous)
 CommandText* cmd_txt_new_plus(char* text, CommandText* previous)
 {
 	CommandText* cmd_txt = malloc(sizeof(CommandText));
+	if (cmd_txt == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 
 	// copy from previous
 	if(previous)
@@ -44,6 +54,11 @@ CommandText* cmd_txt_new_plus(char* text, CommandText* previous)
 CommandText* cmd_txt_new_custom(char* text, CommandText* custom)
 {
 	CommandText* cmd_txt = malloc(sizeof(CommandText));
+	if (cmd_txt == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 
 	// copy from previous
 	memcpy(cmd_txt, custom, sizeof(CommandText));

@@ -59,6 +59,11 @@ int main(int argc, char** argv)
 
 	// prepare temporary directory
 	char* path = alloca(20);
+	if (path == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	sprintf(path, "/tmp/%s", "xsw-XXXXXX");
 	path = mkdtemp(path);
 
@@ -67,6 +72,11 @@ int main(int argc, char** argv)
 	int slides = count(p->slides);
 	int i;
 	char* all_bmp = alloca(slides * 25); // TODO
+	if (all_bmp == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	strcpy(all_bmp, "");
 	for(i=0; i<slides; i++)
 	{
@@ -80,7 +90,17 @@ int main(int argc, char** argv)
 
 	// generate pdf
 	char* command = alloca(strlen(all_bmp) + 512);
+	if (command == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	char* name = alloca(512);
+	if (name == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	sprintf(name, "%s.pdf", base_name(p->filename));
 	printf("Generating %s...\n", name);
 	sprintf(command, "convert -compress Zip %s %s", all_bmp, name);

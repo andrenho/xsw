@@ -7,6 +7,11 @@
 Slide* slide_new()
 {
 	Slide* sl = malloc(sizeof(Slide));
+	if (sl == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	sl->commands = NULL;
 	sl->id = NULL;
 	sl->parent = NULL;
@@ -20,6 +25,11 @@ Slide* slide_new()
 Slide* template_new(char* id)
 {
 	Slide* sl = malloc(sizeof(Slide));
+	if (sl == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	sl->commands = NULL;
 	sl->id = id;
 	sl->parent = NULL;

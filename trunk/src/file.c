@@ -40,6 +40,11 @@ char* file_path(const char* filename)
 	}
 
 	char* s = malloc(ct+1);
+	if (s == NULL) 
+	{
+		fprintf(stderr, "Not enough memory\n");
+		exit(1);		
+	}
 	strncpy(s, filename, ct);
 	s[ct+1] = '\0';
 
@@ -66,6 +71,12 @@ char* file_read(const char* filename)
         }
 
         buffer = (char*)malloc(length);
+				if (buffer == NULL) 
+				{
+					fprintf(stderr, "Not enough memory\n");
+					exit(1);		
+				}
+
         read(fd, buffer, length);
 
         close(fd);

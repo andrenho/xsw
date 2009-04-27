@@ -160,6 +160,11 @@ int x2h_template_generate(Presentation* p, char* tpl, PageType page)
 	while(sds)
 	{
 		char* img_filename = alloca(512);
+		if (img_filename == NULL) 
+		{
+			fprintf(stderr, "Not enough memory\n");
+			exit(1);		
+		}
 
 		if(n == 1)
 			first = 1;

@@ -15,6 +15,7 @@ List* ladd(List* l, void* data)
 		}
 		l->next = l->prev = NULL;
 		l->data = data;
+		return l;
 	}
 	else
 	{
@@ -27,6 +28,7 @@ List* ladd(List* l, void* data)
 		ln->data = data;
 		ln->next = NULL;
 		ll->next = ln;
+		return l;
 	}
 
 }
@@ -35,7 +37,7 @@ int lcount(List* l)
 {
 	int i = 0;
 
-	while(l->next)
+	while(l)
 	{
 		i++;
 		l = l->next;
@@ -48,7 +50,7 @@ void* ln(List* l, int n)
 {
 	List* ll = l;
 
-	while(n > 0)
+	while(n >= 0)
 	{
 		if(!ll)
 			return NULL;
@@ -57,4 +59,14 @@ void* ln(List* l, int n)
 	}
 
 	return ll->data;
+}
+
+int main()
+{
+	List* l = NULL;
+	l = ladd(l, "Teste 1");
+	l = ladd(l, "Teste 2");
+	printf("%d\n", lcount(l));
+	printf("%s\n", ln(l, 1));
+	return 0;
 }

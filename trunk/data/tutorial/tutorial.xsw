@@ -81,6 +81,35 @@ slide: example
  - 'Hello' x:75 y:55 size:16 align:center
  + 'World'
 
+#
+# Text font
+#
+slide: example
+ - title: 'Text font'
+ - desc: "A font can be set with the parameter 'font'. Options"
+       + "are: 'sans', 'serif' and 'mono'."
+ - code: 'slide:'
+       + ' - "Hello!" x:50 y:30 align:center font:serif'
+       + ' + "World"'
+ - img: 'bgblack.png' x:57 y:45
+ - 'Hello' x:75 y:55 size:16 align:center font:serif
+ + 'World'
+
+#
+# Text size
+#
+slide: example
+ - title: 'Text size'
+ - desc: 'The size of the text can be set with the parameter'
+       + "'size'. Note in the example that commands that begin"
+       + "with '+' can have parameters changed."
+ - code: 'slide:' y:32
+       + ' - "Hello!" x:50 y:30 align:center'
+       + ' + "World" size:64'
+ - img: 'bgblack.png' x:57 y:45
+ - 'Hello' x:75 y:55 size:16 align:center
+ + 'World' size:28
+
 # 
 # Adding images
 #
@@ -95,9 +124,44 @@ slide: example
 
 #
 # Scaling images
+#
 slide: example
  - title: 'Scaling images'
  - desc: 'Images can be positioned too. They can also be'
        + 'scaled (zoomed in or out).'
  - code: 'slide:'
-       + ' - img: "tux.png" x:40 y:40
+       + ' - img: "tux.png" x:40 y:28 scale:0.5'
+ - img: 'bgblack.png' x:57 y:45
+ - img: 'tux.png' x:73 y:55 scale:0.175
+
+# 
+# Backgrounds
+#
+slide: example
+ - title: 'Background'
+ - desc: 'To set a background, use the command bg to set'
+       + 'a solid color.'
+ - code: 'slide:'
+       + ' - bg: darkolivegreen'
+ - img: 'bgolive.png' x:57 y:45
+
+#
+# Gradients
+#
+slide: example
+ - title: 'Background gradients'
+ - desc: 'To set a background gradient, use the parameter'
+       + 'gradient.'
+ - code: 'slide:'
+       + ' - bg: darkolivegreen gradient:yellow'
+ - img: 'bgblack.png' x:57 y:45                      # <-- TODO
+
+#
+# Background images
+#
+slide: example
+ - title: 'Background images'
+ - desc: 'A image can also be used as a background.'
+ - code: 'slide:'
+       + ' - bg: "pattern.jpg"'
+ - img: 'pattern.jpg' x:57 y:45 scale:0.27

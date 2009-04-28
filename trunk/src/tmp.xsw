@@ -1,7 +1,2 @@
-image_path: "../tmp"
-
 slide: 
- - img: "temp1.png"
-
-slide:
- - img: "temp2.png"
+ - 'A'

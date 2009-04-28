@@ -163,5 +163,5 @@ slide: example
  - title: 'Background images'
  - desc: 'A image can also be used as a background.'
  - code: 'slide:'
-       + ' - bg: "pattern.jpg"'
- - img: 'pattern.jpg' x:57 y:45 scale:0.27
+       + ' - bg: "bg.jpg"'
+ - img: 'lake.jpg' x:57 y:45 scale:1.2

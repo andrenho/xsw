@@ -1,0 +1,103 @@
+#################################
+#                               #
+#  TUTORIAL PRESENTATION - XSW  #
+#                               #
+#  http://xsw.googlecode.com/   #
+#                               #
+#################################
+
+template: tutorial
+ - bg: white
+
+template: example tutorial
+ - title: style:italic x:4 y:3
+ - desc: x:5 y:16 size:24
+ - code: font:mono x:10 y:28 size:24
+
+#
+# Title
+#
+slide: tutorial
+ - 'xsw - a presentation software' x:5 y:4 size:42
+ - 'xsw is a software designed for creating' y:52 size:30
+ + 'presentations by hand. This brief tutorial'
+ + 'will guide you through the main features'
+ + 'of xsw.'
+
+# 
+# Basic slide
+#
+slide: example
+ - title: 'Creating a new slide'
+ - desc: 'To create a new presentation, create a file'
+       + 'with a extension xsw (tutorial.xsw, for example),'
+       + 'with the following contents:'
+       + ''
+       + 'slide:' font:mono x:10
+       + '' x:5 font:sans
+       + 'This will create a empty slide. Now, to run the'
+       + 'presentation, execute the following command:'
+       + ''
+       + '$ xsw tutorial.xsw' font:mono x:10
+
+#
+# Text
+#
+slide: example
+ - title: 'Adding text'
+ - desc: 'Adding text to the slide is very simple.'
+       + 'Just type the text you want between quotes.'
+       + ''
+ - code: 'slide:'
+       + '  - "Hello!"'
+ - img: 'bgblack.png' x:57 y:45
+ - 'Hello' x:59 y:47 size:16
+
+# 
+# Positionin text
+#
+slide: example
+ - title: 'Positioning'
+ - desc: 'The text can be positioned by using the parameters'
+       + 'x and y. The screen is always 100x75, so the text' 
+       + 'can be positioned accordingly. For example, to'
+       + "center the text on the screen, we'd have:"
+ - code: 'slide:' y:35
+       + ' - "Hello!" x:50 y:30 align:center'
+ - img: 'bgblack.png' x:57 y:45
+ - 'Hello' x:75 y:55 size:16 align:center
+
+#
+# Copying text parameters
+#
+slide: example
+ - title: 'Copying text parameters'
+ - desc: 'To add a new line of text using the same parameters,'
+       + "use the symbol '+' instead of '-'. Example:"
+ - code: 'slide:'
+       + ' - "Hello!" x:50 y:30 align:center'
+       + ' + "World"'
+ - img: 'bgblack.png' x:57 y:45
+ - 'Hello' x:75 y:55 size:16 align:center
+ + 'World'
+
+# 
+# Adding images
+#
+slide: example
+ - title: 'Adding images'
+ - desc: 'To add images, the command img can be used. Such as'
+       + 'this:'
+ - code: 'slide:'
+       + ' - img: "tux.png"'
+ - img: 'bgblack.png' x:57 y:45
+ - img: 'tux.png' x:57 y:45 scale:0.35
+
+#
+# Scaling images
+slide: example
+ - title: 'Scaling images'
+ - desc: 'Images can be positioned too. They can also be'
+       + 'scaled (zoomed in or out).'
+ - code: 'slide:'
+       + ' - img: "tux.png" x:40 y:40

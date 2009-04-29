@@ -19,10 +19,26 @@ template: example tutorial
 #
 slide: tutorial
  - 'xsw - a presentation software' x:5 y:4 size:42
- - 'xsw is a software designed for creating' y:52 size:30
+ - 'xsw is a software designed for creating' y:42 size:30
  + 'presentations by hand. This brief tutorial'
  + 'will guide you through the main features'
  + 'of xsw.'
+ + ''
+ + ''
+ + 'Press RIGHT ARROW to continue' size: 22
+
+#
+# Using xsw
+#
+slide: example
+ - title: 'Using xsw'
+ - desc: 'This tutorial is a slideshow being run through'
+       + 'xsw. You can use the following keys:'
+       + ''
+       + '- The arrows will go back and forward;'
+       + "- 'F' will go fullscreen;"
+       + "- HOME and END will go to the beginning and end;"
+       + "- 'Q' will quit the presentation"
 
 # 
 # Basic slide
@@ -54,7 +70,7 @@ slide: example
  - 'Hello' x:59 y:47 size:16
 
 # 
-# Positionin text
+# Positioning text
 #
 slide: example
  - title: 'Positioning'
@@ -65,7 +81,7 @@ slide: example
  - code: 'slide:' y:35
        + ' - "Hello!" x:50 y:30 align:center'
  - img: 'bgblack.png' x:57 y:45
- - 'Hello' x:75 y:55 size:16 align:center
+ - 'Hello!' x:75 y:55 size:16 align:center
 
 #
 # Copying text parameters
@@ -165,3 +181,84 @@ slide: example
  - code: 'slide:'
        + ' - bg: "bg.jpg"'
  - img: 'lake.jpg' x:57 y:45 scale:1.2
+
+#
+# Using templates
+#
+slide: example
+ - title: 'Understanding templates'
+ - desc: 'There are situations where you might want to have a'
+       + '"master slide", where you can have a group of'
+       + 'commands there are repeated in the slide. In xsw,'
+       + 'this kind of slide is called a "template".'
+       + ''
+       + 'A template is built just like a slide. When a slide'
+       + 'references a template, all commands in the template'
+       + 'are executed before the slide is shown.'
+
+slide: example
+ - title: 'Using templates'
+ - desc: 'When a template is created, you give a name that'
+       + 'you will reference later in the slide. You can create'
+       + 'as many templates as you want.'
+ - code: 'template: example' y:32
+       + ' - bg: white'
+       + ' - img: "tux.png" x:40 y:28 scale:0.5'
+       + ''
+       + 'slide: example'
+       + ' - "Linux" x:50 y:40'
+       + '   align:center size:60 '
+       + '   color:brown'
+ - img: 'bgblack.png' x:57 y:45
+ - img: 'tux.png' x:73 y:53 scale:0.175
+ - "Linux" align:center color:brown x:76 y:60 size:26
+
+slide: example
+ - title: 'Custom comands'
+ - desc: 'A custom command can be created on a template,'
+       + 'making easy to have predefined positions and styles'
+       + 'on a slide.'
+ - code: 'template: example' y:32
+       + ' - center: x:50 y:30 align:center font:serif'
+       + ''
+       + 'slide: example'
+       + ' - center: "Hello!"'
+ - img: 'bgblack.png' x:57 y:45
+ - 'Hello!' x:75 y:55 size:16 align:center font:serif
+
+slide: example
+ - title: 'Templates of templates'
+ - desc: 'Sometimes, is useful to create a template from'
+       + 'another template. This can be done too, like this:'
+ - code: 'template: back' y:26
+       + ' - bg: "lake.jpg"'
+       + ''
+       + 'template: tux back'
+       + ' - img: "tux.png" x:40 y:28 scale:0.5'
+       + ''
+       + 'slide:'
+       + ' - "Linux" x:50 y:40'
+       + '   align:center size:60 '
+ - img: 'lake.jpg' x:57 y:45 scale:1.2
+ - img: 'tux.png' x:73 y:53 scale:0.175
+ - "Linux" align:center x:76 y:60 size:26
+
+# 
+# The END
+#
+slide: example
+ - title: 'The END'
+ - desc: "That's the end of the tutorial. There are many"
+       + 'other options that can be used. To know more, check'
+       + 'the file REFERENCE included in your xsw archive,'
+       + 'or visit:'
+       + ''
+       + "http://code.google.com/p/xsw/wiki/Reference" font:mono x:10
+       + '' font:sans x:5
+       + 'xsw is free software. It can be used, redistributed'
+       + 'and studied without restriction (except for'
+       + 'distributing it non-free).'
+       + ''
+       + 'Check the homepage for news:'
+       + ''
+       + "http://xsw.googlecode.com/" font:mono x:10

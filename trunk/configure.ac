@@ -38,6 +38,6 @@ AC_CONFIG_FILES([
 		 Makefile
 		 src/Makefile
 		 data/Makefile
-		 data/intro/xsw.xsw:data/intro/xsw.xsw.in
+		 data/tutorial/tutorial.xsw:data/tutorial/tutorial.xsw.in
 		 ])
 AC_OUTPUT

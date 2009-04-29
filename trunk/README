@@ -52,6 +52,14 @@ would be called a "master slide" in other programs). Do so the following way:
       - title: "My Company"
 
 
+Tutorial
+--------
+
+To view a complete tutorial presentation, type:
+
+$ xsw --tutorial
+
+
 Other formats
 -------------
 

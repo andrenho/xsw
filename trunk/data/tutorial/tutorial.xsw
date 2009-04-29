@@ -7,12 +7,12 @@
 #################################
 
 template: tutorial
- - bg: white
+ - bg: "back.jpg"
 
 template: example tutorial
  - title: style:italic x:4 y:3
  - desc: x:5 y:16 size:24
- - code: font:mono x:10 y:28 size:24
+ - code: font:mono x:10 y:28 size:24 color:seagreen1
 
 #
 # Title
@@ -49,8 +49,8 @@ slide: example
        + 'with a extension xsw (tutorial.xsw, for example),'
        + 'with the following contents:'
        + ''
-       + 'slide:' font:mono x:10
-       + '' x:5 font:sans
+       + 'slide:' font:mono x:10 color:seagreen1
+       + '' x:5 font:sans color:white
        + 'This will create a empty slide. Now, to run the'
        + 'presentation, execute the following command:'
        + ''
@@ -170,7 +170,7 @@ slide: example
        + 'gradient.'
  - code: 'slide:'
        + ' - bg: darkolivegreen gradient:yellow'
- - img: 'bgblack.png' x:57 y:45                      # <-- TODO
+ - img: 'bggrad.png' x:57 y:45
 
 #
 # Background images
@@ -180,7 +180,7 @@ slide: example
  - desc: 'A image can also be used as a background.'
  - code: 'slide:'
        + ' - bg: "bg.jpg"'
- - img: 'lake.jpg' x:57 y:45 scale:1.2
+ - img: 'lake.jpg' x:57 y:45
 
 #
 # Using templates
@@ -231,7 +231,7 @@ slide: example
  - desc: 'Sometimes, is useful to create a template from'
        + 'another template. This can be done too, like this:'
  - code: 'template: back' y:26
-       + ' - bg: "lake.jpg"'
+       + ' - bg: "back.jpg"'
        + ''
        + 'template: tux back'
        + ' - img: "tux.png" x:40 y:28 scale:0.5'
@@ -239,7 +239,7 @@ slide: example
        + 'slide:'
        + ' - "Linux" x:50 y:40'
        + '   align:center size:60 '
- - img: 'lake.jpg' x:57 y:45 scale:1.2
+ - img: 'lake.jpg' x:57 y:45
  - img: 'tux.png' x:73 y:53 scale:0.175
  - "Linux" align:center x:76 y:60 size:26
 

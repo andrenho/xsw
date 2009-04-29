@@ -243,6 +243,10 @@ slide: example
  - img: 'tux.png' x:73 y:53 scale:0.175
  - "Linux" align:center x:76 y:60 size:26
 
+#
+# An example
+#
+
 # 
 # The END
 #
@@ -263,3 +267,11 @@ slide: example
        + ''
        + "http://xsw.googlecode.com/" font:mono x:10
 
+slide: example
+ - title: 'A good example'
+ - desc: 'If you want an example of a complete presentation,'
+       + 'you can look at the source of this very presentation.'
+       + 'The source file is in:'
+       + ''
+       + ''
+       + '@datadir@/xsw/tutorial/tutorial.xsw' font:mono size:24

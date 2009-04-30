@@ -189,7 +189,7 @@ slide: example
  - title: 'Understanding templates'
  - desc: 'There are situations where you might want to have a'
        + '"master slide", where you can have a group of'
-       + 'commands there are repeated in the slide. In xsw,'
+       + 'commands that are repeated in the slide. In xsw,'
        + 'this kind of slide is called a "template".'
        + ''
        + 'A template is built just like a slide. When a slide'
@@ -235,7 +235,7 @@ slide: example
        + 'template: tux back'
        + ' - img: "tux.png" x:40 y:28 scale:0.5'
        + ''
-       + 'slide:'
+       + 'slide: tux'
        + ' - "Linux" x:50 y:40'
        + '   align:center size:60 '
  - img: 'lake.jpg' x:57 y:45

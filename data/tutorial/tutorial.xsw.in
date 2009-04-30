@@ -65,7 +65,7 @@ slide: example
        + 'Just type the text you want between quotes.'
        + ''
  - code: 'slide:'
-       + '  - "Hello!"'
+       + '  - "Hello"'
  - img: 'bgblack.png' x:57 y:45
  - 'Hello' x:59 y:47 size:16
 
@@ -91,7 +91,7 @@ slide: example
  - desc: 'To add a new line of text using the same parameters,'
        + "use the symbol '+' instead of '-'. Example:"
  - code: 'slide:'
-       + ' - "Hello!" x:50 y:30 align:center'
+       + ' - "Hello" x:50 y:30 align:center'
        + ' + "World"'
  - img: 'bgblack.png' x:57 y:45
  - 'Hello' x:75 y:55 size:16 align:center
@@ -105,7 +105,7 @@ slide: example
  - desc: "A font can be set with the parameter 'font'. Options"
        + "are: 'sans', 'serif' and 'mono'."
  - code: 'slide:'
-       + ' - "Hello!" x:50 y:30 align:center font:serif'
+       + ' - "Hello" x:50 y:30 align:center font:serif'
        + ' + "World"'
  - img: 'bgblack.png' x:57 y:45
  - 'Hello' x:75 y:55 size:16 align:center font:serif
@@ -120,7 +120,7 @@ slide: example
        + "'size'. Note in the example that commands that begin"
        + "with '+' can have parameters changed."
  - code: 'slide:' y:32
-       + ' - "Hello!" x:50 y:30 align:center'
+       + ' - "Hello" x:50 y:30 align:center'
        + ' + "World" size:64'
  - img: 'bgblack.png' x:57 y:45
  - 'Hello' x:75 y:55 size:16 align:center
@@ -202,7 +202,6 @@ slide: example
        + 'you will reference later in the slide. You can create'
        + 'as many templates as you want.'
  - code: 'template: example' y:32
-       + ' - bg: white'
        + ' - img: "tux.png" x:40 y:28 scale:0.5'
        + ''
        + 'slide: example'
@@ -247,6 +246,15 @@ slide: example
 # An example
 #
 
+slide: example
+ - title: 'A good example'
+ - desc: 'If you want an example of a complete presentation,'
+       + 'you can look at the source of this very presentation.'
+       + 'The source file is in:'
+       + ''
+       + ''
+       + '@prefix@/share/xsw/tutorial/tutorial.xsw' font:mono size:24
+
 # 
 # The END
 #
@@ -266,12 +274,3 @@ slide: example
        + 'Check the homepage for news:'
        + ''
        + "http://xsw.googlecode.com/" font:mono x:10
-
-slide: example
- - title: 'A good example'
- - desc: 'If you want an example of a complete presentation,'
-       + 'you can look at the source of this very presentation.'
-       + 'The source file is in:'
-       + ''
-       + ''
-       + '@datadir@/xsw/tutorial/tutorial.xsw' font:mono size:24

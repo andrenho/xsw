@@ -1,6 +1,11 @@
 ﻿#summary News about the xsw project
 #labels Featured,Phase-Support
 
+== Version 0.3.2 ==
+
+ * created a tutorial presentation, that can be run with the `switch --tutorial`. This presentation supersedes the previous introduction presentation.
+ * corrected a problem where many big presentations would fail due to not freeing a font.
+
 == Version 0.3.1 ==
 
  * ALT+F4 and CTRL+C now quit xsw, and ESC leaves full screen.

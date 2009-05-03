@@ -1,4 +1,4 @@
-xsw is a slideshow presentation tool for all those who are frustrated with
+xsw is a slide show presentation tool for all those who are frustrated with
 Microsoft PowerPoint and its clones.
 
 
@@ -6,7 +6,7 @@ Basics
 ------
 
 By using xsw, you create your presentation "by hand", using the xsw language
-described in the manual. A exemple of a file is:
+described in the manual. A example of a file is:
 
     slide:
       - "Hello" x:50 y:30 align:center

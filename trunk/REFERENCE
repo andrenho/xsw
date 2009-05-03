@@ -73,7 +73,7 @@ The image command pastes a image on the screen. The parameters are:
 
 background (or bg)
 ------------------
-Similar to the image command, but automaticly scale the image to the screen
+Similar to the image command, but automatically scale the image to the screen
 size. The parameters are:
 
       x: the horizontal position (0~100, default: 0). It can be used to move the
@@ -141,7 +141,7 @@ Colors can be referred to in two ways: by their code or by their name.
 
 By code
 -------
-Colors can be refered by code, such as this: $FF00FF (this is pink). It's just
+Colors can be referred by code, such as this: $FF00FF (this is pink). It's just
 like the HTML color standard, except that it uses the character $ instead of #.
 
 By name
@@ -177,6 +177,6 @@ The following keys can be used during the presentation:
  - LEFT / PAGE UP: go to the previous slide
  - HOME: go to the first slide
  - END: go to the last slide
- - F: fullscreen
+ - F: full screen
  - Ctrl+D: developer mode
  - Q: quits presentation

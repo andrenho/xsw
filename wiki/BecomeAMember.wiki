@@ -1,4 +1,4 @@
-#summary How to become a member of xsw project.
+#summary How to become a member of the xsw project.
 #labels Featured,Phase-Requirements
 
 = Introduction =

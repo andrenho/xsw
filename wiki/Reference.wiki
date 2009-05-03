@@ -71,7 +71,7 @@ The image command pastes a image on the screen. The parameters are:
 
 == background (or bg) ==
 
-Similar to the image command, but automaticly scale the image to the screen size. The parameters are:
+Similar to the image command, but automatically scale the image to the screen size. The parameters are:
 
 ||x||the horizontal position (`0~100`, default: `0`). It can be used to move the background image. Negative values can be used.||
 ||y||the vertical position (`0~75`, default: `0`)||

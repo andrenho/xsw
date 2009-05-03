@@ -2,7 +2,7 @@
 # See LICENSE file or <http://www.gnu.org/licenses/gpl-3.0.txt/>
 
 # Start
-AC_INIT([xsw], [0.3.2])
+AC_INIT([xsw], [0.3.3])
 AM_INIT_AUTOMAKE([-Wall -Werror])
 AC_DEFINE(VERSION, ["AC_PACKAGE_VERSION"])
 

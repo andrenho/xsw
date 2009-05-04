@@ -1,6 +1,14 @@
 ﻿#summary News about the xsw project
 #labels Featured,Phase-Support
 
+== Version 0.3.3 ==
+
+ * xsw no longer install the Vera fonts if they can be found in the font directory.
+ * corrected a problem where the font border would be broken if the text was to fall out of the screen.
+ * error in configure.ac where ./configure was informing that SDL_image was missing if SDL_gfx was actually missing.
+ * added xsw2pdf manual page.
+ * Changelog file replaced by the NEWS file.
+
 == Version 0.3.2 ==
 
  * created a tutorial presentation, that can be run with the `switch --tutorial`. This presentation supersedes the previous introduction presentation.

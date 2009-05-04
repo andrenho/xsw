@@ -28,7 +28,7 @@ AC_CHECK_LIB(SDL_ttf, TTF_Init, [], [
 	exit -1
 ])
 AC_CHECK_LIB(SDL_gfx, zoomSurface, [], [
-	echo "Error: you need SDL_image in order to use xsw."
+	echo "Error: you need SDL_gfx in order to use xsw."
 	exit -1
 ])
 

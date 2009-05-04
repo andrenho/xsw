@@ -256,7 +256,7 @@ void presenter_cache(Presenter* pr, int n)
 void presenter_show(Presenter* pr, int n, int developer)
 {
 	CommandImage* img;
-	SDL_Rect r;
+	SDL_Rect r, t;
 
 	presenter_cache(pr, n);
 
@@ -300,16 +300,20 @@ void presenter_show(Presenter* pr, int n, int developer)
 
 			if(txt->has_border)
 			{
-				r.x -= 1;
-				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
-				r.x += 2;
-				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
-				r.x -= 1;
-				r.y -= 1;
-				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
-				r.y += 2;
-				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &r);
-				r.y -= 1;
+				/* we need to work with a copy of r because
+				 * SDL_BlitSurface may clip the rectangle's values */
+				t.x = r.x; t.y = r.y; // copy r
+				t.x -= 1;
+				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &t);
+				t.x = r.x; t.y = r.y; // copy r
+				t.x += 1;
+				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &t);
+				t.x = r.x; t.y = r.y; // copy r
+				t.y -= 1;
+				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &t);
+				t.x = r.x; t.y = r.y; // copy r
+				t.y += 1;
+				SDL_BlitSurface(txt->surface_inv, NULL, pr->scr, &t);
 			}
 			SDL_BlitSurface(txt->surface, NULL, pr->scr, &r);
 			break;

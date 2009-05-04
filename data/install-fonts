@@ -1,0 +1,9 @@
+#!/bin/sh
+
+for font in VeraBd.ttf VeraMono.ttf VeraSeBd.ttf
+do
+	if [ -e /usr/share/fonts/TTF/$font ]
+	then
+		/bin/sh /home/andre/projects/xsw/install-sh -c -m 644 $font /usr/local/share/xsw/$font
+	fi
+done

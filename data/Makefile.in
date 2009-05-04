@@ -145,7 +145,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 nobase_dist_pkgdata_DATA = tutorial/*
-EXTRA_DIST = install-fonts
+EXTRA_DIST = install-fonts VeraBd.ttf VeraSeBd.ttf VeraMono.ttf
 all: all-am
 
 .SUFFIXES:

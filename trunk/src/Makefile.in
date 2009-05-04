@@ -33,7 +33,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = xsw$(EXEEXT) xsw2pdf$(EXEEXT)
+bin_PROGRAMS = xsw$(EXEEXT) xsw2img$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in lexer.c \
 	parser.c parser.h
@@ -58,15 +58,15 @@ am__DEPENDENCIES_1 =
 xsw_DEPENDENCIES = $(am__DEPENDENCIES_1)
 xsw_LINK = $(CCLD) $(xsw_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o \
 	$@
-am_xsw2pdf_OBJECTS = xsw2pdf-xsw2pdf.$(OBJEXT) xsw2pdf-file.$(OBJEXT) \
-	xsw2pdf-presentation.$(OBJEXT) xsw2pdf-slide.$(OBJEXT) \
-	xsw2pdf-cmd_text.$(OBJEXT) xsw2pdf-cmd_img.$(OBJEXT) \
-	xsw2pdf-list.$(OBJEXT) xsw2pdf-presenter.$(OBJEXT) \
-	xsw2pdf-execute.$(OBJEXT) xsw2pdf-color.$(OBJEXT) \
-	xsw2pdf-parser.$(OBJEXT) xsw2pdf-lexer.$(OBJEXT)
-xsw2pdf_OBJECTS = $(am_xsw2pdf_OBJECTS)
-xsw2pdf_DEPENDENCIES = $(am__DEPENDENCIES_1)
-xsw2pdf_LINK = $(CCLD) $(xsw2pdf_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+am_xsw2img_OBJECTS = xsw2img-xsw2img.$(OBJEXT) xsw2img-file.$(OBJEXT) \
+	xsw2img-presentation.$(OBJEXT) xsw2img-slide.$(OBJEXT) \
+	xsw2img-cmd_text.$(OBJEXT) xsw2img-cmd_img.$(OBJEXT) \
+	xsw2img-list.$(OBJEXT) xsw2img-presenter.$(OBJEXT) \
+	xsw2img-execute.$(OBJEXT) xsw2img-color.$(OBJEXT) \
+	xsw2img-parser.$(OBJEXT) xsw2img-lexer.$(OBJEXT)
+xsw2img_OBJECTS = $(am_xsw2img_OBJECTS)
+xsw2img_DEPENDENCIES = $(am__DEPENDENCIES_1)
+xsw2img_LINK = $(CCLD) $(xsw2img_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -78,8 +78,8 @@ LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 LEXCOMPILE = $(LEX) $(LFLAGS) $(AM_LFLAGS)
 YLWRAP = $(top_srcdir)/ylwrap
 YACCCOMPILE = $(YACC) $(YFLAGS) $(AM_YFLAGS)
-SOURCES = $(xsw_SOURCES) $(xsw2pdf_SOURCES)
-DIST_SOURCES = $(xsw_SOURCES) $(xsw2pdf_SOURCES)
+SOURCES = $(xsw_SOURCES) $(xsw2img_SOURCES)
+DIST_SOURCES = $(xsw_SOURCES) $(xsw2img_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -180,12 +180,12 @@ xsw_SOURCES = xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c
 
 xsw_LDADD = $(SDL_LIBS) -L/usr/local/lib
 xsw_CFLAGS = $(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\"
-xsw2pdf_SOURCES = xsw2pdf.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
+xsw2img_SOURCES = xsw2img.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
 	                  file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h \
 		          parser.y lexer.l
 
-xsw2pdf_LDADD = $(SDL_LIBS) -L/usr/local/lib
-xsw2pdf_CFLAGS = $(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\"
+xsw2img_LDADD = $(SDL_LIBS) -L/usr/local/lib
+xsw2img_CFLAGS = $(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\"
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -251,9 +251,9 @@ parser.h: parser.c
 xsw$(EXEEXT): $(xsw_OBJECTS) $(xsw_DEPENDENCIES) 
 	@rm -f xsw$(EXEEXT)
 	$(xsw_LINK) $(xsw_OBJECTS) $(xsw_LDADD) $(LIBS)
-xsw2pdf$(EXEEXT): $(xsw2pdf_OBJECTS) $(xsw2pdf_DEPENDENCIES) 
-	@rm -f xsw2pdf$(EXEEXT)
-	$(xsw2pdf_LINK) $(xsw2pdf_OBJECTS) $(xsw2pdf_LDADD) $(LIBS)
+xsw2img$(EXEEXT): $(xsw2img_OBJECTS) $(xsw2img_DEPENDENCIES) 
+	@rm -f xsw2img$(EXEEXT)
+	$(xsw2img_LINK) $(xsw2img_OBJECTS) $(xsw2img_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -274,18 +274,18 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-presenter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-slide.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw-xsw.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-cmd_img.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-cmd_text.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-color.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-execute.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-file.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-lexer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-list.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-parser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-presentation.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-presenter.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-slide.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2pdf-xsw2pdf.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-cmd_img.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-cmd_text.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-color.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-execute.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-file.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-lexer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-list.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-parser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-presentation.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-presenter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-slide.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xsw2img-xsw2img.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -483,173 +483,173 @@ xsw-lexer.obj: lexer.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw_CFLAGS) $(CFLAGS) -c -o xsw-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
 
-xsw2pdf-xsw2pdf.o: xsw2pdf.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-xsw2pdf.o -MD -MP -MF $(DEPDIR)/xsw2pdf-xsw2pdf.Tpo -c -o xsw2pdf-xsw2pdf.o `test -f 'xsw2pdf.c' || echo '$(srcdir)/'`xsw2pdf.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-xsw2pdf.Tpo $(DEPDIR)/xsw2pdf-xsw2pdf.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xsw2pdf.c' object='xsw2pdf-xsw2pdf.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-xsw2img.o: xsw2img.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-xsw2img.o -MD -MP -MF $(DEPDIR)/xsw2img-xsw2img.Tpo -c -o xsw2img-xsw2img.o `test -f 'xsw2img.c' || echo '$(srcdir)/'`xsw2img.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-xsw2img.Tpo $(DEPDIR)/xsw2img-xsw2img.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xsw2img.c' object='xsw2img-xsw2img.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-xsw2pdf.o `test -f 'xsw2pdf.c' || echo '$(srcdir)/'`xsw2pdf.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-xsw2img.o `test -f 'xsw2img.c' || echo '$(srcdir)/'`xsw2img.c
 
-xsw2pdf-xsw2pdf.obj: xsw2pdf.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-xsw2pdf.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-xsw2pdf.Tpo -c -o xsw2pdf-xsw2pdf.obj `if test -f 'xsw2pdf.c'; then $(CYGPATH_W) 'xsw2pdf.c'; else $(CYGPATH_W) '$(srcdir)/xsw2pdf.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-xsw2pdf.Tpo $(DEPDIR)/xsw2pdf-xsw2pdf.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xsw2pdf.c' object='xsw2pdf-xsw2pdf.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-xsw2img.obj: xsw2img.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-xsw2img.obj -MD -MP -MF $(DEPDIR)/xsw2img-xsw2img.Tpo -c -o xsw2img-xsw2img.obj `if test -f 'xsw2img.c'; then $(CYGPATH_W) 'xsw2img.c'; else $(CYGPATH_W) '$(srcdir)/xsw2img.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-xsw2img.Tpo $(DEPDIR)/xsw2img-xsw2img.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xsw2img.c' object='xsw2img-xsw2img.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-xsw2pdf.obj `if test -f 'xsw2pdf.c'; then $(CYGPATH_W) 'xsw2pdf.c'; else $(CYGPATH_W) '$(srcdir)/xsw2pdf.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-xsw2img.obj `if test -f 'xsw2img.c'; then $(CYGPATH_W) 'xsw2img.c'; else $(CYGPATH_W) '$(srcdir)/xsw2img.c'; fi`
 
-xsw2pdf-file.o: file.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-file.o -MD -MP -MF $(DEPDIR)/xsw2pdf-file.Tpo -c -o xsw2pdf-file.o `test -f 'file.c' || echo '$(srcdir)/'`file.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-file.Tpo $(DEPDIR)/xsw2pdf-file.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='file.c' object='xsw2pdf-file.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-file.o: file.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-file.o -MD -MP -MF $(DEPDIR)/xsw2img-file.Tpo -c -o xsw2img-file.o `test -f 'file.c' || echo '$(srcdir)/'`file.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-file.Tpo $(DEPDIR)/xsw2img-file.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='file.c' object='xsw2img-file.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-file.o `test -f 'file.c' || echo '$(srcdir)/'`file.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-file.o `test -f 'file.c' || echo '$(srcdir)/'`file.c
 
-xsw2pdf-file.obj: file.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-file.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-file.Tpo -c -o xsw2pdf-file.obj `if test -f 'file.c'; then $(CYGPATH_W) 'file.c'; else $(CYGPATH_W) '$(srcdir)/file.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-file.Tpo $(DEPDIR)/xsw2pdf-file.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='file.c' object='xsw2pdf-file.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-file.obj: file.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-file.obj -MD -MP -MF $(DEPDIR)/xsw2img-file.Tpo -c -o xsw2img-file.obj `if test -f 'file.c'; then $(CYGPATH_W) 'file.c'; else $(CYGPATH_W) '$(srcdir)/file.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-file.Tpo $(DEPDIR)/xsw2img-file.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='file.c' object='xsw2img-file.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-file.obj `if test -f 'file.c'; then $(CYGPATH_W) 'file.c'; else $(CYGPATH_W) '$(srcdir)/file.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-file.obj `if test -f 'file.c'; then $(CYGPATH_W) 'file.c'; else $(CYGPATH_W) '$(srcdir)/file.c'; fi`
 
-xsw2pdf-presentation.o: presentation.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-presentation.o -MD -MP -MF $(DEPDIR)/xsw2pdf-presentation.Tpo -c -o xsw2pdf-presentation.o `test -f 'presentation.c' || echo '$(srcdir)/'`presentation.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-presentation.Tpo $(DEPDIR)/xsw2pdf-presentation.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presentation.c' object='xsw2pdf-presentation.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-presentation.o: presentation.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-presentation.o -MD -MP -MF $(DEPDIR)/xsw2img-presentation.Tpo -c -o xsw2img-presentation.o `test -f 'presentation.c' || echo '$(srcdir)/'`presentation.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-presentation.Tpo $(DEPDIR)/xsw2img-presentation.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presentation.c' object='xsw2img-presentation.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-presentation.o `test -f 'presentation.c' || echo '$(srcdir)/'`presentation.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-presentation.o `test -f 'presentation.c' || echo '$(srcdir)/'`presentation.c
 
-xsw2pdf-presentation.obj: presentation.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-presentation.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-presentation.Tpo -c -o xsw2pdf-presentation.obj `if test -f 'presentation.c'; then $(CYGPATH_W) 'presentation.c'; else $(CYGPATH_W) '$(srcdir)/presentation.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-presentation.Tpo $(DEPDIR)/xsw2pdf-presentation.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presentation.c' object='xsw2pdf-presentation.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-presentation.obj: presentation.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-presentation.obj -MD -MP -MF $(DEPDIR)/xsw2img-presentation.Tpo -c -o xsw2img-presentation.obj `if test -f 'presentation.c'; then $(CYGPATH_W) 'presentation.c'; else $(CYGPATH_W) '$(srcdir)/presentation.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-presentation.Tpo $(DEPDIR)/xsw2img-presentation.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presentation.c' object='xsw2img-presentation.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-presentation.obj `if test -f 'presentation.c'; then $(CYGPATH_W) 'presentation.c'; else $(CYGPATH_W) '$(srcdir)/presentation.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-presentation.obj `if test -f 'presentation.c'; then $(CYGPATH_W) 'presentation.c'; else $(CYGPATH_W) '$(srcdir)/presentation.c'; fi`
 
-xsw2pdf-slide.o: slide.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-slide.o -MD -MP -MF $(DEPDIR)/xsw2pdf-slide.Tpo -c -o xsw2pdf-slide.o `test -f 'slide.c' || echo '$(srcdir)/'`slide.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-slide.Tpo $(DEPDIR)/xsw2pdf-slide.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='slide.c' object='xsw2pdf-slide.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-slide.o: slide.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-slide.o -MD -MP -MF $(DEPDIR)/xsw2img-slide.Tpo -c -o xsw2img-slide.o `test -f 'slide.c' || echo '$(srcdir)/'`slide.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-slide.Tpo $(DEPDIR)/xsw2img-slide.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='slide.c' object='xsw2img-slide.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-slide.o `test -f 'slide.c' || echo '$(srcdir)/'`slide.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-slide.o `test -f 'slide.c' || echo '$(srcdir)/'`slide.c
 
-xsw2pdf-slide.obj: slide.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-slide.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-slide.Tpo -c -o xsw2pdf-slide.obj `if test -f 'slide.c'; then $(CYGPATH_W) 'slide.c'; else $(CYGPATH_W) '$(srcdir)/slide.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-slide.Tpo $(DEPDIR)/xsw2pdf-slide.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='slide.c' object='xsw2pdf-slide.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-slide.obj: slide.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-slide.obj -MD -MP -MF $(DEPDIR)/xsw2img-slide.Tpo -c -o xsw2img-slide.obj `if test -f 'slide.c'; then $(CYGPATH_W) 'slide.c'; else $(CYGPATH_W) '$(srcdir)/slide.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-slide.Tpo $(DEPDIR)/xsw2img-slide.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='slide.c' object='xsw2img-slide.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-slide.obj `if test -f 'slide.c'; then $(CYGPATH_W) 'slide.c'; else $(CYGPATH_W) '$(srcdir)/slide.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-slide.obj `if test -f 'slide.c'; then $(CYGPATH_W) 'slide.c'; else $(CYGPATH_W) '$(srcdir)/slide.c'; fi`
 
-xsw2pdf-cmd_text.o: cmd_text.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-cmd_text.o -MD -MP -MF $(DEPDIR)/xsw2pdf-cmd_text.Tpo -c -o xsw2pdf-cmd_text.o `test -f 'cmd_text.c' || echo '$(srcdir)/'`cmd_text.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-cmd_text.Tpo $(DEPDIR)/xsw2pdf-cmd_text.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_text.c' object='xsw2pdf-cmd_text.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-cmd_text.o: cmd_text.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-cmd_text.o -MD -MP -MF $(DEPDIR)/xsw2img-cmd_text.Tpo -c -o xsw2img-cmd_text.o `test -f 'cmd_text.c' || echo '$(srcdir)/'`cmd_text.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-cmd_text.Tpo $(DEPDIR)/xsw2img-cmd_text.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_text.c' object='xsw2img-cmd_text.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-cmd_text.o `test -f 'cmd_text.c' || echo '$(srcdir)/'`cmd_text.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-cmd_text.o `test -f 'cmd_text.c' || echo '$(srcdir)/'`cmd_text.c
 
-xsw2pdf-cmd_text.obj: cmd_text.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-cmd_text.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-cmd_text.Tpo -c -o xsw2pdf-cmd_text.obj `if test -f 'cmd_text.c'; then $(CYGPATH_W) 'cmd_text.c'; else $(CYGPATH_W) '$(srcdir)/cmd_text.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-cmd_text.Tpo $(DEPDIR)/xsw2pdf-cmd_text.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_text.c' object='xsw2pdf-cmd_text.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-cmd_text.obj: cmd_text.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-cmd_text.obj -MD -MP -MF $(DEPDIR)/xsw2img-cmd_text.Tpo -c -o xsw2img-cmd_text.obj `if test -f 'cmd_text.c'; then $(CYGPATH_W) 'cmd_text.c'; else $(CYGPATH_W) '$(srcdir)/cmd_text.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-cmd_text.Tpo $(DEPDIR)/xsw2img-cmd_text.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_text.c' object='xsw2img-cmd_text.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-cmd_text.obj `if test -f 'cmd_text.c'; then $(CYGPATH_W) 'cmd_text.c'; else $(CYGPATH_W) '$(srcdir)/cmd_text.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-cmd_text.obj `if test -f 'cmd_text.c'; then $(CYGPATH_W) 'cmd_text.c'; else $(CYGPATH_W) '$(srcdir)/cmd_text.c'; fi`
 
-xsw2pdf-cmd_img.o: cmd_img.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-cmd_img.o -MD -MP -MF $(DEPDIR)/xsw2pdf-cmd_img.Tpo -c -o xsw2pdf-cmd_img.o `test -f 'cmd_img.c' || echo '$(srcdir)/'`cmd_img.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-cmd_img.Tpo $(DEPDIR)/xsw2pdf-cmd_img.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_img.c' object='xsw2pdf-cmd_img.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-cmd_img.o: cmd_img.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-cmd_img.o -MD -MP -MF $(DEPDIR)/xsw2img-cmd_img.Tpo -c -o xsw2img-cmd_img.o `test -f 'cmd_img.c' || echo '$(srcdir)/'`cmd_img.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-cmd_img.Tpo $(DEPDIR)/xsw2img-cmd_img.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_img.c' object='xsw2img-cmd_img.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-cmd_img.o `test -f 'cmd_img.c' || echo '$(srcdir)/'`cmd_img.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-cmd_img.o `test -f 'cmd_img.c' || echo '$(srcdir)/'`cmd_img.c
 
-xsw2pdf-cmd_img.obj: cmd_img.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-cmd_img.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-cmd_img.Tpo -c -o xsw2pdf-cmd_img.obj `if test -f 'cmd_img.c'; then $(CYGPATH_W) 'cmd_img.c'; else $(CYGPATH_W) '$(srcdir)/cmd_img.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-cmd_img.Tpo $(DEPDIR)/xsw2pdf-cmd_img.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_img.c' object='xsw2pdf-cmd_img.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-cmd_img.obj: cmd_img.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-cmd_img.obj -MD -MP -MF $(DEPDIR)/xsw2img-cmd_img.Tpo -c -o xsw2img-cmd_img.obj `if test -f 'cmd_img.c'; then $(CYGPATH_W) 'cmd_img.c'; else $(CYGPATH_W) '$(srcdir)/cmd_img.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-cmd_img.Tpo $(DEPDIR)/xsw2img-cmd_img.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cmd_img.c' object='xsw2img-cmd_img.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-cmd_img.obj `if test -f 'cmd_img.c'; then $(CYGPATH_W) 'cmd_img.c'; else $(CYGPATH_W) '$(srcdir)/cmd_img.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-cmd_img.obj `if test -f 'cmd_img.c'; then $(CYGPATH_W) 'cmd_img.c'; else $(CYGPATH_W) '$(srcdir)/cmd_img.c'; fi`
 
-xsw2pdf-list.o: list.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-list.o -MD -MP -MF $(DEPDIR)/xsw2pdf-list.Tpo -c -o xsw2pdf-list.o `test -f 'list.c' || echo '$(srcdir)/'`list.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-list.Tpo $(DEPDIR)/xsw2pdf-list.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='list.c' object='xsw2pdf-list.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-list.o: list.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-list.o -MD -MP -MF $(DEPDIR)/xsw2img-list.Tpo -c -o xsw2img-list.o `test -f 'list.c' || echo '$(srcdir)/'`list.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-list.Tpo $(DEPDIR)/xsw2img-list.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='list.c' object='xsw2img-list.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-list.o `test -f 'list.c' || echo '$(srcdir)/'`list.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-list.o `test -f 'list.c' || echo '$(srcdir)/'`list.c
 
-xsw2pdf-list.obj: list.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-list.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-list.Tpo -c -o xsw2pdf-list.obj `if test -f 'list.c'; then $(CYGPATH_W) 'list.c'; else $(CYGPATH_W) '$(srcdir)/list.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-list.Tpo $(DEPDIR)/xsw2pdf-list.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='list.c' object='xsw2pdf-list.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-list.obj: list.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-list.obj -MD -MP -MF $(DEPDIR)/xsw2img-list.Tpo -c -o xsw2img-list.obj `if test -f 'list.c'; then $(CYGPATH_W) 'list.c'; else $(CYGPATH_W) '$(srcdir)/list.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-list.Tpo $(DEPDIR)/xsw2img-list.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='list.c' object='xsw2img-list.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-list.obj `if test -f 'list.c'; then $(CYGPATH_W) 'list.c'; else $(CYGPATH_W) '$(srcdir)/list.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-list.obj `if test -f 'list.c'; then $(CYGPATH_W) 'list.c'; else $(CYGPATH_W) '$(srcdir)/list.c'; fi`
 
-xsw2pdf-presenter.o: presenter.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-presenter.o -MD -MP -MF $(DEPDIR)/xsw2pdf-presenter.Tpo -c -o xsw2pdf-presenter.o `test -f 'presenter.c' || echo '$(srcdir)/'`presenter.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-presenter.Tpo $(DEPDIR)/xsw2pdf-presenter.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presenter.c' object='xsw2pdf-presenter.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-presenter.o: presenter.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-presenter.o -MD -MP -MF $(DEPDIR)/xsw2img-presenter.Tpo -c -o xsw2img-presenter.o `test -f 'presenter.c' || echo '$(srcdir)/'`presenter.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-presenter.Tpo $(DEPDIR)/xsw2img-presenter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presenter.c' object='xsw2img-presenter.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-presenter.o `test -f 'presenter.c' || echo '$(srcdir)/'`presenter.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-presenter.o `test -f 'presenter.c' || echo '$(srcdir)/'`presenter.c
 
-xsw2pdf-presenter.obj: presenter.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-presenter.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-presenter.Tpo -c -o xsw2pdf-presenter.obj `if test -f 'presenter.c'; then $(CYGPATH_W) 'presenter.c'; else $(CYGPATH_W) '$(srcdir)/presenter.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-presenter.Tpo $(DEPDIR)/xsw2pdf-presenter.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presenter.c' object='xsw2pdf-presenter.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-presenter.obj: presenter.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-presenter.obj -MD -MP -MF $(DEPDIR)/xsw2img-presenter.Tpo -c -o xsw2img-presenter.obj `if test -f 'presenter.c'; then $(CYGPATH_W) 'presenter.c'; else $(CYGPATH_W) '$(srcdir)/presenter.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-presenter.Tpo $(DEPDIR)/xsw2img-presenter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='presenter.c' object='xsw2img-presenter.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-presenter.obj `if test -f 'presenter.c'; then $(CYGPATH_W) 'presenter.c'; else $(CYGPATH_W) '$(srcdir)/presenter.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-presenter.obj `if test -f 'presenter.c'; then $(CYGPATH_W) 'presenter.c'; else $(CYGPATH_W) '$(srcdir)/presenter.c'; fi`
 
-xsw2pdf-execute.o: execute.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-execute.o -MD -MP -MF $(DEPDIR)/xsw2pdf-execute.Tpo -c -o xsw2pdf-execute.o `test -f 'execute.c' || echo '$(srcdir)/'`execute.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-execute.Tpo $(DEPDIR)/xsw2pdf-execute.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='execute.c' object='xsw2pdf-execute.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-execute.o: execute.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-execute.o -MD -MP -MF $(DEPDIR)/xsw2img-execute.Tpo -c -o xsw2img-execute.o `test -f 'execute.c' || echo '$(srcdir)/'`execute.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-execute.Tpo $(DEPDIR)/xsw2img-execute.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='execute.c' object='xsw2img-execute.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-execute.o `test -f 'execute.c' || echo '$(srcdir)/'`execute.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-execute.o `test -f 'execute.c' || echo '$(srcdir)/'`execute.c
 
-xsw2pdf-execute.obj: execute.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-execute.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-execute.Tpo -c -o xsw2pdf-execute.obj `if test -f 'execute.c'; then $(CYGPATH_W) 'execute.c'; else $(CYGPATH_W) '$(srcdir)/execute.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-execute.Tpo $(DEPDIR)/xsw2pdf-execute.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='execute.c' object='xsw2pdf-execute.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-execute.obj: execute.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-execute.obj -MD -MP -MF $(DEPDIR)/xsw2img-execute.Tpo -c -o xsw2img-execute.obj `if test -f 'execute.c'; then $(CYGPATH_W) 'execute.c'; else $(CYGPATH_W) '$(srcdir)/execute.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-execute.Tpo $(DEPDIR)/xsw2img-execute.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='execute.c' object='xsw2img-execute.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-execute.obj `if test -f 'execute.c'; then $(CYGPATH_W) 'execute.c'; else $(CYGPATH_W) '$(srcdir)/execute.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-execute.obj `if test -f 'execute.c'; then $(CYGPATH_W) 'execute.c'; else $(CYGPATH_W) '$(srcdir)/execute.c'; fi`
 
-xsw2pdf-color.o: color.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-color.o -MD -MP -MF $(DEPDIR)/xsw2pdf-color.Tpo -c -o xsw2pdf-color.o `test -f 'color.c' || echo '$(srcdir)/'`color.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-color.Tpo $(DEPDIR)/xsw2pdf-color.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='color.c' object='xsw2pdf-color.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-color.o: color.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-color.o -MD -MP -MF $(DEPDIR)/xsw2img-color.Tpo -c -o xsw2img-color.o `test -f 'color.c' || echo '$(srcdir)/'`color.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-color.Tpo $(DEPDIR)/xsw2img-color.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='color.c' object='xsw2img-color.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-color.o `test -f 'color.c' || echo '$(srcdir)/'`color.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-color.o `test -f 'color.c' || echo '$(srcdir)/'`color.c
 
-xsw2pdf-color.obj: color.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-color.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-color.Tpo -c -o xsw2pdf-color.obj `if test -f 'color.c'; then $(CYGPATH_W) 'color.c'; else $(CYGPATH_W) '$(srcdir)/color.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-color.Tpo $(DEPDIR)/xsw2pdf-color.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='color.c' object='xsw2pdf-color.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-color.obj: color.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-color.obj -MD -MP -MF $(DEPDIR)/xsw2img-color.Tpo -c -o xsw2img-color.obj `if test -f 'color.c'; then $(CYGPATH_W) 'color.c'; else $(CYGPATH_W) '$(srcdir)/color.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-color.Tpo $(DEPDIR)/xsw2img-color.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='color.c' object='xsw2img-color.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-color.obj `if test -f 'color.c'; then $(CYGPATH_W) 'color.c'; else $(CYGPATH_W) '$(srcdir)/color.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-color.obj `if test -f 'color.c'; then $(CYGPATH_W) 'color.c'; else $(CYGPATH_W) '$(srcdir)/color.c'; fi`
 
-xsw2pdf-parser.o: parser.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-parser.o -MD -MP -MF $(DEPDIR)/xsw2pdf-parser.Tpo -c -o xsw2pdf-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-parser.Tpo $(DEPDIR)/xsw2pdf-parser.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parser.c' object='xsw2pdf-parser.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-parser.o: parser.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-parser.o -MD -MP -MF $(DEPDIR)/xsw2img-parser.Tpo -c -o xsw2img-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-parser.Tpo $(DEPDIR)/xsw2img-parser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parser.c' object='xsw2img-parser.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-parser.o `test -f 'parser.c' || echo '$(srcdir)/'`parser.c
 
-xsw2pdf-parser.obj: parser.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-parser.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-parser.Tpo -c -o xsw2pdf-parser.obj `if test -f 'parser.c'; then $(CYGPATH_W) 'parser.c'; else $(CYGPATH_W) '$(srcdir)/parser.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-parser.Tpo $(DEPDIR)/xsw2pdf-parser.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parser.c' object='xsw2pdf-parser.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-parser.obj: parser.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-parser.obj -MD -MP -MF $(DEPDIR)/xsw2img-parser.Tpo -c -o xsw2img-parser.obj `if test -f 'parser.c'; then $(CYGPATH_W) 'parser.c'; else $(CYGPATH_W) '$(srcdir)/parser.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-parser.Tpo $(DEPDIR)/xsw2img-parser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parser.c' object='xsw2img-parser.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-parser.obj `if test -f 'parser.c'; then $(CYGPATH_W) 'parser.c'; else $(CYGPATH_W) '$(srcdir)/parser.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-parser.obj `if test -f 'parser.c'; then $(CYGPATH_W) 'parser.c'; else $(CYGPATH_W) '$(srcdir)/parser.c'; fi`
 
-xsw2pdf-lexer.o: lexer.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-lexer.o -MD -MP -MF $(DEPDIR)/xsw2pdf-lexer.Tpo -c -o xsw2pdf-lexer.o `test -f 'lexer.c' || echo '$(srcdir)/'`lexer.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-lexer.Tpo $(DEPDIR)/xsw2pdf-lexer.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lexer.c' object='xsw2pdf-lexer.o' libtool=no @AMDEPBACKSLASH@
+xsw2img-lexer.o: lexer.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-lexer.o -MD -MP -MF $(DEPDIR)/xsw2img-lexer.Tpo -c -o xsw2img-lexer.o `test -f 'lexer.c' || echo '$(srcdir)/'`lexer.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-lexer.Tpo $(DEPDIR)/xsw2img-lexer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lexer.c' object='xsw2img-lexer.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-lexer.o `test -f 'lexer.c' || echo '$(srcdir)/'`lexer.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-lexer.o `test -f 'lexer.c' || echo '$(srcdir)/'`lexer.c
 
-xsw2pdf-lexer.obj: lexer.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -MT xsw2pdf-lexer.obj -MD -MP -MF $(DEPDIR)/xsw2pdf-lexer.Tpo -c -o xsw2pdf-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2pdf-lexer.Tpo $(DEPDIR)/xsw2pdf-lexer.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lexer.c' object='xsw2pdf-lexer.obj' libtool=no @AMDEPBACKSLASH@
+xsw2img-lexer.obj: lexer.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -MT xsw2img-lexer.obj -MD -MP -MF $(DEPDIR)/xsw2img-lexer.Tpo -c -o xsw2img-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/xsw2img-lexer.Tpo $(DEPDIR)/xsw2img-lexer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lexer.c' object='xsw2img-lexer.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2pdf_CFLAGS) $(CFLAGS) -c -o xsw2pdf-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xsw2img_CFLAGS) $(CFLAGS) -c -o xsw2img-lexer.obj `if test -f 'lexer.c'; then $(CYGPATH_W) 'lexer.c'; else $(CYGPATH_W) '$(srcdir)/lexer.c'; fi`
 
 .l.c:
 	$(am__skiplex) $(SHELL) $(YLWRAP) $< $(LEX_OUTPUT_ROOT).c $@ -- $(LEXCOMPILE)

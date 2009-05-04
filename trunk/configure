@@ -4124,7 +4124,7 @@ _ACEOF
 
 else
 
-	echo "Error: you need SDL_image in order to use xsw."
+	echo "Error: you need SDL_gfx in order to use xsw."
 	exit -1
 
 fi

@@ -8,6 +8,14 @@
 #include "presenter.h"
 #include "parser.h"
 
+typedef enum { none, pdf, png, jpg } t_format;
+
+typedef struct {
+	t_format format;
+	char* output_file;
+	char* filename;
+} ConvOptions;
+
 extern int parser_parse(Presentation *pres, char *filename);
 
 static int check_convert()
@@ -17,19 +25,39 @@ static int check_convert()
 	return 1;
 }
 
-static void print_usage()
+static void print_usage(FILE* stream)
 {
-	fprintf(stdout, "xsw2pdf version " VERSION "\n");
-	fprintf(stdout, "Usage: xsw2pdf FILE\n");
-	fprintf(stdout, "Convert a xsw presentation into a PDF file.\n");
+	fprintf(stream, "xswconv version " VERSION "\n");
+	fprintf(stream, "Usage: xswconv [OPTIONS] FILE\n");
+	fprintf(stream, "Convert a xsw presentation into a different format.\n");
+	fprintf(stream, "\n");
+	fprintf(stream, "Options:\n");
+	fprintf(stream, "  -f, --format=FORMAT     output format (see below)\n");
+	fprintf(stream, "  -o, --output=FILE       output file/directory name\n");
+	fprintf(stream, "\n");
+	fprintf(stream, "Formats:\n");
+	fprintf(stream, "  pdf        Portable Document Format (one file per presentation)\n");
+	fprintf(stream, "  png        Portable Network Graphics (one file per slide)\n");
+	fprintf(stream, "  jpeg       JPEG interchange format (one file per slide)\n");
+}
+
+static ConvOptions* parse_options(int argc, char** argv)
+{
+	opt = malloc(sizeof(ConvOptions));
+	opt->format = none;
+	opt->output_file = NULL;
+	opt->filename = NULL;
+
+	return op;
 }
 
 int main(int argc, char** argv)
 {
 	// check parameters
-	if(argc != 2)
+	ConvOptions *opt = parse_options(argc, argv);
+	if(opt->format == none || !opt->output_file || !opt->filename)
 	{
-		print_usage();
+		print_usage(stderr);
 		return 1;
 	}
 

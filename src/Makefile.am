@@ -4,7 +4,7 @@
 BUILT_SOURCES=parser.h
 AM_YFLAGS=-d
 
-bin_PROGRAMS=xsw xsw2img #xsw2html
+bin_PROGRAMS=xsw xswconv #xsw2html
 
 xsw_SOURCES=xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
 	          options.h file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h \
@@ -12,11 +12,11 @@ xsw_SOURCES=xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c l
 xsw_LDADD=$(SDL_LIBS) -L/usr/local/lib
 xsw_CFLAGS=$(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\"
 
-xsw2img_SOURCES=xsw2img.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
+xswconv_SOURCES=xswconv.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
 	                  file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h \
 		          parser.y lexer.l
-xsw2img_LDADD=$(SDL_LIBS) -L/usr/local/lib
-xsw2img_CFLAGS=$(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\"
+xswconv_LDADD=$(SDL_LIBS) -L/usr/local/lib
+xswconv_CFLAGS=$(SDL_CFLAGS) -I/usr/local/include/SDL -Wall -Wextra -DUSE_SDL -DDATADIR=\""$(datadir)/xsw/"\" -DVERSION=\"$(VERSION)\"
 
 #xsw2html_SOURCES=x2h.c x2h_options.c x2h_template.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c util.c \
 #		       x2h_options.h x2h_template.h file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h util.h \

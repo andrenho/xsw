@@ -9,6 +9,19 @@
 #include "SDL_ttf.h"
 #include "SDL_rotozoom.h"
 
+static TTF_Font* load_font(char* name, int size)
+{
+	char path[1024];
+	sprintf(path, "/usr/share/fonts/TTF/%s", name);
+	TTF_Font* font = TTF_OpenFont(path, size);
+	if(!font)
+	{
+		sprintf(path, "%s/%s", DATADIR, name);
+		font = TTF_OpenFont(path, size);
+	}
+	return font;
+}
+
 void execute_parse(Presenter* pr, void* cmd, CommandType type)
 {
 	SDL_Surface* tmp;
@@ -24,11 +37,11 @@ void execute_parse(Presenter* pr, void* cmd, CommandType type)
 
 		// load font - TOD slow, someday we'll not do this for every text block
 		if(strcmp(txt->font, "sans") == 0)
-			font = TTF_OpenFont(DATADIR "VeraBd.ttf", txt->size);
+			font = load_font("VeraBd.ttf", txt->size);
 		else if(strcmp(txt->font, "serif") == 0)
-			font = TTF_OpenFont(DATADIR "VeraSeBd.ttf", txt->size);
+			font = load_font("VeraSeBd.ttf", txt->size);
 		else if(strcmp(txt->font, "mono") == 0)
-			font = TTF_OpenFont(DATADIR "VeraMono.ttf", txt->size);
+			font = load_font("VeraMono.ttf", txt->size);
 		else
 		{
 			fprintf(stderr, "warning: Font %s not found, defaulting to Sans.", txt->font);

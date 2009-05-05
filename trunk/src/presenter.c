@@ -54,6 +54,7 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 			return NULL;
 		}
 		SDL_WM_SetCaption("xsw", "xsw");
+		SDL_WM_SetIcon(IMG_Load(DATADIR "camera.png"), NULL);
 		clear_screen(pr->scr);
 		if(pr->scr == SDL_GetVideoSurface())
 			SDL_Flip(pr->scr);

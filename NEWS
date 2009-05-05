@@ -1,3 +1,7 @@
+Version 0.3.4
+-------------
+* added a window icon.
+
 Version 0.3.3
 -------------
 * xsw no longer install the Vera fonts if they can be found in the font

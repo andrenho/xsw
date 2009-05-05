@@ -43,10 +43,35 @@ static void print_usage(FILE* stream)
 
 static ConvOptions* parse_options(int argc, char** argv)
 {
+	int next_option;
+
 	opt = malloc(sizeof(ConvOptions));
 	opt->format = none;
 	opt->output_file = NULL;
 	opt->filename = NULL;
+
+	const char* const short_options = "hv";
+	const struct option long_options[] = {
+		{ "help", 0, NULL, 'h' },
+		{ "version", 0, NULL, 'v' },
+		{ NULL, 0, NULL, 0 }
+	};
+	
+	do 
+	{
+		next_option = getopt_long(argc, argv, short_options, 
+				long_options, NULL);
+		switch(next_option)
+		{
+			case '?':
+				print_usage(stderr, 1);
+				break;
+			case -1: // done
+				break;
+			default:
+				abort();
+		}
+	} while (next_option != -1);
 
 	return op;
 }

@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <getopt.h>
 #include <string.h>
+#include <sys/stat.h>
 #include "presentation.h"
 #include "presenter.h"
 #include "slide.h"
@@ -17,19 +18,20 @@ extern int parser_parse(Presentation *pres, char *filename);
 // available formats
 //
 typedef enum { none, pdf, png, jpeg } t_format;
+typedef enum { one_file_per_slide, one_file_per_presentation } t_nfiles;
 
 typedef struct {
 	char* desc;
 	t_format format;
 	char* extension;
-	int one_per_slide;
+	t_nfiles n_files;
 } t_type;
 
 static const t_type const types[] = {
-	{ "none", none, "none", 0 },
-	{ "pdf", pdf, "pdf", 0 },
-	{ "png", png, "png", 1 },
-	{ "jpeg", jpeg, "jpg", 1 }
+	{ "none", none, "none", one_file_per_slide },
+	{ "pdf", pdf, "pdf", one_file_per_presentation },
+	{ "png", png, "png", one_file_per_slide },
+	{ "jpeg", jpeg, "jpg", one_file_per_slide }
 };
 
 #define TYPE_NONE types[0];
@@ -140,10 +142,13 @@ static ConvOptions* parse_options(int argc, char** argv)
 	} while (next_option != -1);
 
 	if(argc > optind)
-		opt->filename = argv[optind];
+	{
+		opt->filename = strdup(argv[optind]);
 
-	if(!opt->output_file)
-		opt->output_file = base_name(opt->filename);
+		char *s = strdup(opt->filename);
+		if(!opt->output_file)
+			opt->output_file = base_name(s);
+	}
 
 	return opt;
 }
@@ -159,9 +164,6 @@ int main(int argc, char** argv)
 	if(opt->type.format == none || !opt->output_file || !opt->filename)
 		print_usage(stderr, 1);
 
-	printf("%s %s %s\n", opt->type.desc, opt->output_file, opt->filename);
-	return 0;
-
 	// check for 'convert'
 	if(!check_convert())
 	{
@@ -171,7 +173,7 @@ int main(int argc, char** argv)
 
 	// load presentation
 	Presentation* p = presentation_new();
-	p->filename = argv[1];
+	p->filename = opt->filename;
 	if(!file_exists(p->filename))
 	{
 		fprintf(stderr, "%s is not a valid file.\n", p->filename);
@@ -217,27 +219,52 @@ int main(int argc, char** argv)
 		strcat(all_bmp, " ");
 	}
 
-	// generate pdf
-	char* command = alloca(strlen(all_bmp) + 512);
-	if (command == NULL) 
+	// generate output file
+	if(opt->type.n_files == one_file_per_presentation)
 	{
-		fprintf(stderr, "Not enough memory\n");
-		exit(1);		
+		char* command = alloca(strlen(all_bmp) + 512);
+		if (command == NULL) 
+		{
+			fprintf(stderr, "Not enough memory\n");
+			exit(1);		
+		}
+		char* name = alloca(512);
+		if (name == NULL) 
+		{
+			fprintf(stderr, "Not enough memory\n");
+			exit(1);		
+		}
+		sprintf(name, "%s.pdf", base_name(p->filename));
+		printf("Generating %s...\n", name);
+		sprintf(command, "convert -compress Zip %s %s", all_bmp, name);
+		if(system(command) != 0)
+		{
+			fprintf(stderr, "There was an error when running 'convert'.\n");
+			return 1;
+		}
 	}
-	char* name = alloca(512);
-	if (name == NULL) 
+	else
 	{
-		fprintf(stderr, "Not enough memory\n");
-		exit(1);		
-	}
-	sprintf(name, "%s.pdf", base_name(p->filename));
-	printf("Generating %s...\n", name);
-	sprintf(command, "convert -compress Zip %s %s", all_bmp, name);
-	if(system(command) != 0)
-	{
-		printf("error!\n");
-		fprintf(stderr, "There was an error when running 'convert'.\n");
-		return 1;
+		// make directory
+		if(mkdir(opt->output_file, S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH) != 0)
+		{
+			fprintf(stderr, "Could not create directory %s/ .", opt->output_file);
+			return 1;
+		}
+
+		// convert files
+		for(i=0; i<slides; i++)
+		{
+			char* command = alloca(1024);
+			sprintf(command, "convert %s/%d.bmp %s/%d.%s",
+					path, i, opt->output_file, i, opt->type.extension);
+			printf("Generating slide %d.\n", i+1);
+			if(system(command) != 0)
+			{
+				fprintf(stderr, "There was an error when running 'convert'.\n");
+				return 1;
+			}
+		}
 	}
 
 	// remove files

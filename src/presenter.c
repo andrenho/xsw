@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "SDL_ttf.h"
+#include "SDL_image.h"
 #include "presenter.h"
 #include "execute.h"
 #include "list.h"

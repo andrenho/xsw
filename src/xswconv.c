@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <getopt.h>
+#include <string.h>
 #include "presentation.h"
 #include "presenter.h"
 #include "slide.h"
@@ -8,16 +10,44 @@
 #include "presenter.h"
 #include "parser.h"
 
-typedef enum { none, pdf, png, jpg } t_format;
+extern int parser_parse(Presentation *pres, char *filename);
+
+
+// 
+// available formats
+//
+typedef enum { none, pdf, png, jpeg } t_format;
 
 typedef struct {
+	char* desc;
 	t_format format;
+	char* extension;
+	int one_per_slide;
+} t_type;
+
+static const t_type const types[] = {
+	{ "none", none, "none", 0 },
+	{ "pdf", pdf, "pdf", 0 },
+	{ "png", png, "png", 1 },
+	{ "jpeg", jpeg, "jpg", 1 }
+};
+
+#define TYPE_NONE types[0];
+#define N_TYPES (sizeof(types) / sizeof(*types))
+
+// 
+// user options
+//
+typedef struct {
+	t_type type;
 	char* output_file;
 	char* filename;
 } ConvOptions;
 
-extern int parser_parse(Presentation *pres, char *filename);
 
+// 
+// check if the utility 'convert' is installed
+//
 static int check_convert()
 {
 	if(system("convert > /dev/null") == 32512)
@@ -25,7 +55,10 @@ static int check_convert()
 	return 1;
 }
 
-static void print_usage(FILE* stream)
+// 
+// print tool usage
+//
+static void print_usage(FILE* stream, int exit_value)
 {
 	fprintf(stream, "xswconv version " VERSION "\n");
 	fprintf(stream, "Usage: xswconv [OPTIONS] FILE\n");
@@ -36,27 +69,48 @@ static void print_usage(FILE* stream)
 	fprintf(stream, "  -o, --output=FILE       output file/directory name\n");
 	fprintf(stream, "\n");
 	fprintf(stream, "Formats:\n");
-	fprintf(stream, "  pdf        Portable Document Format (one file per presentation)\n");
-	fprintf(stream, "  png        Portable Network Graphics (one file per slide)\n");
+	fprintf(stream, "   pdf       Portable Document Format (one file per presentation)\n");
+	fprintf(stream, "   png       Portable Network Graphics (one file per slide)\n");
 	fprintf(stream, "  jpeg       JPEG interchange format (one file per slide)\n");
+
+	exit(exit_value);
 }
 
+
+// 
+// print tool version
+//
+static void print_version(FILE* stream, int exit_code)
+{
+	fprintf(stream, "xswconv " VERSION ", a xsw converter tool.\n");
+	fprintf(stream, "xsw and xswconv are free softwares.\n");
+	fprintf(stream, "Copyleft (C) 2009 André Wagner <andre.nho@gmail.com> - all wrongs reserved\n");
+	exit(exit_code);
+}
+
+
+// 
+// parse the options given by the user
+//
 static ConvOptions* parse_options(int argc, char** argv)
 {
 	int next_option;
+	unsigned int i;
 
-	opt = malloc(sizeof(ConvOptions));
-	opt->format = none;
+	ConvOptions* opt = malloc(sizeof(ConvOptions));
+	opt->type = TYPE_NONE;
 	opt->output_file = NULL;
 	opt->filename = NULL;
 
-	const char* const short_options = "hv";
+	const char* const short_options = "hvf:o:";
 	const struct option long_options[] = {
 		{ "help", 0, NULL, 'h' },
 		{ "version", 0, NULL, 'v' },
+		{ "format", 1, NULL, 'f' },
+		{ "output", 1, NULL, 'o' },
 		{ NULL, 0, NULL, 0 }
 	};
-	
+
 	do 
 	{
 		next_option = getopt_long(argc, argv, short_options, 
@@ -68,23 +122,45 @@ static ConvOptions* parse_options(int argc, char** argv)
 				break;
 			case -1: // done
 				break;
+			case 'h':
+				print_usage(stdout, 0);
+			case 'v':
+				print_version(stdout, 0);
+			case 'f':
+				for(i=0; i<N_TYPES; i++)
+					if(strcmp(optarg, types[i].desc) == 0)
+						opt->type = types[i];
+				break;
+			case 'o':
+				opt->output_file = strdup(optarg);
+				break;
 			default:
 				abort();
 		}
 	} while (next_option != -1);
 
-	return op;
+	if(argc > optind)
+		opt->filename = argv[optind];
+
+	if(!opt->output_file)
+		opt->output_file = base_name(opt->filename);
+
+	return opt;
 }
 
+
+// 
+// parse options and generate the files
+//
 int main(int argc, char** argv)
 {
 	// check parameters
 	ConvOptions *opt = parse_options(argc, argv);
-	if(opt->format == none || !opt->output_file || !opt->filename)
-	{
-		print_usage(stderr);
-		return 1;
-	}
+	if(opt->type.format == none || !opt->output_file || !opt->filename)
+		print_usage(stderr, 1);
+
+	printf("%s %s %s\n", opt->type.desc, opt->output_file, opt->filename);
+	return 0;
 
 	// check for 'convert'
 	if(!check_convert())

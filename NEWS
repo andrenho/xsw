@@ -1,6 +1,14 @@
 Version 0.3.4
 -------------
+* created the xswconv, that converts a xsw presentation to png, jpg and pdf.
+* created the xsw2pdf, xsw2png and xsw2jpeg, that uses xswconv to convert
+a xsw presentation.
+* added a -s option to xsw, where the user can start the presentation
+at a specific slide.
 * added a window icon.
+* corrected a bug that prevented developer mode to work.
+* corrected a bug that prevented gradients to work when the amount of red.
+of the background and the gradient was the same.
 
 Version 0.3.3
 -------------

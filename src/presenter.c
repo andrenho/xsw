@@ -46,6 +46,7 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 	if(st == -1)
 		fprintf(stderr, "Could not initialize SDL: %s.\n", SDL_GetError());
 
+	// initialize video
 	if(initialize_video)
 	{
 		pr->scr = SDL_SetVideoMode(800, 600, 0, SDL_SWSURFACE|SDL_ANYFORMAT|(initialize_video == 2 ? SDL_FULLSCREEN : 0));
@@ -63,12 +64,17 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 	else
 		pr->scr = SDL_CreateRGBSurface(SDL_SWSURFACE, 800, 600, 32, 0, 0, 0, 0);
 
+	// initialize TTF
 	if(TTF_Init() == -1)
 	{
 		fprintf(stderr, "Error initializing SDL_ttf: %s.\n", TTF_GetError());
 		return NULL;
 	}
-	dev_font = TTF_OpenFont(DATADIR "VeraMono.ttf", 10);
+
+	// load developer font
+	dev_font = TTF_OpenFont("/usr/share/fonts/TTF/VeraMono.ttf", 10);
+	if(!dev_font)
+		dev_font = TTF_OpenFont(DATADIR "VeraMono.ttf", 10);
 
 	return pr;
 }
@@ -266,7 +272,7 @@ void presenter_show(Presenter* pr, int n, int developer)
 	Slide* slide = (Slide*)nth(pr->p->slides, n);
 
 	// clear screen
-	if(strncmp((char*)slide->bg_color, (char*)slide->bg_gradient, 3) == 0)
+	if(memcmp((char*)slide->bg_color, (char*)slide->bg_gradient, 3) == 0)
 	{
 		Uint32 bg = SDL_MapRGB(pr->scr->format, slide->bg_color[0], slide->bg_color[1], slide->bg_color[2]);
 		SDL_FillRect(pr->scr, NULL, bg);

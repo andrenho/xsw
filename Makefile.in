@@ -168,7 +168,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = gnu
 SUBDIRS = src data
-dist_man_MANS = man/man1/xsw.1 man/man1/xsw2pdf.1
+dist_man_MANS = man/man1/xsw.1 man/man1/xswconv.1 man/man1/xsw2pdf.1
 EXTRA_DIST = REFERENCE THANKS doc/xsw.vim
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive

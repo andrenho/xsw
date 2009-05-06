@@ -2,20 +2,50 @@
 .\" See LICENSE file or <http://www.gnu.org/licenses/gpl-3.0.txt/>
 
 .\" Process with
-.\" groff -man -Tascii xsw.1
+.\" groff -man -Tascii xswconv.1
 .\"
 
-.TH XSW2PDF 1 "April 2009" Linux "User Manuals"
+.TH XSWCONV 1 "April 2009" Linux "User Manuals"
 .SH NAME
-xsw2pdf \- generates a PDF file from a XSW presentation
+xswconv \- converts a XSW presentation into another format
 
 .SH SYNOPSIS
-.B xsw2pdf FILE
+.B xswconv [OPTIONS] -f FORMAT FILE
+.br
+.B xsw2pdf [OPTIONS] FILE
 
 .br
 .SH DESCRIPTION
-xsw2pdf is a program that generates a PDF file from a XSW presentation. It
+xswconv is a program that converts a XSW presentation into other formats. It
 requires ImageMagick to be installed.
+
+.SH OPTIONS
+.TP
+\fB-f\fR, \fB\-\-format\fR
+choose the output format (see FORMATS)
+\fB-o\fR, \fB\-\-output\fR
+choose the output filename or directory name (depending of the output file)
+.TP
+\fB-v\fR, \fB\-\-version\fR
+display application version information
+.TP
+\fB-h\fR, \fB\-\-help\fR
+display application help
+
+.SH FORMATS
+.TP
+\fBpdf\fR
+Portable Document Format (pdf) - one file generated per presentation
+.TP
+\fBpng\fR
+Portable Network Graphics (png) - one file generated per slide
+.TP
+\fBjpeg\fR
+JPEG Interchange Format - one file generated per slide
+
+.SH OTHER PROGRAMS
+The scripts \fBxsw2pdf\fR, \fBxsw2png\fR and \fBxsw2jpeg\fR are convenience
+programs that call \fBxswconv\fR with a predefined output format.
 
 .SH AUTHOR
 Andre' Wagner <andre.nho@gmail.com>.

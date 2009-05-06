@@ -9,6 +9,8 @@ at a specific slide.
 * corrected a bug that prevented developer mode to work.
 * corrected a bug that prevented gradients to work when the amount of red.
 of the background and the gradient was the same.
+* corrected a bug that increased CPU usage in developer mode.
+* when xsw enters developer mode in fullscreen, the mouse is now visible.
 
 Version 0.3.3
 -------------

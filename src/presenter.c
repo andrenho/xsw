@@ -332,7 +332,10 @@ void presenter_show(Presenter* pr, int n, int developer)
 	}
 
 	if(developer)
+	{
 		developer_grid(pr);
+		SDL_ShowCursor(SDL_ENABLE);
+	}
 
 	if(pr->scr == SDL_GetVideoSurface())
 	{
@@ -342,7 +345,7 @@ void presenter_show(Presenter* pr, int n, int developer)
 
 		/* sometimes the mouse might 'come back', for example when
 		 * changing resolutions, so this avoids the problem */
-		if(pr->fullscreen)
+		if(pr->fullscreen && !developer)
 		{
 			SDL_ShowCursor(SDL_ENABLE);
 			SDL_ShowCursor(SDL_DISABLE);
@@ -426,14 +429,14 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer)
 	}
 }
 
-void presenter_fullscreen(Presenter* pr)
+void presenter_fullscreen(Presenter* pr, int developer)
 {
 	// fullscreen
 	if(SDL_WM_ToggleFullScreen(pr->scr))
 		pr->fullscreen = !pr->fullscreen;
 
 	// hide/show mouse
-	if(pr->fullscreen)
+	if(pr->fullscreen && !developer)
 		SDL_ShowCursor(SDL_DISABLE);
 	else
 		SDL_ShowCursor(SDL_ENABLE);

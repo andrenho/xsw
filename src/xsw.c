@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 				break;
 
 			case PRESENTER_FULLSCREEN:
-				presenter_fullscreen(pr);
+				presenter_fullscreen(pr, options->developer);
 				break;
 
 			case PRESENTER_NEXT:

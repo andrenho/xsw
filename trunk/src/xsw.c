@@ -111,9 +111,12 @@ int main(int argc, char *argv[])
 				options->developer = !options->developer;
 				presenter_show(pr, current, options->developer);
 				break;
+
+			case PRESENTER_NO_EVENT:
+				break;
 		}
 		if(!all_cached)
-			presenter_cache_next(pr);
+			all_cached = presenter_cache_next(pr);
 	}
 	presenter_quit();
 

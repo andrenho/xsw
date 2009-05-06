@@ -8,7 +8,6 @@ typedef struct List {
 	struct List* prev;
 	void* data;
 	int type;
-	int dirty;
 	struct List* next;
 } List;
 

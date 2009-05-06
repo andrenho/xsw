@@ -19,6 +19,7 @@ typedef struct Slide {
 	unsigned char bg_gradient[3];
 	struct Slide* parent;
 	SlideType type;
+	int dirty;
 } Slide;
 
 Slide* slide_new();

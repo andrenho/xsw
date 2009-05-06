@@ -206,15 +206,10 @@ int presenter_cache_next(Presenter* pr)
 	for(; ns < n_slides; ns++)
 	{
 		Slide* slide = (Slide*)nth(pr->p->slides, ns);
-		List* commands = slide->commands;
-		while(commands)
+		if(slide->dirty)
 		{
-			if(commands->dirty)
-			{
-				presenter_cache(pr, ns);
-				return 0;
-			}
-			commands = commands->next;
+			presenter_cache(pr, ns);
+			return 0;
 		}
 	}
 	return 1;
@@ -227,17 +222,19 @@ void presenter_cache(Presenter* pr, int n)
 	// go to slide
 	Slide* slide = (Slide*)nth(pr->p->slides, n);
 
-	// load the required slide images
-	List* commands = slide->commands;
-	while(commands)
+	if(slide->dirty)
 	{
-		if(commands->dirty)
+		printf("Caching slide %d.\n", n);
+
+		// load the required slide images
+		List* commands = slide->commands;
+		while(commands)
 		{
-			printf("Caching slide %d\n", n);
 			execute_parse(pr, commands->data, commands->type);
-			commands->dirty = 0;
+			commands = commands->next;
 		}
-		commands = commands->next;
+
+		slide->dirty = 0;
 	}
 }
 
@@ -346,38 +343,36 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer, int wait)
 
 	pr = pr; // avoids warnings
 
-	for(;;)
+	if(wait)
+		SDL_WaitEvent(&e);
+	else
+		SDL_PollEvent(&e);
+
+	switch(e.type)
 	{
-		if(wait)
-			SDL_WaitEvent(&e);
-		else
-			SDL_PollEvent(&e);
+	case SDL_QUIT:
+		return PRESENTER_QUIT;
 
-		switch(e.type)
+	case SDL_KEYDOWN:
+		switch(e.key.keysym.sym)
 		{
-		case SDL_QUIT:
-			return PRESENTER_QUIT;
-
-		case SDL_KEYDOWN:
-			switch(e.key.keysym.sym)
-			{
-			case SDLK_F4:				
-				if(e.key.keysym.mod & KMOD_ALT)
-					return PRESENTER_QUIT;
-				break;
-			case SDLK_c:				
-				if(e.key.keysym.mod & KMOD_CTRL)
-					return PRESENTER_QUIT;
-				break;
-			case SDLK_q:
+		case SDLK_F4:				
+			if(e.key.keysym.mod & KMOD_ALT)
 				return PRESENTER_QUIT;
-			case SDLK_PAGEUP:
-			case SDLK_UP:
-			case SDLK_LEFT:
-			case SDLK_BACKSPACE:
-				return PRESENTER_PREVIOUS;
-			case SDLK_PAGEDOWN:
-			case SDLK_DOWN:
+			break;
+		case SDLK_c:				
+			if(e.key.keysym.mod & KMOD_CTRL)
+				return PRESENTER_QUIT;
+			break;
+		case SDLK_q:
+			return PRESENTER_QUIT;
+		case SDLK_PAGEUP:
+		case SDLK_UP:
+		case SDLK_LEFT:
+		case SDLK_BACKSPACE:
+			return PRESENTER_PREVIOUS;
+		case SDLK_PAGEDOWN:
+		case SDLK_DOWN:
 			case SDLK_RIGHT:
 			case SDLK_SPACE:
 				return PRESENTER_NEXT;
@@ -403,17 +398,18 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer, int wait)
 				break;
 			default:
 				break;
-			}
-			break;
-
-		case SDL_MOUSEMOTION:
-			if(developer)
-				developer_mouse_position(pr,
-				  (double)e.motion.x / (double)SCR_W * 100, 
-				  (double)e.motion.y / (double)SCR_H * 75);
-			break;
 		}
+		break;
+
+	case SDL_MOUSEMOTION:
+		if(developer)
+			developer_mouse_position(pr,
+			  (double)e.motion.x / (double)SCR_W * 100, 
+			  (double)e.motion.y / (double)SCR_H * 75);
+		break;
 	}
+
+	return PRESENTER_NO_EVENT;
 }
 
 void presenter_fullscreen(Presenter* pr, int developer)

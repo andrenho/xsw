@@ -19,6 +19,7 @@ Slide* slide_new()
 	sl->bg_color[0] = sl->bg_gradient[0] = 
 			sl->bg_color[1] = sl->bg_gradient[1] = 
 			sl->bg_color[2] = sl->bg_gradient[2] = 0;
+	sl->dirty = 1;
 	return sl;
 }
 

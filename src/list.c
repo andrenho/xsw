@@ -22,7 +22,6 @@ List* append_t(List* list, void* data, int type)
 		list->next = NULL;
 		list->data = data;
 		list->type = type;
-		list->dirty = 1;
 		original = list;
 	}
 	else
@@ -39,7 +38,6 @@ List* append_t(List* list, void* data, int type)
 		list->next->prev = list;
 		list->next->data = data;
 		list->next->type = type;
-		list->next->dirty = 1;
 		list->next->next = NULL;		
 	}
 

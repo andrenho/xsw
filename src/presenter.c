@@ -33,9 +33,6 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 		exit(1);		
 	}
 	pr->p = p;
-	pr->thread = NULL;
-	pr->leave_thread = 0;
-	pr->thread_running = 0;
 	pr->fullscreen = (initialize_video == 2 ? 1 : 0);
 	
 	if(initialize_video)
@@ -171,37 +168,6 @@ static inline void developer_grid(Presenter* pr)
 			(double)y / (double)SCR_H * 75);
 }
 
-static int presenter_cache_thread(void* p_pr)
-{
-	Presenter* pr = (Presenter*)p_pr;
-	List *slides = pr->p->slides;
-
-	pr->thread_running = 1;
-	pr->leave_thread = 0;
-
-	while(slides)
-	{
-		List* commands = ((Slide*)slides->data)->commands;
-		while(commands)
-		{
-			if(pr->leave_thread)
-			{
-				pr->thread_running = 0;
-				return 1;
-			}
-			if(commands->dirty)
-			{
-				execute_parse(pr, commands->data, commands->type);
-				commands->dirty = 0;
-			}
-			commands = commands->next;
-		}
-		slides = slides->next;
-	}
-
-	pr->thread_running = 0;
-	return 0;
-}
 
 static void gradient(Slide* slide, SDL_Surface* screen)
 {
@@ -231,6 +197,29 @@ static void gradient(Slide* slide, SDL_Surface* screen)
 	}
 }
 
+// This function caches the next uncached slide. It returns 1 when all
+// presentation has been cached, otherwise it returns 0.
+int presenter_cache_next(Presenter* pr)
+{
+	int ns = 0;
+	int n_slides = count(pr->p->slides);
+	for(; ns < n_slides; ns++)
+	{
+		Slide* slide = (Slide*)nth(pr->p->slides, ns);
+		List* commands = slide->commands;
+		while(commands)
+		{
+			if(commands->dirty)
+			{
+				presenter_cache(pr, ns);
+				return 0;
+			}
+			commands = commands->next;
+		}
+	}
+	return 1;
+}
+
 void presenter_cache(Presenter* pr, int n)
 {
 	assert(n < count(pr->p->slides));
@@ -238,27 +227,18 @@ void presenter_cache(Presenter* pr, int n)
 	// go to slide
 	Slide* slide = (Slide*)nth(pr->p->slides, n);
 
-	// if the thread is running, we tell it to leave
-	if(pr->thread_running)
-	{
-		pr->leave_thread = 1;
-		SDL_WaitThread(pr->thread, NULL);
-	}
-
-	// load the required slide images outside the thread
+	// load the required slide images
 	List* commands = slide->commands;
 	while(commands)
 	{
 		if(commands->dirty)
 		{
+			printf("Caching slide %d\n", n);
 			execute_parse(pr, commands->data, commands->type);
 			commands->dirty = 0;
 		}
 		commands = commands->next;
 	}
-
-	// load the rest of the images from the thread
-	pr->thread = SDL_CreateThread(presenter_cache_thread, pr);
 }
 
 void presenter_show(Presenter* pr, int n, int developer)
@@ -357,7 +337,10 @@ void presenter_show(Presenter* pr, int n, int developer)
 	// FIXME - free stuff?
 }
 
-PresenterEvent presenter_get_event(Presenter* pr, int developer)
+// This function gets the next event. The parameter developer says if we're
+// in developer mode, and the parameter wait says if the function should
+// wait for the next event, or return right away.
+PresenterEvent presenter_get_event(Presenter* pr, int developer, int wait)
 {
 	SDL_Event e;
 
@@ -365,7 +348,11 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer)
 
 	for(;;)
 	{
-		SDL_WaitEvent(&e);
+		if(wait)
+			SDL_WaitEvent(&e);
+		else
+			SDL_PollEvent(&e);
+
 		switch(e.type)
 		{
 		case SDL_QUIT:

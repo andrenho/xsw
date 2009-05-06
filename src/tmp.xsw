@@ -1,6 +1,7 @@
 slide:
- - bg:darkgreen gradient:darkblue
+ - bg:white
  - 'A'
 
 slide:
+ - bg:white
  - 'B'

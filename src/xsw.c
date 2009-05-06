@@ -68,9 +68,10 @@ int main(int argc, char *argv[])
 		return 1; // message was already given in the function
 	presenter_show(pr, current, options->developer);
 
+	int all_cached = 0;
 	while(running)
 	{
-		switch(presenter_get_event(pr, options->developer))
+		switch(presenter_get_event(pr, options->developer, all_cached))
 		{
 			case PRESENTER_QUIT:
 				running = 0;
@@ -110,10 +111,9 @@ int main(int argc, char *argv[])
 				options->developer = !options->developer;
 				presenter_show(pr, current, options->developer);
 				break;
-
-			default:
-				abort();
 		}
+		if(!all_cached)
+			presenter_cache_next(pr);
 	}
 	presenter_quit();
 

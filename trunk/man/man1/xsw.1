@@ -20,11 +20,27 @@ Microsoft PowerPoint and its clones.
 It uses SDL as backend and reads from a input file, that should be written
 by the user in the xsw language described in the manual.
 
-.SH OPTIONS
+.SH BASIC OPTIONS
+.TP
+\fB-v\fR, \fB\-\-version\fR
+display application version information
+.TP
+\fB-h\fR, \fB\-\-help\fR
+display application help
 .TP
 \fB-T\fR, \fB\-\-tutorial\fR
 Display a presentation that shows a brief tutorial about what xsw is and
 how it works.
+
+.SH USER OPTIONS
+.TP
+\fB-f\fR, \fB\-\-fullscreen\fR
+Starts in fullscreen mode.
+
+.SH DEVELOPER OPTIONS
+.TP
+\fB-s\fR, \fB\-\-slide [NUM]\fR
+Start at the slide number NUM.
 .TP
 \fB-l\fR, \fB\-\-last\fR
 Starts in the last slide. This can be used as a help when writing the 
@@ -34,15 +50,6 @@ presentation, since the user will usually be writing the last slide.
 Starts in developer mode. This means a grid will be shown to help the developer
 to position his strings and images. This grid can also be turned on and off by
 pressing CTRL+D.
-.TP
-\fB-f\fR, \fB\-\-fullscreen\fR
-Starts in fullscreen mode.
-.TP
-\fB-v\fR, \fB\-\-version\fR
-display application version information
-.TP
-\fB-h\fR, \fB\-\-help\fR
-display application help
 
 .SH AUTHOR
 Andre' Wagner <andre.nho@gmail.com>.

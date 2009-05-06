@@ -24,6 +24,7 @@ static void print_usage(FILE* stream, int exit_code)
 	fprintf(stream, "\n");
 	fprintf(stream, "Developer options:\n");
 	fprintf(stream, "  -d, --developer     developer mode\n");
+	fprintf(stream, "  -s, --slide [NUM]   start at the slide NUM\n");
 	fprintf(stream, "  -l, --last          start at the last slide\n");
 	exit(exit_code);
 }
@@ -49,8 +50,9 @@ Options* options_get(Presentation* presentation, int argc, char* argv[])
 	options->last = 0;
 	options->developer = 0;
 	options->fullscreen = 0;
+	options->starting_slide = 0;
 
-	const char* const short_options = "hldvITf";
+	const char* const short_options = "hldvITfs:";
 	const struct option long_options[] = {
 		{ "help", 0, NULL, 'h' },
 		{ "version", 0, NULL, 'v' },
@@ -59,6 +61,7 @@ Options* options_get(Presentation* presentation, int argc, char* argv[])
 		{ "intro", 0, NULL, 'I' },
 		{ "tutorial", 0, NULL, 'I' },
 		{ "fullscreen", 0, NULL, 'f' },
+		{ "slide", 1, NULL, 's' },
 		{ NULL, 0, NULL, 0 }
 	};
 	
@@ -89,6 +92,9 @@ Options* options_get(Presentation* presentation, int argc, char* argv[])
 				break;
 			case 'f':
 				options->fullscreen = 1;
+				break;
+			case 's':
+				options->starting_slide = atol(optarg);
 				break;
 			case -1: // done
 				break;

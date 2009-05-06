@@ -1,4 +1,5 @@
-slide: 
+slide:
+ - bg:darkgreen gradient:darkblue
  - 'A'
 
 slide:

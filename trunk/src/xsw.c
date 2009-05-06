@@ -40,10 +40,28 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	// present slideshow
+	// go to the slide n?
 	int current = 0;
+	if(options->starting_slide != 0)
+	{
+		if(options->starting_slide < 0)
+		{
+			fprintf(stderr, "The starting slide must be > 0.\n");
+			return 1;
+		}
+		else if(options->starting_slide > count(p->slides))
+		{
+			fprintf(stderr, "This presentation only has %d slides.\n", count(p->slides));
+			return 1;
+		}
+		current = options->starting_slide - 1;
+	}
+	
+	// go to the last slide?
 	if(options->last)
 		current = count(p->slides) - 1;
+
+	// present slideshow
 	int running = 1;
 	Presenter* pr = presenter_initialize(p, options->fullscreen ? 2 : 1);
 	if(!pr)

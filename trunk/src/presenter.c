@@ -122,7 +122,7 @@ static inline void developer_mouse_position(Presenter* pr, int x, int y)
 	SDL_BlitSurface(sf, NULL, pr->scr, &r);
 
 	if(pr->scr == SDL_GetVideoSurface())
-		SDL_Flip(pr->scr); // TODO
+		SDL_UpdateRect(pr->scr, SCR_W - 50, SCR_H - 30, 40, 20);
 	SDL_FreeSurface(sf);
 }
 

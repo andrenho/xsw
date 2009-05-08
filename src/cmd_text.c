@@ -37,6 +37,7 @@ CommandText* cmd_txt_new(char* text, CommandText* previous)
 CommandText* cmd_txt_new_plus(char* text, CommandText* previous)
 {
 	CommandText* cmd_txt = malloc(sizeof(CommandText));
+	cmd_txt->type = 1; //T_TEXT;
 	if (cmd_txt == NULL) 
 	{
 		fprintf(stderr, "Not enough memory\n");
@@ -56,6 +57,7 @@ CommandText* cmd_txt_new_plus(char* text, CommandText* previous)
 CommandText* cmd_txt_new_custom(char* text, CommandText* custom)
 {
 	CommandText* cmd_txt = malloc(sizeof(CommandText));
+	cmd_txt->type = 1; //T_TEXT;
 	if (cmd_txt == NULL) 
 	{
 		fprintf(stderr, "Not enough memory\n");
@@ -64,7 +66,7 @@ CommandText* cmd_txt_new_custom(char* text, CommandText* custom)
 
 	// copy from previous
 	memcpy(cmd_txt, custom, sizeof(CommandText));
-	cmd_txt->text = text;
+	cmd_txt->text = strdup(text);
 	cmd_txt->previous = custom;
 	
 	return cmd_txt;
@@ -73,6 +75,7 @@ CommandText* cmd_txt_new_custom(char* text, CommandText* custom)
 CommandText* cmd_txt_new_template(char* id)
 {
 	CommandText* cmd_txt = cmd_txt_new(NULL, NULL);
+	cmd_txt->type = 1; //T_TEXT;
 	cmd_txt->id = id;
 	return cmd_txt;
 }

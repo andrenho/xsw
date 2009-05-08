@@ -61,7 +61,7 @@ void* slide_add_custom_command(Slide* slide, char* id, char* text)
 	List* cmds = slide->parent->commands;
 	while(cmds)
 	{
-		if(TYPE(cmds) == T_TEXT)
+		if(TYPE(cmds->data) == T_TEXT)
 		{
 			cmd = (CommandText*)cmds->data;
 			if(cmd->id)

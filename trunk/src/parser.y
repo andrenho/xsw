@@ -98,8 +98,8 @@ color: COLOR { $<cval>$ = $1; }
 text:
     | TEXT COLON;
 
-text_command: HIFEN text STRING { cr_cmd_txt = (CommandText*)slide_add_command(cr_slide, T_TEXT, cmd_txt_new($3, (CommandText*)cr_cmd_txt)); } text_parameters
-            | PLUS text STRING { cr_cmd_txt = (CommandText*)slide_add_command(cr_slide, T_TEXT, cmd_txt_new_plus($3, (CommandText*)cr_cmd_txt)); } text_parameters
+text_command: HIFEN text STRING { cr_cmd_txt = (CommandText*)slide_add_command(cr_slide, cmd_txt_new($3, (CommandText*)cr_cmd_txt)); } text_parameters
+            | PLUS text STRING { cr_cmd_txt = (CommandText*)slide_add_command(cr_slide, cmd_txt_new_plus($3, (CommandText*)cr_cmd_txt)); } text_parameters
 
 text_parameters:
 	       | text_parameters text_parameter;
@@ -119,7 +119,7 @@ text_parameter: X COLON NUM { cr_cmd_txt->x = $3; }
 /*
  * Image command
  */
-image_command: HIFEN IMAGE COLON STRING { cr_cmd_img = (CommandImage*)slide_add_command(cr_slide, T_IMAGE, cmd_img_new($4, 0)); } image_parameters;
+image_command: HIFEN IMAGE COLON STRING { cr_cmd_img = (CommandImage*)slide_add_command(cr_slide, cmd_img_new($4, 0)); } image_parameters;
 
 image_parameters:
 		| image_parameters image_parameter;
@@ -131,7 +131,7 @@ image_parameter: X COLON NUM { cr_cmd_img->x = $3; }
 /*
  * Template command
  */
-template_command: HIFEN ID COLON { cr_cmd_txt = (CommandText*)slide_add_command(cr_slide, T_TEXT, cmd_txt_new_template($2)); } text_parameters;
+template_command: HIFEN ID COLON { cr_cmd_txt = (CommandText*)slide_add_command(cr_slide, cmd_txt_new_template($2)); } text_parameters;
 
 /*
  * Custom command
@@ -141,7 +141,7 @@ custom_command: HIFEN ID COLON STRING { cr_cmd_txt = (CommandText*)slide_add_cus
 /*
  * Background command
  */
-background_command: HIFEN BACKGROUND COLON STRING { cr_cmd_img = (CommandImage*)slide_add_command(cr_slide, T_IMAGE, cmd_img_new($4, 1)); } background_parameters
+background_command: HIFEN BACKGROUND COLON STRING { cr_cmd_img = (CommandImage*)slide_add_command(cr_slide, cmd_img_new($4, 1)); } background_parameters
 		  | HIFEN BACKGROUND COLON color { memcpy(cr_slide->bg_color, $<cval>4, 3); memcpy(cr_slide->bg_gradient, $<cval>4, 3); } bg_color_parameters;
 
 background_parameters:

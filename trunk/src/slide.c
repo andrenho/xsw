@@ -41,10 +41,9 @@ Slide* template_new(char* id)
 	return sl;
 }
 
-void* slide_add_command(Slide* slide, CommandType type, void* command)
+void* slide_add_command(Slide* slide, void* command)
 {
 	slide->commands = ladd(slide->commands, command);
-	slide->commands->type = type;
 	return command;
 }
 
@@ -62,7 +61,7 @@ void* slide_add_custom_command(Slide* slide, char* id, char* text)
 	List* cmds = slide->parent->commands;
 	while(cmds)
 	{
-		if(cmds->type == T_TEXT)
+		if(TYPE(cmds) == T_TEXT)
 		{
 			cmd = (CommandText*)cmds->data;
 			if(cmd->id)
@@ -78,6 +77,5 @@ void* slide_add_custom_command(Slide* slide, char* id, char* text)
 found:
 	cmd_new = cmd_txt_new_custom(text, cmd);
 	slide->commands = ladd(slide->commands, cmd_new);
-	slide->commands->type = T_TEXT;
 	return (void*)cmd_new;
 }

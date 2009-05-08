@@ -16,6 +16,7 @@
 typedef enum { vertical, horizontal } ExpandType;
 
 typedef struct {
+	unsigned char type;
 	char* path;
 	double x, y;
 	double scale;

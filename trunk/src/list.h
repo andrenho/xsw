@@ -3,7 +3,6 @@
 
 typedef struct List {
 	void* data;
-	int type; // TODO remove this hack
 	struct List* prev;
 	struct List* next;
 } List;
@@ -11,5 +10,6 @@ typedef struct List {
 List* ladd(List* l, void* data);
 int lcount(List* l);
 void* ln(List* l, int n);
+/* void* llast(List* l); */
 
 #endif

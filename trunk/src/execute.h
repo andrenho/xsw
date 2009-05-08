@@ -7,6 +7,6 @@
 #include "presentation.h"
 #include "presenter.h"
 
-void execute_parse(Presenter* pr, void* cmd, CommandType type);
+void execute_parse(Presenter* pr, void* cmd);
 
 #endif

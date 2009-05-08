@@ -3,10 +3,12 @@
 
 #include <stdlib.h>
 #include "cmd_img.h"
+#include "slide.h"
 
 CommandImage* cmd_img_new(char* path, int background)
 {
 	CommandImage* cmd_img = malloc(sizeof(CommandImage));
+	cmd_img->type = 2; //T_IMAGE;
 	if (cmd_img == NULL) 
 	{
 		fprintf(stderr, "Not enough memory\n");

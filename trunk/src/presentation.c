@@ -64,11 +64,10 @@ Slide* pr_add_slide_from(Presentation* p, Slide* sl, char* _template)
 	List* cmd = sl->parent->commands;
 	while(cmd)
 	{
-		if(cmd->type == T_TEXT)
+		if(TYPE(cmd) == T_TEXT)
 			if(!((CommandText*)cmd->data)->text)
 				goto skip;
 		sl->commands = ladd(sl->commands, cmd->data);
-		sl->commands->type = cmd->type;
 skip:
 		cmd = cmd->next;
 	}

@@ -65,7 +65,7 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 	pr->invalid = IMG_Load(DATADIR "/invalid.png");
 	if(!pr->invalid)
 	{
-		fprintf(stderr, "Image invalid.png not found. Have you typed 'make install'?");
+		fprintf(stderr, "Image invalid.png not found. Have you typed 'make install'?\n");
 		abort();
 	}
 

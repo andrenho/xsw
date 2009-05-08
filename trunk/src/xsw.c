@@ -49,9 +49,9 @@ int main(int argc, char *argv[])
 			fprintf(stderr, "The starting slide must be > 0.\n");
 			return 1;
 		}
-		else if(options->starting_slide > count(p->slides))
+		else if(options->starting_slide > lcount(p->slides))
 		{
-			fprintf(stderr, "This presentation only has %d slides.\n", count(p->slides));
+			fprintf(stderr, "This presentation only has %d slides.\n", lcount(p->slides));
 			return 1;
 		}
 		current = options->starting_slide - 1;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 	
 	// go to the last slide?
 	if(options->last)
-		current = count(p->slides) - 1;
+		current = lcount(p->slides) - 1;
 
 	// present slideshow
 	int running = 1;
@@ -69,20 +69,22 @@ int main(int argc, char *argv[])
 	presenter_show(pr, current, options->developer);
 
 	int all_cached = 0;
-	while(running)
+	while(1 /*running*/)
 	{
 		switch(presenter_get_event(pr, options->developer, all_cached))
 		{
 			case PRESENTER_QUIT:
-				running = 0;
-				break;
+				// running = 0;
+				printf("Quitting.\n");
+				presenter_quit();
+				return 0;
 
 			case PRESENTER_FULLSCREEN:
 				presenter_fullscreen(pr, options->developer);
 				break;
 
 			case PRESENTER_NEXT:
-				if(current < count(p->slides)-1)
+				if(current < lcount(p->slides)-1)
 				{
 					current++;
 					presenter_show(pr, current, options->developer);
@@ -103,7 +105,7 @@ int main(int argc, char *argv[])
 				break;
 
 			case PRESENTER_LAST:
-				current = count(p->slides) - 1;
+				current = lcount(p->slides) - 1;
 				presenter_show(pr, current, options->developer);
 				break;
 
@@ -118,8 +120,8 @@ int main(int argc, char *argv[])
 		if(!all_cached)
 			all_cached = presenter_cache_next(pr);
 	}
-	presenter_quit();
+//	presenter_quit();
 
 	// exit
-	return 0;
+//	return 0;
 }

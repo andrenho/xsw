@@ -26,7 +26,7 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video);
 void presenter_cache(Presenter* pr, int slide);
 int presenter_cache_next(Presenter* pr);
 void presenter_show(Presenter* pr, int slide, int developer);
-PresenterEvent presenter_get_event(Presenter* pr, int developer, int wait);
+PresenterEvent presenter_get_event(Presenter* pr, int developer, int w);
 void presenter_fullscreen(Presenter* pr, int developer);
 void presenter_save_image(Presenter* pr, char* filename);
 void presenter_quit();

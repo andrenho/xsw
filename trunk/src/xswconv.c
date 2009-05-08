@@ -200,7 +200,7 @@ int main(int argc, char** argv)
 
 	// load slideshow
 	Presenter* pr = presenter_initialize(p, 0);
-	int slides = count(p->slides);
+	int slides = lcount(p->slides);
 	int i;
 	char* all_bmp = alloca(slides * 25); // TODO
 	if (all_bmp == NULL) 

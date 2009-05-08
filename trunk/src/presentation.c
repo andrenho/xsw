@@ -30,9 +30,9 @@ Presentation* presentation_new()
 Slide* pr_add_slide(Presentation* p, Slide* sl)
 {
 	if(sl->type == T_SLIDE)
-		p->slides = append(p->slides, sl);
+		p->slides = ladd(p->slides, sl);
 	else
-		p->templates = append(p->templates, sl);
+		p->templates = ladd(p->templates, sl);
 
 	return sl;
 }
@@ -67,7 +67,8 @@ Slide* pr_add_slide_from(Presentation* p, Slide* sl, char* _template)
 		if(cmd->type == T_TEXT)
 			if(!((CommandText*)cmd->data)->text)
 				goto skip;
-		sl->commands = append_t(sl->commands, cmd->data, cmd->type);
+		sl->commands = ladd(sl->commands, cmd->data);
+		sl->commands->type = cmd->type;
 skip:
 		cmd = cmd->next;
 	}

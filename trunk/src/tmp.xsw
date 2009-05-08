@@ -1,6 +1,4 @@
-template: xx
- - bg: white
+%include "tmp2.xsw"
 
 slide: xx
  - 'A'
- - img: 'xxx.png' x:50 y:50

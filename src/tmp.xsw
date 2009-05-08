@@ -1,7 +1,9 @@
-slide:
- - bg:white
- - 'A'
+template: xx
+ - bg: white
+ - letter: x:15 y:15
+
+slide: xx
+ - letter: 'A'
 
 slide:
- - bg:white
  - 'B'

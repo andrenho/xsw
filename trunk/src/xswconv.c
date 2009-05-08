@@ -248,7 +248,7 @@ int main(int argc, char** argv)
 		// make directory
 		if(mkdir(opt->output_file, S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH) != 0)
 		{
-			fprintf(stderr, "Could not create directory %s/ .", opt->output_file);
+			fprintf(stderr, "Could not create directory %s/ .\n", opt->output_file);
 			return 1;
 		}
 

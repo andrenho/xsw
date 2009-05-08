@@ -20,12 +20,13 @@
 == Version 0.3 ==
 
  * ~~PDF export~~
- * PNG/HTML/...(other formats) exportation
+ * ~~PNG/JPEG exportation~~
+ * HTML exportation
 
 == Version 0.4 ==
 
  * image automatic scale when informing width
- * allow viewing presentation even with invalid images
+ * ~~allow viewing presentation even with invalid images~~
  * include templates from other files
  * ~~presentation tutorial to be run as `xsw --tutorial`~~
 

@@ -152,3 +152,5 @@ The following keys can be used during the presentation:
 A PDF of the presentation can be generated like this:
 
 `$ xsw2pdf mypresentation.xsw`
+
+The `xsw2jpeg` and `xsw2png` tools can be used to generate jpeg and png images from the presentation.

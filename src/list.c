@@ -1,90 +1,102 @@
-/* Source file covered by the GNU Public License v3 
- * See LICENSE file or <http://www.gnu.org/licenses/gpl-3.0.txt/> */
-
-#include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <stdio.h>
 #include "list.h"
 
-List* append_t(List* list, void* data, int type)
+List* ladd(List* l, void* data)
 {
-	List* original = list;
-
-	if(!list)
+	if(!l)
 	{
-		list = malloc(sizeof(List));
-		if (list == NULL) 
+		l = malloc(sizeof(List));
+		if(!l)
 		{
-			fprintf(stderr, "Not enough memory\n");
-			exit(1);		
+			fprintf(stderr, "Oops... we're out of memory!\n");
+			exit(1);
 		}
-		list->prev = NULL;
-		list->next = NULL;
-		list->data = data;
-		list->type = type;
-		original = list;
+		l->next = l->prev = NULL;
+		l->data = data;
+		return l;
 	}
 	else
 	{
-		while(list->next)
-			list = list->next;
+		List* ll = l;
+		while(ll->next)
+			ll = ll->next;
 
-		list->next = malloc(sizeof(List));
-		if (list->next == NULL) 
-		{
-			fprintf(stderr, "Not enough memory\n");
-			exit(1);		
-		}
-		list->next->prev = list;
-		list->next->data = data;
-		list->next->type = type;
-		list->next->next = NULL;		
+		List* ln = malloc(sizeof(List));
+		ln->prev = ll;
+		ln->data = data;
+		ln->next = NULL;
+		ll->next = ln;
+		return l;
 	}
 
-	return original;
 }
 
-List* append(List* list, void* data)
+List* linsert(List* l, int n, void* data)
 {
-	return append_t(list, data, 0);
-}
+	List* ll = l;
 
-int count(List* list)
-{
-	if(!list)
-		return 0;
-
-	int c = 1;
-
-	while(list->next)
+	if(!l)
 	{
-		list = list->next;
-		c++;
+		if(n == 0)
+			return ladd(l, data);
+		else
+			abort();
 	}
-
-	return c;
-}
-
-void* nth(List* list, int n)
-{
-	assert(list);
 
 	int i;
 	for(i=0; i<n; i++)
 	{
-		list = list->next;
-		assert(list);
+		assert(l);
+		l = l->next;
 	}
 
-	return list->data;
+	if(!l) // last record
+	{
+		ladd(ll, data);
+	}
+	else
+	{
+		List* prev = l->prev;
+		List* next = l;
+		List* _new = malloc(sizeof(List));
+		if(prev)
+			prev->next = _new;
+		if(next)
+			next->prev = _new;
+		_new->prev = prev;
+		_new->next = next;
+		_new->data = data;
+		if(!_new->prev)
+			return _new;
+	}
+	return ll;
 }
 
-void* last(List* list)
+int lcount(List* l)
 {
-	assert(list);
+	int i = 0;
 
-	while(list->next)
-		list = list->next;
+	while(l)
+	{
+		i++;
+		l = l->next;
+	}
 
-	return list->data;
+	return i;
+}
+
+void* ln(List* l, int n)
+{
+	int i;
+	List* ll = l;
+
+	for(i=0; i<n; i++)
+	{
+		ll = ll->next;
+		assert(ll);
+	}
+
+	return ll->data;
 }

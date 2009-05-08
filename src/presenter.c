@@ -202,10 +202,10 @@ static void gradient(Slide* slide, SDL_Surface* screen)
 int presenter_cache_next(Presenter* pr)
 {
 	int ns = 0;
-	int n_slides = count(pr->p->slides);
-	for(; ns < n_slides; ns++)
+	int n_slides = lcount(pr->p->slides);
+	for(ns = 0; ns < n_slides; ns++)
 	{
-		Slide* slide = (Slide*)nth(pr->p->slides, ns);
+		Slide* slide = (Slide*)ln(pr->p->slides, ns);
 		if(slide->dirty)
 		{
 			presenter_cache(pr, ns);
@@ -217,10 +217,10 @@ int presenter_cache_next(Presenter* pr)
 
 void presenter_cache(Presenter* pr, int n)
 {
-	assert(n < count(pr->p->slides));
+	assert(n < lcount(pr->p->slides));
 
 	// go to slide
-	Slide* slide = (Slide*)nth(pr->p->slides, n);
+	Slide* slide = (Slide*)ln(pr->p->slides, n);
 
 	if(slide->dirty)
 	{
@@ -246,7 +246,7 @@ void presenter_show(Presenter* pr, int n, int developer)
 	presenter_cache(pr, n);
 
 	// go to slide
-	Slide* slide = (Slide*)nth(pr->p->slides, n);
+	Slide* slide = (Slide*)ln(pr->p->slides, n);
 
 	// clear screen
 	if(memcmp((char*)slide->bg_color, (char*)slide->bg_gradient, 3) == 0)
@@ -317,7 +317,7 @@ void presenter_show(Presenter* pr, int n, int developer)
 	if(pr->scr == SDL_GetVideoSurface())
 	{
 		char title[100];
-		sprintf(title, "xsw %d/%d", n+1, count(pr->p->slides));
+		sprintf(title, "xsw %d/%d", n+1, lcount(pr->p->slides));
 		SDL_WM_SetCaption(title, title);
 
 		/* sometimes the mouse might 'come back', for example when
@@ -337,20 +337,22 @@ void presenter_show(Presenter* pr, int n, int developer)
 // This function gets the next event. The parameter developer says if we're
 // in developer mode, and the parameter wait says if the function should
 // wait for the next event, or return right away.
-PresenterEvent presenter_get_event(Presenter* pr, int developer, int wait)
+PresenterEvent presenter_get_event(Presenter* pr, int developer, int w)
 {
 	SDL_Event e;
 
 	pr = pr; // avoids warnings
 
-	if(wait)
+	if(w)
 		SDL_WaitEvent(&e);
 	else
 		SDL_PollEvent(&e);
+	printf("%d\n", e.type);
 
 	switch(e.type)
 	{
 	case SDL_QUIT:
+		printf("Quit pressed!\n");
 		return PRESENTER_QUIT;
 
 	case SDL_KEYDOWN:

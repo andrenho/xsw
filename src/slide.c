@@ -43,7 +43,8 @@ Slide* template_new(char* id)
 
 void* slide_add_command(Slide* slide, CommandType type, void* command)
 {
-	slide->commands = append_t(slide->commands, command, type);
+	slide->commands = ladd(slide->commands, command);
+	slide->commands->type = type;
 	return command;
 }
 
@@ -76,6 +77,7 @@ void* slide_add_custom_command(Slide* slide, char* id, char* text)
 
 found:
 	cmd_new = cmd_txt_new_custom(text, cmd);
-	slide->commands = append_t(slide->commands, cmd_new, T_TEXT);
+	slide->commands = ladd(slide->commands, cmd_new);
+	slide->commands->type = T_TEXT;
 	return (void*)cmd_new;
 }

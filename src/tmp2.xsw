@@ -1,4 +1,2 @@
-slide:
- - image: "Linux.jpg"
- - "asda"
-
+template: xx
+ - bg: white

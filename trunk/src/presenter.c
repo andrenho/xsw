@@ -347,12 +347,10 @@ PresenterEvent presenter_get_event(Presenter* pr, int developer, int w)
 		SDL_WaitEvent(&e);
 	else
 		SDL_PollEvent(&e);
-	printf("%d\n", e.type);
 
 	switch(e.type)
 	{
 	case SDL_QUIT:
-		printf("Quit pressed!\n");
 		return PRESENTER_QUIT;
 
 	case SDL_KEYDOWN:

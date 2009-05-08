@@ -64,7 +64,7 @@ Slide* pr_add_slide_from(Presentation* p, Slide* sl, char* _template)
 	List* cmd = sl->parent->commands;
 	while(cmd)
 	{
-		if(TYPE(cmd) == T_TEXT)
+		if(TYPE(cmd->data) == T_TEXT)
 			if(!((CommandText*)cmd->data)->text)
 				goto skip;
 		sl->commands = ladd(sl->commands, cmd->data);

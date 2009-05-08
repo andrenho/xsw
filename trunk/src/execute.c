@@ -117,6 +117,7 @@ void execute_parse(Presenter* pr, void* cmd)
 		}
 		else
 		{
+			// image found
 			if(!img->background)
 			{
 				if(img->scale == 1)

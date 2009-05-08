@@ -17,10 +17,35 @@ int line_no = 1;
 
 %option nounput
 %option noinput
+%option noyywrap
+%option warn
+
+%x incl
 
 %%
 
 #.*\n			line_no++; // ignore comments
+
+^%include	BEGIN(incl);
+<incl>[ \t]*	/* eat the whitespace */
+<incl>\".*\"|\'.*\'	{
+	yytext[strlen(yytext)-1] = '\0';
+	yyin = fopen(&yytext[1], "r");
+	if(!yyin)
+	{
+		fprintf(stderr, "File %s not found.\n", yytext);
+		exit(1);
+	}
+	
+	yypush_buffer_state(yy_create_buffer(yyin, YY_BUF_SIZE));
+
+	BEGIN(INITIAL);
+}
+<<EOF>> {
+	yypop_buffer_state();
+	if(!YY_CURRENT_BUFFER)
+		yyterminate();
+}
 
 slide			return SLIDE;
 template		return TEMPLATE;

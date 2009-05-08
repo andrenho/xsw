@@ -112,40 +112,42 @@ void execute_parse(Presenter* pr, void* cmd)
 		// image still not found
 		if(!tmp)
 		{
-			fprintf(stderr, "Error loading image %s: %s.\n", img->path, IMG_GetError());
-			exit(1);
-		}
-		
-		if(!img->background)
-		{
-			if(img->scale == 1)
-				img->surface = tmp;
-			else
-			{
-				img->surface = zoomSurface(tmp, img->scale, img->scale, 1);
-				SDL_FreeSurface(tmp);
-			}
+			fprintf(stderr, "warning: error loading image %s: %s.\n", img->path, IMG_GetError());
+			img->surface = pr->invalid;
 		}
 		else
 		{
-			float w, h;
-			if(img->expand == horizontal)
+			if(!img->background)
 			{
-				w = (float)SCR_W / (float)tmp->w; // we'll value the width over the height
-				h = ((float)tmp->h / (float)tmp->w * (float)SCR_W) / (float)tmp->h;
-			}
-			else // vertical
-			{
-				h = (float)SCR_H / (float)tmp->h; // we'll value the height over the width
-				w = ((float)tmp->w / (float)tmp->h * (float)SCR_H) / (float)tmp->w;
-			}
-			if(h != 1 || w != 1)
-			{
-				img->surface = zoomSurface(tmp, w, h, 1);
-				SDL_FreeSurface(tmp);
+				if(img->scale == 1)
+					img->surface = tmp;
+				else
+				{
+					img->surface = zoomSurface(tmp, img->scale, img->scale, 1);
+					SDL_FreeSurface(tmp);
+				}
 			}
 			else
-				img->surface = tmp;
+			{
+				float w, h;
+				if(img->expand == horizontal)
+				{
+					w = (float)SCR_W / (float)tmp->w; // we'll value the width over the height
+					h = ((float)tmp->h / (float)tmp->w * (float)SCR_W) / (float)tmp->h;
+				}
+				else // vertical
+				{
+					h = (float)SCR_H / (float)tmp->h; // we'll value the height over the width
+					w = ((float)tmp->w / (float)tmp->h * (float)SCR_H) / (float)tmp->w;
+				}
+				if(h != 1 || w != 1)
+				{
+					img->surface = zoomSurface(tmp, w, h, 1);
+					SDL_FreeSurface(tmp);
+				}
+				else
+					img->surface = tmp;
+			}
 		}
 #ifdef DEBUG
 		printf("done!\n");

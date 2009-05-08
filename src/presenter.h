@@ -20,6 +20,7 @@ typedef struct {
 	TTF_Font* font;
 	Presentation* p;
 	int fullscreen;
+	SDL_Surface* invalid;
 } Presenter;
 
 Presenter* presenter_initialize(Presentation* p, int initialize_video);

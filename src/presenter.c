@@ -53,13 +53,21 @@ Presenter* presenter_initialize(Presentation* p, int initialize_video)
 			return NULL;
 		}
 		SDL_WM_SetCaption("xsw", "xsw");
-		SDL_WM_SetIcon(IMG_Load(DATADIR "camera.png"), NULL);
+			SDL_WM_SetIcon(IMG_Load(DATADIR "camera.png"), NULL);
 		clear_screen(pr->scr);
 		if(pr->scr == SDL_GetVideoSurface())
 			SDL_Flip(pr->scr);
 	}
 	else
 		pr->scr = SDL_CreateRGBSurface(SDL_SWSURFACE, 800, 600, 32, 0, 0, 0, 0);
+
+	// load invalid image
+	pr->invalid = IMG_Load(DATADIR "/invalid.png");
+	if(!pr->invalid)
+	{
+		fprintf(stderr, "Image invalid.png not found. Have you typed 'make install'?");
+		abort();
+	}
 
 	// initialize TTF
 	if(TTF_Init() == -1)

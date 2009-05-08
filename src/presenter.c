@@ -230,7 +230,7 @@ void presenter_cache(Presenter* pr, int n)
 		List* commands = slide->commands;
 		while(commands)
 		{
-			execute_parse(pr, commands->data, commands->type);
+			execute_parse(pr, commands->data);
 			commands = commands->next;
 		}
 
@@ -262,7 +262,7 @@ void presenter_show(Presenter* pr, int n, int developer)
 	{
 		CommandText* txt;
 
-		switch(commands->type)
+		switch(TYPE(commands->data))
 		{
 		case T_IMAGE:
 			img = (CommandImage*)commands->data;

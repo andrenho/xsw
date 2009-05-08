@@ -21,6 +21,7 @@ typedef enum { left, center, right } Alignment;
 typedef enum { nostyle, italic } StyleType;
 
 typedef struct CommandText {
+	unsigned char type;
 	char* id;
 	char* text;
 	double x, y, h;

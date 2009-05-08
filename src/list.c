@@ -100,3 +100,12 @@ void* ln(List* l, int n)
 
 	return ll->data;
 }
+
+/*
+void* llast(List* l)
+{
+	if(!l)
+		abort();
+	return ln(l, lcount(l)-1); // TODO - faster
+}
+*/

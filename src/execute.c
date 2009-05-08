@@ -22,13 +22,13 @@ static TTF_Font* load_font(char* name, int size)
 	return font;
 }
 
-void execute_parse(Presenter* pr, void* cmd, CommandType type)
+void execute_parse(Presenter* pr, void* cmd)
 {
 	SDL_Surface* tmp;
 	CommandImage* img;
 	CommandText* txt;
 
-	switch(type)
+	switch(TYPE(cmd))
 	{
 	case T_TEXT:
 		txt = (CommandText*)cmd;

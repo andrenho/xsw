@@ -4,10 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cmd_text.h"
+#include "slide.h"
 
 CommandText* cmd_txt_new(char* text, CommandText* previous)
 {
 	CommandText* cmd_txt = malloc(sizeof(CommandText));
+	cmd_txt->type = 1; //T_TEXT;
 	if (cmd_txt == NULL) 
 	{
 		fprintf(stderr, "Not enough memory\n");

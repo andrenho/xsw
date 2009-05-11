@@ -1,3 +1,8 @@
+Version 0.3.5
+-------------
+* a few files were missing in the last version, and this version corrects
+this.
+
 Version 0.3.4
 -------------
 * created the xswconv, that converts a xsw presentation to png, jpg and pdf.

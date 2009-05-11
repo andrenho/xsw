@@ -126,6 +126,8 @@ image_parameters:
 
 image_parameter: X COLON NUM { cr_cmd_img->x = $3; }
 	       | Y COLON NUM { cr_cmd_img->y = $3; }
+               | W COLON NUM { cr_cmd_img->w = $3; }
+               | H COLON NUM { cr_cmd_img->h = $3; }
                | SCALE COLON NUM { cr_cmd_img->scale = $3; }
 
 /*

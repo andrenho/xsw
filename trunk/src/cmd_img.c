@@ -17,6 +17,8 @@ CommandImage* cmd_img_new(char* path, int background)
 	cmd_img->path = path;
 	cmd_img->x = DEFAULT_IMG_X;
 	cmd_img->y = DEFAULT_IMG_Y;
+	cmd_img->h = 0;
+	cmd_img->w = 0;
 	cmd_img->scale = DEFAULT_SCALE;
 	cmd_img->background = background;
 	cmd_img->expand = DEFAULT_EXPAND;

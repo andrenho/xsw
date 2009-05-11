@@ -19,6 +19,7 @@ typedef struct {
 	unsigned char type;
 	char* path;
 	double x, y;
+	double w, h;
 	double scale;
 	int background;
 	ExpandType expand;

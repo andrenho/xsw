@@ -5,7 +5,7 @@ BUILT_SOURCES=parser.h
 AM_YFLAGS=-d
 
 bin_PROGRAMS=xsw xswconv #xsw2html
-bin_SCRIPTS=xsw2pdf xsw2png xsw2jpeg
+dist_bin_SCRIPTS=xsw2pdf xsw2png xsw2jpeg
 
 xsw_SOURCES=xsw.c options.c file.c presentation.c slide.c cmd_text.c cmd_img.c list.c presenter.c execute.c color.c \
 	          options.h file.h presentation.h slide.h cmd_text.h cmd_img.h list.h presenter.h execute.h color.h \

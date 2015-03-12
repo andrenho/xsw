@@ -1,0 +1,89 @@
+﻿#summary News about the xsw project
+#labels Featured,Phase-Support
+
+## Version 0.3.4 ##
+
+  * created the **xswconv**, that converts a xsw presentation to png, jpg and pdf.
+  * created the **xsw2pdf**, **xsw2png** and **xsw2jpeg**, that uses xswconv to convert a xsw presentation.
+  * added a **-s** option to xsw, where the user can start the presentation at a specific slide.
+  * added a **window icon**.
+  * when xsw enters **developer mode** in fullscreen, the mouse is now visible.
+  * corrected a bug that prevented developer mode to work.
+  * corrected a bug that prevented gradients to work when the amount of red of the background and the gradient was the same.
+  * corrected a bug that increased CPU usage in developer mode.
+
+
+## Version 0.3.3 ##
+
+  * xsw no longer install the Vera fonts if they can be found in the font directory.
+  * corrected a problem where the font border would be broken if the text was to fall out of the screen.
+  * error in configure.ac where ./configure was informing that SDL\_image was missing if SDL\_gfx was actually missing.
+  * added xsw2pdf manual page.
+  * Changelog file replaced by the NEWS file.
+
+## Version 0.3.2 ##
+
+  * created a tutorial presentation, that can be run with the `switch --tutorial`. This presentation supersedes the previous introduction presentation.
+  * corrected a problem where many big presentations would fail due to not freeing a font.
+
+## Version 0.3.1 ##
+
+  * ALT+F4 and CTRL+C now quit xsw, and ESC leaves full screen.
+  * corrected a bug where image\_path didn't accept static paths.
+  * corrected a bug where xsw2pdf would segfault when the xsw presentation file didn't have a extension
+
+## Version 0.3.0 ##
+
+  * the program `xsw2pdf` was created. This programs requires ImageMagick and generates a PDF file from a presentation.
+  * the color search function was optimized and should be both faster to execute and to compile.
+  * the mouse pointer is now hidden in fullscreen.
+  * a strange number was being shown when CTRL was pressed in developer mode.
+
+## Version 0.2.3 ##
+
+  * added a switch `-f` for fullscreen
+  * the window title now show the current and total slide number
+
+## Version 0.2.2 ##
+
+  * named colors: now colors can be referred by their X11 names (see [Colors](Colors.md))
+  * IDs (template names and custom commands) and named colors are no longer case sensitive.
+  * corrected a bug where the background color was not working when using templates
+  * added license information to source files
+
+## Version 0.2.1 ##
+
+  * fixed a serious bug where previous presentations would not work.
+
+## Version 0.2.0 ##
+
+  * added options color and gradient to the background.
+  * added options color and border to the text.
+  * added option h (height) to the text.
+
+## Version 0.1.3 ##
+
+  * a bug was segfaulting xsw when a empty string (or spaces) was about to be shown. This was corrected, and now a empty string can be used as a line spacer.
+  * an option `--intro` was added to show a introductory slideshow.
+  * the presentation now can be started from any directory - the program will look for the images starting on the presentation path.
+  * the file [INSTALL](InstallationInstructions.md) was overwritten by autoconf and was recovered.
+  * in developer mode, now xsw shows the fine position of the mouse in a box at the bottom right.
+
+## Version 0.1.2 ##
+
+  * the keyword "text" is no longer needed, and it'll be ignored in new versions
+  * the limit of 1024 slides/commands was removed. There's no limit now.
+  * the keywords "image" and "background" can be used as "img" and "bg"
+  * a "-v" option was added the show the program version
+  * a syntax error now shows the line where the error ocurred
+  * a option called "image\_path" was added, so that xsw will look for images in that directory as well
+  * documentation was corrected to inform about comments and keys that can be used during the execution of the program
+
+## Version 0.1.1 ##
+
+  * A problem was corrected when building in a system where one of the libraries was in /usr/local/.
+  * A Win32 version was released.
+
+## Version 0.1 ##
+
+First public release.
